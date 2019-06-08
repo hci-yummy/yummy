@@ -11,14 +11,11 @@
               <el-table-column
                 prop="orderTime"
                 label="下单时间"
-                align="center"
               >
               </el-table-column>
               <el-table-column
                 prop="foodList"
                 label="商品"
-                align="center"
-                width="170px"
               >
                 <template slot-scope="scope">
                   <p
@@ -32,13 +29,12 @@
               <el-table-column
                 prop="sum"
                 label="总价(元)"
-                align="center"
-                width="100px"
+                width="150px"
               >
               </el-table-column>
               <el-table-column
                 label="是否退订"
-                align="center"
+                width="100px"
               >
                 <template slot-scope="scope">
                   <div v-show="!scope.row.isCancel">
@@ -66,14 +62,13 @@
               <el-table-column
                 prop="orderTime"
                 label="下单时间"
-                align="center"
+                width="190px"
               >
               </el-table-column>
               <el-table-column
                 prop="foodList"
                 label="商品"
-                align="center"
-                width="170px"
+                width="150px"
               >
                 <template slot-scope="scope">
                   <p
@@ -87,27 +82,30 @@
               <el-table-column
                 prop="sum"
                 label="总价(元)"
-                align="center"
-                width="100px"
+                width="130px"
               >
               </el-table-column>
               <el-table-column
                 label="是否退订"
-                align="center"
+                width="120px"
               >
                 <template slot-scope="scope">
                   <div v-show="!scope.row.isCancel">
                     否
                   </div>
-                  <el-button v-show="scope.row.isCancel" size="small" v-on:click="agree_cancel(scope.row.oid)">接受退订</el-button>
-                </template>
+                  <div v-show="scope.row.isCancel">
+                    <span style="color: red">是</span>
+                  </div>
+                  </template>
               </el-table-column>
               <el-table-column
                 label="操作"
                 align="center"
               >
                 <template slot-scope="scope">
-                  <el-button size="small" v-on:click="deliver_order(scope.row.oid)">发货</el-button>
+                  <el-button v-show="!scope.row.isCancel" size="small" v-on:click="deliver_order(scope.row.oid)">准备发货</el-button>
+                  <el-button v-show="scope.row.isCancel" size="small" v-on:click="agree_cancel(scope.row.oid)">接受退订</el-button>
+
                 </template>
               </el-table-column>
             </el-table>
@@ -121,13 +119,13 @@
               <el-table-column
                 prop="orderTime"
                 label="下单时间"
-                align="center"
+
+                width="190px"
               >
               </el-table-column>
               <el-table-column
                 prop="foodList"
                 label="商品"
-                align="center"
                 width="170px"
               >
                 <template slot-scope="scope">
@@ -142,24 +140,22 @@
               <el-table-column
                 prop="sum"
                 label="总价(元)"
-                align="center"
-                width="100px"
+                width="130px"
               >
               </el-table-column>
               <el-table-column
                 prop="state"
                 label="状态"
-                align="center"
               >
               </el-table-column>
               <el-table-column
                 label="是否退订"
-                align="center"
               >
                 <template slot-scope="scope">
                   <div v-show="!scope.row.isCancel">
                     否
                   </div>
+
                   <el-button v-show="scope.row.isCancel" size="small" v-on:click="agree_cancel(scope.row.oid)">接受退订</el-button>
                 </template>
               </el-table-column>
@@ -252,8 +248,8 @@
             }
           }).then(
             function (response) {
-              self.delivered_list = response.data;
-              for(let i = 0; i < self.delivered_list.length; i++) {
+              self.delivered_list = response.data.reverse();
+              for(let i = self.delivered_list.length - 1; i >= 0; i--) {
                 let time = self.delivered_list[i].orderTime + "";
                 time = time.substring(0, 10) + " " + time.substring(11,20);
                 self.delivered_list[i].orderTime = time;
