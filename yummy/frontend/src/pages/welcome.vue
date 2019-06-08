@@ -11,7 +11,7 @@
       <img src="../assets/logo.png" style="width: auto;height: auto;max-width: 100%;">
     </div>
     <div style="width: 900px; margin:0 auto;display: flex; font-size: 20px;">
-      <div style="width: 300px; background: #409EFF; color: white; font-size: 20px;
+      <div style="width: 250px; background: #409EFF; color: white; font-size: 20px;
       text-align: center; margin-right: 10px; padding: 10px;">
         <span>选择您所在的城市</span>
         <img src="../assets/down.svg" style="width: 30px; height: 30px; float: right; margin-right: 10px"/>
