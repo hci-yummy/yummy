@@ -27,11 +27,17 @@
 </template>
 
 <script>
+    import province from '../components/addressUtil'
     export default {
         name: "welcome",
         data () {
           return {
             activeIndex: 1,
+            address: province,
+            province: "",
+            city: "",
+            district: "",
+            detail_address: "",
           }
         }
     }
