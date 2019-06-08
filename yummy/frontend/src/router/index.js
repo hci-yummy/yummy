@@ -24,6 +24,7 @@ import adminLogin from '@/pages/adminLogin'
 import adminPage from '@/pages/adminPage'
 import approveModifyInfo from '@/pages/approveModifyInfo'
 import adminStatistics from '@/pages/adminStatistics'
+import welcome from '@/pages/welcome'
 
 Vue.use(Router);
 
@@ -32,7 +33,7 @@ export default new Router({
     {
       path: '/',
       name: '',
-      component: index
+      component: welcome
     },
     {
       path: '/login',
