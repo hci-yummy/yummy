@@ -19,6 +19,22 @@
 
         >
           <el-menu-item index="/login">登出</el-menu-item>
+          <el-menu-item index="/foodList">
+            <i class="el-icon-location-outline bar-icon"></i>
+            <span slot="title">附近餐厅</span>
+          </el-menu-item>
+          <el-menu-item index="/memberInfo" class="bar-main">
+            <i class="el-icon-menu bar-icon"></i>
+            <span slot="title">我的信息</span>
+          </el-menu-item>
+          <el-menu-item index="/order" class="bar-main">
+            <i class="el-icon-menu bar-icon"></i>
+            <span slot="title">我的订单</span>
+          </el-menu-item>
+          <el-menu-item index="/memberStatistics" class="bar-main">
+            <i class="el-icon-location bar-icon"></i>
+            <span slot="title">统计信息</span>
+          </el-menu-item>
           <!--<el-menu-item index="2">登录</el-menu-item>
           <el-menu-item index="3">注册</el-menu-item>-->
 

@@ -1,15 +1,32 @@
 <template>
   <memberNavi>
-    <div  style="display: flex">
-      <div>
-        <foodInfo :food_info="item" v-for="item in food_list" :key="item.name" v-on:getFoodEvent="add_basket"></foodInfo>
+    <div>
+      <div  style="display: flex">
+        <div>
+          <foodInfo :food_info="item" v-for="item in food_list" :key="item.name" v-on:getFoodEvent="add_basket"></foodInfo>
+        </div>
+        <div>
+          <el-button v-on:click="get_basket">查看购物车</el-button>
+        </div>
       </div>
-      <div>
-        <el-button v-on:click="get_basket">查看购物车</el-button>
+
+      <div class="basket">
+        <div style="border-top: 2px solid #409EFF;background-color: #f4f4f4">
+          <div style="margin-top: 10px; margin-left: 10px; padding-bottom: 10px; font-size: 14px;">购物车</div>
+        </div>
+        <div style="min-height: 0px;border: 1px solid #409EFF"></div>
+        <div style="height: 50px;display: flex">
+          <div style="width: 200px;background-color: #454342;">
+
+          </div>
+          <div style="width: 100px;background-color: #8be866">
+
+          </div>
+        </div>
       </div>
     </div>
-  </memberNavi>
 
+  </memberNavi>
 </template>
 
 <script>
@@ -33,17 +50,16 @@
         }
 
         this.basket = basket;
+
+        for(let i = 0; i < basket.length; i++) {
+          this.sum += basket[i].price;
+        }
       },
       data() {
         return {
           id:'',
           name:'',
-          food_info:{
-            name:'',
-            type:'',
-            price:0.0,
-            image:''
-          },
+          sum: 0,
           food_list:[
             {
               name:'冒菜',
@@ -135,5 +151,34 @@
 </script>
 
 <style scoped>
+
+  .basket{
+    border: 1px solid black;
+    width: 300px;
+    min-height: 80px;
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+  }
+
+  .myspace{
+    /*个人中心*/
+    /*text-indent: 6.3%;*/
+    color: black;
+    background-color: white;
+    margin: 0px;
+    border: 0px;
+    padding: 5px;
+    box-shadow:
+      0 1px 6px 0 rgba(0,0,0, .12),
+      0 1px 6px 0 rgba(0,0,0, .12);
+    border-radius: 3px;
+    padding-left: 5%;
+  }
+
+  .myspace p{
+    font-size: 15px;
+    color: #505050;
+  }
 
 </style>

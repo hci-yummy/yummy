@@ -19,12 +19,12 @@
           <div class="row" style="width: 100%">
             <div style="width: 95%;margin-left: 5%;margin-top: 30px">
               <el-row :gutter="0">
-                <el-col :span="6">
+                <el-col :span="0">
                   <div id="UserBar" style="margin-left: 0;">
                     <left-user-bar></left-user-bar>
                   </div>
                 </el-col>
-                <el-col :span="18" id="mainbody">
+                <el-col :span="24" id="mainbody">
                   <div class="panel-group">
                     <div class="panel panel-default" id="mainpanel" style="min-height: 550px">
                       <div class="panel-heading">

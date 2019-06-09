@@ -8,21 +8,22 @@
         <div style="margin-left: 30px;margin-top: -18px">
           <div>
             <p><b>{{food_info.name}}</b></p>
-            <div style="font-size: 14px">
-              分类：{{food_info.type}}
+            <div style="font-size: 14px;margin-bottom: 10px">
+              分类：{{food_info.type}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 剩余：{{food_info.amount}}
             </div>
             <div style="font-size: 14px">
-              剩余：{{food_info.amount}}
+              描述：藤椒炸鸡腿
             </div>
-            <p style="color: red">￥{{food_info.price}}</p>
+          </div>
+          <div>
+            <el-row style="margin-top: 10px;">
+              <span style="color: red">￥{{food_info.price}}</span>
+              <el-input-number size="mini" v-model="food_info.num" style="margin-left: 50px"></el-input-number>
+              <el-button size="mini" type="primary" v-on:click="add_food">加入购物车</el-button>
+            </el-row>
           </div>
         </div>
-        <div>
-          <el-row style="margin-top: 80px;margin-left: 10px">
-            <el-input-number size="mini" v-model="food_info.num"></el-input-number>
-            <el-button size="mini" type="primary" v-on:click="add_food">加入购物车</el-button>
-          </el-row>
-        </div>
+
       </div>
     </el-card>
   </div>
