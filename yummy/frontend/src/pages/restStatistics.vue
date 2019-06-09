@@ -1,6 +1,16 @@
 <template>
    <restNavi paneltitle="统计信息">
      <div>
+       <div>
+         <div id="orderChart" style="width: 800px; height: 400px; margin-top: 30px">
+
+         </div>
+
+         <!--<div id="moneyChart" style="width: 800px; height: 300px; margin-top: 30px">
+
+         </div>-->
+       </div>
+
        <el-row class="row">
          <span class="title">开始日期：</span>
          <el-date-picker
@@ -99,11 +109,25 @@
 
 <script>
     import restNavi from '../components/restNavi'
+
+    let echarts = require('echarts/lib/echarts');
+    // 引入柱状图组件
+    require('echarts/lib/chart/bar');
+    require('echarts/lib/chart/line');
+    require('echarts/lib/chart/pie');
+    // 引入提示框和title组件
+    require('echarts/lib/component/tooltip');
+    require('echarts/lib/component/title');
+    //
+    require('echarts/theme/macarons');
+
     export default {
       name: "rest-statistics",
       components:{restNavi},
       mounted: function () {
+        this.draw();
         this.get_all_info();
+        //this.draw
       },
       watch: {
         'filter_info.startDate':{
@@ -144,9 +168,99 @@
           },
           tableList: [],
           allList: [],
+          xList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+          orderList: [100, 200, 235, 172, 337, 213, 363, 278, 352, 396, 417, 336],
+          moneyList: [1110, 2000, 2300, 1720, 3370, 2130, 3630, 2780, 3520, 2960, 4170, 3360]
         }
       },
       methods: {
+        draw() {
+          this.draw_order();
+          this.draw_money();
+        },
+
+        draw_order() {
+          let myChart = echarts.init(document.getElementById('orderChart'),'macarons');
+          // 绘制图表
+          myChart.setOption({
+            title : {
+              /*text: '订单数',*/
+              /*subtext: '纯属虚构'*/
+            },
+            tooltip : {
+              trigger: 'axis'
+            },
+            legend: {
+              data:['订单数','金额数']
+            },
+            toolbox: {
+              show : true,
+              feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {show: true, type: ['line', 'bar']},
+                restore : {show: true},
+                saveAsImage : {show: true}
+              }
+            },
+            /* calculable : true,*/
+            xAxis : [
+              {
+                type : 'category',
+                /*boundaryGap : false,*/
+                data : this.xList
+              }
+            ],
+            yAxis : [
+              {
+                type : 'value',
+                axisLabel : {
+                  formatter: '{value} '
+                }
+              }
+            ],
+            series : [
+              {
+                name:'订单数',
+                type:'line',
+                data:this.orderList,
+                markPoint : {
+                  data : [
+                    {type : 'max', name: '最大值'},
+                    {type : 'min', name: '最小值'}
+                  ]
+                },
+                markLine : {
+                  data : [
+                    {type : 'average', name: '平均值'}
+                  ]
+                }
+              },
+
+              {
+                name:'金额数',
+                type:'line',
+                data:this.moneyList,
+                markPoint : {
+                  data : [
+                    {type : 'max', name: '最大值'},
+                    {type : 'min', name: '最小值'}
+                  ]
+                },
+                markLine : {
+                  data : [
+                    {type : 'average', name: '平均值'}
+                  ]
+                }
+              },
+            ]
+          });
+        },
+
+        draw_money() {
+
+        },
+
         get_all_info() {
           let restId = localStorage.rest_id;
           let self = this;
