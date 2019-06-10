@@ -1,94 +1,123 @@
 <template>
   <memberNavi paneltitle="购物车">
-    <div>
-      <el-card style="width: 650px;margin-bottom: 40px">
-        <div slot="header" class="clearfix">
-          <span>订单详情</span>
-          <el-button style="float: right; padding: 3px 0" type="text" v-on:click="return_to_rest">< 返回商家修改 </el-button>
-        </div>
-        <div>
-          <el-table
-            :data="basket"
-            stripe
-            style="width: 100%"
-            @selection-change="handleChange"
-          >
-            <el-table-column
-              prop="name"
-              label="商品"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="num"
-              label="份数"
-              align="center"
+    <div style="display:flex;">
+      <div>
+        <el-card style="width: 500px;margin-bottom: 40px">
+          <div slot="header" class="clearfix">
+            <span>订单详情</span>
+            <el-button style="float: right; padding: 3px 0" type="text" v-on:click="return_to_rest">< 返回商家修改 </el-button>
+          </div>
+          <div>
+            <el-table
+              :data="basket"
+              stripe
+              style="width: 100%"
+              @selection-change="handleChange"
             >
-              <template  slot-scope="scope" >
-                <el-input-number
-                  size="mini"
-                  :min="0"
-                  v-model="scope.row.num"
-                  @change="test(scope.row.num, scope.$index)"
-                ></el-input-number>
-              </template>
-            </el-table-column>
-            <!--<el-table-column
-              label="操作"
-              align="center"
-            >
-              <template slot-scope="scope">
-                <el-button plain type="danger" size="mini" @click="delete_food(scope.$index)">删除</el-button>
-              </template>
-            </el-table-column>-->
-            <el-table-column
-              prop="price"
-              label="小计(元)"
-              align="center"
-            >
-              <template  slot-scope="scope" >
-                <span>{{scope.row.num * scope.row.cost}}</span>
-              </template>
-            </el-table-column>
+              <el-table-column
+                prop="name"
+                label="商品"
+                align="center"
+              ></el-table-column>
+              <el-table-column
+                prop="num"
+                label="份数"
+                align="center"
+              >
+                <template  slot-scope="scope" >
+                  <el-input-number
+                    size="mini"
+                    :min="0"
+                    v-model="scope.row.num"
+                    @change="test(scope.row.num, scope.$index)"
+                  ></el-input-number>
+                </template>
+              </el-table-column>
+              <!--<el-table-column
+                label="操作"
+                align="center"
+              >
+                <template slot-scope="scope">
+                  <el-button plain type="danger" size="mini" @click="delete_food(scope.$index)">删除</el-button>
+                </template>
+              </el-table-column>-->
+              <el-table-column
+                prop="price"
+                label="小计(元)"
+                align="center"
+              >
+                <template  slot-scope="scope" >
+                  <span>{{scope.row.num * scope.row.cost}}</span>
+                </template>
+              </el-table-column>
 
-          </el-table>
-          <div style="color: #7e7e7e;padding-left: 68%;margin-top: 20px">
-            <div align="center">
-              <div class="title">
-                配送费：3.5元
-              </div>
-              <div class="title">
-                会员折扣：-{{this.disMoneyByLevel}}元
-              </div>
-              <div class="title" v-show="fullMoney !== 0">
-                店铺满{{this.fullMoney}}减{{this.disMoneyByRest}}：-{{this.disMoneyByRest}}元
-              </div>
-            </div>
+            </el-table>
+            <div style="color: #7e7e7e;padding-left: 65%;margin-top: 20px">
+              <div align="center">
+                <div class="tip">
+                  配送费：3.5元
+                </div>
+                <div class="tip">
+                  会员折扣：-{{this.disMoneyByLevel}}元
+                </div>
+                <div class="tip" v-show="fullMoney !== 0">
+                  店铺满{{this.fullMoney}}减{{this.disMoneyByRest}}：-{{this.disMoneyByRest}}元
+                </div>
 
-          </div>
-          <div style="font-size: 40px;color: red;padding-left: 67%; margin-top: 10px">
-            <div align="center" style="width: 200px;">
-              ￥{{this.all}}
+                <div  style="font-size: 40px;color: red;">
+                  ￥{{this.all}}
+                </div>
+              </div>
+
             </div>
+            <!--<div style="font-size: 40px;color: red;padding-left: 67%; margin-top: 10px">
+              <div align="center" style="width: 200px;">
+                ￥{{this.all}}
+              </div>
+            </div>-->
+            <!--<div style="margin-left: 80px;">
+              <p style="margin-top: 0"><span style=" font-size: 24px;color: #7e7e7e">收货地址：</span>{{this.now_address}},</p>
+              <p><span style="font-size: 24px;color: #7e7e7e">预计送达时间：</span>{{this.time}}</p>
+            </div>
+            <div style="margin-left: 80px; display: flex;margin-top: 30px">
+              <el-button v-on:click="submit">提交订单</el-button>
+              &lt;!&ndash;<el-button v-show="this.need_pay">付款</el-button>&ndash;&gt;
+            </div>-->
           </div>
-          <div style="margin-left: 80px;">
-            <p style="margin-top: 0"><span style=" font-size: 24px;color: #7e7e7e">收货地址：</span>{{this.now_address}},</p>
-            <p><span style="font-size: 24px;color: #7e7e7e">预计送达时间：</span>{{this.time}}</p>
+        </el-card>
+      </div>
+      <div style="border: 1px solid black;width: 600px; min-height: 300px;margin-left: 30px">
+        <div class="box">
+          <div class="title">
+            收货地址
           </div>
-          <div style="margin-left: 80px; display: flex;margin-top: 30px">
-            <el-button v-on:click="submit">提交订单</el-button>
-            <!--<el-button v-show="this.need_pay">付款</el-button>-->
+          <div v-show="!isShow">
+            <addressCard :info="now_address" :test="now_address.isChoosed"></addressCard>
           </div>
+          <div v-show="isShow">
+            <addressCard
+              :info="item"
+              v-for="item in address_list"
+              :test="item.isChoosed" :key="item.id"
+              v-on:chooseAddressEvent="choose_address"
+              v-on:editAddressEvent="edit_address"
+            ></addressCard>
+          </div>
+
+          <div v-show="!isShow" class="show" v-on:click="show_list"><span>显示更多地址 <i class="el-icon-arrow-down"></i></span></div>
+          <div v-show="isShow" class="show" v-on:click="hide_list"><span>收起 <i class="el-icon-arrow-up"></i></span></div>
         </div>
-      </el-card>
+      </div>
     </div>
   </memberNavi>
 </template>
 
 <script>
     import memberNavi from '../components/memberNavi'
+    import addressCard from '../components/addressCard'
     export default {
       name: "basket",
-      components: {memberNavi},
+      components: {memberNavi, addressCard},
       mounted: function () {
 
         this.id = this.$route.params.id;
@@ -101,6 +130,8 @@
 
         this.get_time();
 
+        this.now_address = this.address_list[0];
+
       },
       data() {
         return {
@@ -110,12 +141,68 @@
           disMoneyByLevel: 0,
           fullMoney: 0,
           disMoneyByRest: 0,
-          now_address:'',
+
           need_pay:false,
           time:'',
+
+          isShow: false,
+          now_address:{
+
+          },
+          address_list:[
+            {
+              id: 1,
+              name: 1,
+              tele: 1234,
+              address: "鼓楼区 广州路10号",
+              isChoosed: true,
+            },
+            {
+              id: 2,
+              name: 2,
+              tele: 5678,
+              address: "栖霞区 仙林大道168号",
+              isChoosed: false,
+            },
+            {
+              id: 3,
+              name: 3,
+              tele: 9101112,
+              address: "玄武区 中山路100号",
+              isChoosed: false,
+            }]
         }
       },
       methods: {
+
+        show_list() {
+          this.isShow = true;
+        },
+
+        hide_list() {
+          this.isShow = false;
+          for(let i = 0; i < this.address_list.length; i++) {
+            if(this.address_list[i].isChoosed) {
+              this.now_address = this.address_list[i];
+              break;
+            }
+          }
+        },
+
+        choose_address: function(id) {
+          for(let i = 0; i < this.address_list.length; i++) {
+            if(id === this.address_list[i].id) {
+              this.address_list[i].isChoosed = true;
+
+            }else {
+              this.address_list[i].isChoosed = false;
+            }
+          }
+        },
+
+        edit_address: function(info) {
+          
+        },
 
         test(num, index) {
           console.log("test");
@@ -240,7 +327,33 @@
 <style scoped>
 /*Vue中表格修改一项数据后，另一项如何实时变化*/
 
-  .title{
+  .tip{
     margin-bottom: 20px;
   }
+
+  .box{
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .show{
+    /*cursor: pointer;*/
+    font-size: 14px;
+    color: #7e7e7e;
+    margin-top: 10px;
+  }
+
+  .show > span:hover {
+    cursor: pointer;
+  }
+
+
+
+
 </style>
