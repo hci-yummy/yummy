@@ -12,7 +12,7 @@
           </div>
           <input style="width: 300px; font-size: 20px;" placeholder="  您的详细地址" v-model="detail_address"/>
           <el-input
-            style="margin-left: 700px;width: 200px"
+            style="margin-left: 45%;width: 200px"
             placeholder="请输入您想查找的餐厅"
             prefix-icon="el-icon-search"
             v-model="search">
@@ -65,12 +65,14 @@
             detail_address: "",
             type:['甜品饮品','快餐便当','小吃夜宵','特色菜系',"欧美西餐","日韩美食","异域美味"],
             checkList: [],
-            infos:[{name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5", pid: 1},
-              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5" , pid: 2},
-              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5",  pid: 3},
-              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5", pid: 4},
-              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5" , pid: 5},
-              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5",  pid: 6},]
+            infos:[{name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5", url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 1},
+              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5" , url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 2},
+              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5",  url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 3},
+              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5", url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 4},
+              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5" , url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 5},
+              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5",  url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 6},
+              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5" , url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 7},
+              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5",  url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 8},]
           }
         },
         mounted(){
