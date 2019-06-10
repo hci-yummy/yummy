@@ -1,11 +1,6 @@
 <template>
   <div>
-    <el-menu :default-active="activeIndex" background-color="#409EFF" text-color="#FFF" mode="horizontal" @select="handleSelect">
-      <el-menu-item index="1"><img src="../assets/logo.png" style="width: auto;height: auto;max-width: 150px;"></el-menu-item>
-      <el-menu-item class="top-bar-style" index="2">|  商家</el-menu-item>
-      <el-menu-item class="top-bar-style" index="3">注册</el-menu-item>
-      <el-menu-item class="top-bar-style" index="4">登录</el-menu-item>
-    </el-menu>
+    <visitorTopBar></visitorTopBar>
 
     <div style="width: 700px; margin:100px auto 20px auto;">
       <img src="../assets/logo.png" style="width: auto;height: auto;max-width: 100%;">
@@ -28,21 +23,18 @@
 
 <script>
     import addressChoice from '../components/addressChoice'
+    import visitorTopBar from '../components/visitorTopBar'
     export default {
-        name: "welcome",
-      components: {addressChoice},
+      name: "welcome",
+      components: {addressChoice, visitorTopBar},
         data () {
           return {
-            activeIndex: "1",
             pcd: "选择您所在的城市",
             detail_address: "",
             showPcdChoice: false
           }
         },
         methods:{
-          handleSelect() {
-
-          },
           setPcd(pcdChoice){
             console.log("pcd: "+pcdChoice);
             this.pcd = pcdChoice;
@@ -56,13 +48,5 @@
 </script>
 
 <style scoped>
-  .top-bar-style{
-    font-size: 22px;
-    float: right;
-  }
-  .tab-style{
-    font-size: 20px;
-    margin-right: 20px;
-  }
 
 </style>
