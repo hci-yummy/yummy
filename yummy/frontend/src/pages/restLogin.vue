@@ -1,10 +1,11 @@
 <template>
   <div>
-    <topBar></topBar>
+    <visitorTopBar></visitorTopBar>
     <div class="back">
       <div class="main">
         <div>
-          <h1 class="title">登 录 餐 厅</h1>
+          <img src="../assets/logo.png" style="width: 700px"/>
+          <!--<h1 class="title">登 录</h1>-->
         </div>
         <div>
           <p> <router-link :to="{name:'register',params:{index:'2'}}"><i> >>>没有账号，去注册</i></router-link><!--<a v-on:click="go"><i> >>>没有账号，去注册</i></a>--></p>
@@ -29,10 +30,10 @@
 </template>
 
 <script>
-    import topBar from '../components/restTop'
+    import visitorTopBar from '../components/visitorTopBar'
     export default {
       name: "rest-login",
-      components: {topBar},
+      components: {visitorTopBar},
       data() {
         return {
           login_form:{
@@ -81,27 +82,27 @@
     height: 700px;
     background-image: url("/static/index-back.jpg");
     background-size:100% 100%;
+    min-height: 750px;
     border: 1px solid white;
     /*opacity: 0.35;*/
   }
 
   .main{
-    margin-top: 10%;
+    margin-top: 5%;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
     width: 50%;
-    height: 40%;
-    border: 1px solid #ce9b5f;
-    background-color: dodgerblue;
-    opacity: 0.8;
+    height: 65%;
+    border: 1px solid #409EFF;
+    background: rgba(255,255,255,0.7);
   }
 
-  .title{
+/*  .title{
     margin-top: 8%;
     margin-left: 2%;
     color: white;
-  }
+  }*/
 
   .login{
     width:400px;

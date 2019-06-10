@@ -18,6 +18,7 @@
         methods: {
           handleSelect(key, keyPath) {
             this.activeIndex = key;
+            console.log(this.activeIndex)
             if(this.activeIndex === '4'){
               this.$router.push({name: "login"})
             }else if(this.activeIndex === '1'){
