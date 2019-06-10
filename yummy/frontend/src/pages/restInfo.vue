@@ -2,7 +2,7 @@
   <memberNavi>
     <div>
       <div  style="display: flex">
-        <div>
+        <div class="pane">
           <foodInfo :food_info="item" v-for="(item, index) in food_list" :key="index" v-on:getFoodEvent="add_basket"></foodInfo>
         </div>
         <!--<div>
@@ -198,6 +198,13 @@
 </script>
 
 <style scoped>
+
+  .pane {
+    width: 100%;
+    min-height: 200px;
+    display: grid;
+    grid-template-columns: 530px 170px;
+  }
 
   .basket{
     width: 320px;
