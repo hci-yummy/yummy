@@ -92,32 +92,40 @@
             收货地址
           </div>
           <div v-show="!isShow">
-            <addressCard :info="now_address" :test="now_address.isChoosed"></addressCard>
+            <addressCard :info="now_address" :test="now_address.isChoosed" @editAddressEvent="edit_address"></addressCard>
           </div>
           <div v-show="isShow">
             <addressCard
               :info="item"
               v-for="item in address_list"
               :test="item.isChoosed" :key="item.id"
-              v-on:chooseAddressEvent="choose_address"
-              v-on:editAddressEvent="edit_address"
+              @chooseAddressEvent="choose_address"
+              @editAddressEvent="edit_address"
             ></addressCard>
           </div>
+
+          <modal v-show="isModalVisible" @close="close_modal">
+            <div slot="header">A</div>
+            <div >B</div>
+            <div>C</div>
+          </modal>
 
           <div v-show="!isShow" class="show" v-on:click="show_list"><span>显示更多地址 <i class="el-icon-arrow-down"></i></span></div>
           <div v-show="isShow" class="show" v-on:click="hide_list"><span>收起 <i class="el-icon-arrow-up"></i></span></div>
         </div>
       </div>
     </div>
+
   </memberNavi>
 </template>
 
 <script>
     import memberNavi from '../components/memberNavi'
     import addressCard from '../components/addressCard'
+    import modal from '../components/modal'
     export default {
       name: "basket",
-      components: {memberNavi, addressCard},
+      components: {memberNavi, addressCard, modal},
       mounted: function () {
 
         this.id = this.$route.params.id;
@@ -146,6 +154,7 @@
           time:'',
 
           isShow: false,
+          isModalVisible: false,
           now_address:{
 
           },
@@ -201,7 +210,11 @@
         },
 
         edit_address: function(info) {
-          
+          this.isModalVisible = true;
+        },
+
+        close_modal:function() {
+          this.isModalVisible = false;
         },
 
         test(num, index) {

@@ -40,17 +40,17 @@
       },
       methods: {
         move_in: function() {
-          console.log("in");
+          // console.log("in");
           this.is_move = true;
         },
 
         move_out: function () {
-          console.log("out");
+          // console.log("out");
           this.is_move = false;
         },
 
         choose_address() {
-          console.log("id:"+this.info.id);
+          //console.log("id:"+this.info.id);
           this.$emit("chooseAddressEvent", this.info.id);
         },
 
