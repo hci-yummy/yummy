@@ -25,6 +25,7 @@ import adminPage from '@/pages/adminPage'
 import approveModifyInfo from '@/pages/approveModifyInfo'
 import adminStatistics from '@/pages/adminStatistics'
 import welcome from '@/pages/welcome'
+import nearbyRestaurant from '@/pages/nearbyRestaurant'
 
 Vue.use(Router);
 
