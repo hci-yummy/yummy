@@ -1666,7 +1666,7 @@
             console.log(this.address);*/
             this.choice = tab.name;
             if(this.choice === "first" ){
-              this.city = "";
+              this.city = ""
               this.district = "";
             }else if(this.choice === "second"){
               this.district = "";
@@ -1680,6 +1680,7 @@
               }
             }
             this.changeAddress();
+            this.choice = "second";
           },
           setCity(cityChoice){
             this.city = cityChoice;
@@ -1689,6 +1690,7 @@
               }
             }
             this.changeAddress();
+            this.choice = "third";
           },
           setDistrict(districtChoice){
             this.district = districtChoice;
