@@ -26,6 +26,8 @@ import approveModifyInfo from '@/pages/approveModifyInfo'
 import adminStatistics from '@/pages/adminStatistics'
 import welcome from '@/pages/welcome'
 import nearbyRestaurant from '@/pages/nearbyRestaurant'
+import memberRegister from '@/pages/memberRegister'
+import restaurantRegister from '@/pages/restaurantRegister'
 
 Vue.use(Router);
 
@@ -55,6 +57,16 @@ export default new Router({
       path: '/restLogin',
       name: 'restLogin',
       component: restLogin
+    },
+    {
+      path: '/memberRegister',
+      name: 'memberRegister',
+      component: memberRegister
+    },
+    {
+      path: '/restaurantRegister',
+      name: 'restaurantRegister',
+      component: restaurantRegister
     },
     {
       path: '/register',
