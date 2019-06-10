@@ -36,6 +36,11 @@ export default new Router({
       component: welcome
     },
     {
+      path: '/nearbyRestaurant',
+      name: 'nearbyRestaurant',
+      component: nearbyRestaurant
+    },
+    {
       path: '/login',
       name: 'login',
       component: login
