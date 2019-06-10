@@ -27,7 +27,7 @@
         name: "restaurantCard",
         props:['info'],
         mounted(){
-          document.getElementsByTagName('img')[0].src = info.url;
+          document.getElementsByTagName('img')[0].src = this.info.url;
         }
     }
 </script>

@@ -5,14 +5,16 @@
     <div class="main-body">
       <div>
         <div style="width: 100%; display: flex;">
-          <div style="width: 350px; background: #409EFF; color: white; font-size: 20px;
+          <div style="width: 350px; background: #409EFF; color: white; font-size: 20px;display: flex;
       text-align: center; margin-right: 10px; padding: 10px" @click="changeShowPcdChoice">
-            <span>当前位置：{{pcd}}</span>
+            <div style="width: 270px; height: 30px; overflow: hidden">当前位置：{{pcd}}</div>
             <img src="../assets/down.svg" style="width: 30px; height: 30px; float: right; margin-right: 10px"/>
           </div>
           <input style="width: 300px; font-size: 20px;" placeholder="  您的详细地址" v-model="detail_address"/>
+          <div style="width: 10px"></div>
+          <el-button type="primary" style="font-size: 20px;" @click="searchNearby">搜索</el-button>
           <el-input
-            style="margin-left: 45%;width: 200px"
+            style="margin-left: 700px;width: 200px"
             placeholder="请输入您想查找的餐厅"
             prefix-icon="el-icon-search"
             v-model="search">
@@ -33,7 +35,7 @@
           </div>
           <!--具体餐厅-->
           <div style="margin-top: 50px;">
-            <div style="display: inline-block;" v-for="info in infos" :key="info.key">
+            <div style="display: inline-block;" v-for="info in infos" :key="info.rid">
               <restaurantCard :info="info"></restaurantCard>
             </div>
           </div>
@@ -90,6 +92,43 @@
           setPcd(pcdChoice){
             console.log("pcd: "+pcdChoice);
             this.pcd = pcdChoice;
+          },
+          searchNearby () {
+            var token = this.pcd.split(' ');
+            var valid = true;
+            if(token.length !== 3){
+              valid = false;
+              this.$message({
+                message: '请先选择完整的省-市-区',
+                type: 'error'
+              });
+            }
+            for(var i = 0; i < token.length; i++){
+              if(token[i].length === 0){
+                this.$message({
+                  message: '请先选择完整的省-市-区',
+                  type: 'error'
+                });
+                valid = false;
+                break;
+              }
+            }
+            if(this.detail_address.length===0){
+              this.$message({
+                message: '请先填写详细地址',
+                type: 'error'
+              });
+              valid = false;
+            }
+            if(valid){
+              localStorage.district = token[2]+this.detail_address;
+              localStorage.city = token[1];
+              localStorage.province = token[0];
+              /*this.$router.push({name:"nearbyRestaurant", params:{pcd:this.pcd, detail_address: this.detail_address}});*/
+              console.log(localStorage)
+              //TODO
+            }
+
           },
           // 点击图片回到顶部方法，加计时器是为了过渡顺滑
           backTop () {

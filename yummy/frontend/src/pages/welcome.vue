@@ -70,6 +70,9 @@
               valid = false;
             }
             if(valid){
+              localStorage.district = token[2]+this.detail_address;
+              localStorage.city = token[1];
+              localStorage.province = token[0];
               this.$router.push({name:"nearbyRestaurant", params:{pcd:this.pcd, detail_address: this.detail_address}});
             }
 

@@ -12,7 +12,7 @@
         <div v-if="province === ''">
           请先选择您所在的省！
         </div>
-        <div v-else style="display: inline-block; height: 35px; width: 72px" v-for="item in all_cities" :key="item.key">
+        <div v-else style="display: inline-block; height: 35px; width: 90px" v-for="item in all_cities" :key="item.key">
           <el-button size="mini" @click="setCity(item.name)">{{item.name}}</el-button>
         </div>
       </div>
@@ -22,7 +22,7 @@
         <div v-if="city === ''">
           请先选择您所在的市！
         </div>
-        <div v-else style="display: inline-block; height: 35px; width: 72px" v-for="item in all_districts" :key="item.key">
+        <div v-else style="display: inline-block; height: 35px; width: 90px" v-for="item in all_districts" :key="item.key">
           <el-button size="mini" @click="setDistrict(item)">{{item}}</el-button>
         </div>
       </div>
