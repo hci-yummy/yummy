@@ -16,8 +16,17 @@
             }
         },
         methods: {
-          handleSelect() {
-
+          handleSelect(key, keyPath) {
+            this.activeIndex = key;
+            if(this.activeIndex === '4'){
+              this.$router.push({name: "login"})
+            }else if(this.activeIndex === '1'){
+              this.$router.push({name: "welcome"})
+            }else if(this.activeIndex === '3'){
+              this.$router.push({name:'register',params:{index:'1'}})
+            }else if(this.activeIndex === '2'){
+              this.$router.push({name: "restLogin"})
+            }
           },
         }
     }

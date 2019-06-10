@@ -33,7 +33,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: '',
+      name: 'welcome',
       component: welcome
     },
     {
