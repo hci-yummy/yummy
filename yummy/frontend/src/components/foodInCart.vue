@@ -19,6 +19,7 @@
       },
       methods: {
         changeNum() {
+          this.food.price = this.food.num * this.food.cost;
           this.$emit("changeNumEvent", this.food);
         }
       }

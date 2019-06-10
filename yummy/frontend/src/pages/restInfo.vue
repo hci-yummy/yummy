@@ -127,10 +127,14 @@
             if(this.basket[i].id === food.id) {
               this.basket[i] = food;
               if(this.basket[i].num === 0) {
-                // TODO delete
+                // delete
+                this.basket.splice(i, 1);
+                i--;
               }
             }
           }
+
+          this.cal_sum();
         },
 
         cal_sum() {
