@@ -3,24 +3,46 @@
     <div>
       <div  style="display: flex">
         <div>
-          <foodInfo :food_info="item" v-for="item in food_list" :key="item.name" v-on:getFoodEvent="add_basket"></foodInfo>
+          <foodInfo :food_info="item" v-for="(item, index) in food_list" :key="index" v-on:getFoodEvent="add_basket"></foodInfo>
         </div>
-        <div>
+        <!--<div>
           <el-button v-on:click="get_basket">查看购物车</el-button>
-        </div>
+        </div>-->
       </div>
 
       <div class="basket">
         <div style="border-top: 2px solid #409EFF;background-color: #f4f4f4">
           <div style="margin-top: 10px; margin-left: 10px; padding-bottom: 10px; font-size: 14px;">购物车</div>
         </div>
-        <div style="min-height: 0px;border: 1px solid #409EFF"></div>
+
+        <div>
+          <foodInCart :food="item" v-for="item in basket" :key="item.id" v-on:changeNumEvent="change_num"></foodInCart>
+        </div>
+
         <div style="height: 50px;display: flex">
-          <div style="width: 200px;background-color: #454342;">
-
+          <div class="cart">
+            <div>
+              <i class="el-icon-shopping-cart-2" style="font-size: 25px"></i>
+            </div>
+            <div style="margin-top:-2px;">
+              <span v-show="sum > 0" >&nbsp;￥<span style="font-size: 25px">{{sum}}</span></span>
+            </div>
+            <div style="font-size: 14px;margin-left: 10px;margin-top: 5px"> | 配送费￥1.5</div>
           </div>
-          <div style="width: 100px;background-color: #8be866">
 
+          <div class="waitPay" v-show="sum === 0">
+            <div style="font-size: 14px;" align="center">
+              <strong>购物车是空的</strong>
+            </div>
+          </div>
+
+          <div class="waitPay" v-show="sum < 20 && sum > 0">
+            <div style="font-size: 14px;" align="center">
+              <strong>还差 {{20-sum}} 元起送</strong>
+            </div>
+          </div>
+          <div class="toPay" v-show="sum >= 20" v-on:click="get_basket">
+            <div style="margin-left: 30px;color: white"><strong>去结算></strong></div>
           </div>
         </div>
       </div>
@@ -33,9 +55,10 @@
 
     import foodInfo from '../components/foodInfo'
     import memberNavi from '../components/memberNavi'
+    import foodInCart from '../components/foodInCart'
     export default {
       name: "rest-info",
-      components: {foodInfo, memberNavi},
+      components: {foodInfo, memberNavi, foodInCart},
       mounted:function () {
         this.id = this.$route.params.id;
         this.name = this.$route.params.name;
@@ -47,19 +70,19 @@
         console.log(basket);
         if(basket === undefined){
           basket = [];
+          this.sum = 0;
         }
 
         this.basket = basket;
+        this.cal_sum();
 
-        for(let i = 0; i < basket.length; i++) {
-          this.sum += basket[i].price;
-        }
       },
       data() {
         return {
           id:'',
           name:'',
           sum: 0,
+
           food_list:[
             {
               name:'冒菜',
@@ -96,8 +119,27 @@
             }
           ).catch(function (error) {
             console.log(error);
-          })
+        })
         },
+
+        change_num: function(food) {
+          for(let i = 0; i < this.basket.length; i++) {
+            if(this.basket[i].id === food.id) {
+              this.basket[i] = food;
+              if(this.basket[i].num === 0) {
+                // TODO delete
+              }
+            }
+          }
+        },
+
+        cal_sum() {
+          this.sum = 0;
+          for(let i = 0; i < this.basket.length; i++) {
+            this.sum += this.basket[i].price;
+          }
+        },
+
         add_basket:function(food) {
           if(food.num > food.amount){
             alert("数量不足！");
@@ -112,6 +154,7 @@
             };
             this.check_basket(f);
           }
+          this.cal_sum();
         },
         check_basket(f) {
 
@@ -153,12 +196,43 @@
 <style scoped>
 
   .basket{
-    border: 1px solid black;
-    width: 300px;
+    width: 320px;
     min-height: 80px;
     position: fixed;
     right: 0px;
     bottom: 0px;
+  }
+
+  .cart{
+    width: 200px;
+    height: 50px;
+    background-color: #454342;
+    padding-top: 15px;
+    padding-left: 5px;
+    display: flex;
+    color: white;
+  }
+
+  .toPay{
+    width: 120px;
+    height:50px;
+    line-height:55px;
+    background-color: #55e851;
+  }
+
+  .toPay:hover{
+    cursor: pointer;
+  }
+
+  .waitPay{
+    width: 120px;
+    height:50px;
+    line-height:55px;
+    background-color: #dadada;
+  }
+
+  .waitPay strong {
+    cursor: default;
   }
 
   .myspace{

@@ -26,20 +26,20 @@
               <template  slot-scope="scope" >
                 <el-input-number
                   size="mini"
-                  :min="1"
+                  :min="0"
                   v-model="scope.row.num"
-                  @change="test"
+                  @change="test(scope.row.num, scope.$index)"
                 ></el-input-number>
               </template>
             </el-table-column>
-            <el-table-column
+            <!--<el-table-column
               label="操作"
               align="center"
             >
               <template slot-scope="scope">
                 <el-button plain type="danger" size="mini" @click="delete_food(scope.$index)">删除</el-button>
               </template>
-            </el-table-column>
+            </el-table-column>-->
             <el-table-column
               prop="price"
               label="小计(元)"
@@ -117,9 +117,15 @@
       },
       methods: {
 
-        test() {
+        test(num, index) {
           console.log("test");
-          this.cal_sum();
+
+          if(num === 0) {
+            this.delete_food(index);
+          }else {
+            this.cal_sum();
+          }
+
         },
 
         delete_food(index) {
