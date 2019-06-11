@@ -68,7 +68,7 @@
   }
 
   .btn-close {
-    border: none 0; font-size: 20px; padding: 20px; cursor: pointer;
+    border: none 0; font-size: 20px; padding: 10px; cursor: pointer;
     font-weight: bold; color: #4aae9b; background-color: transparent; }
 
   .btn-green { color: #fff; background-color: #4aae9b; border: 1px solid #4aae9b; border-radius: 2px; }

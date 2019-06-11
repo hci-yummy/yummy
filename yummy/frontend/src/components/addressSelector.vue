@@ -18,6 +18,12 @@
     export default {
         name: "addressSelector",
         components: {addressChoice},
+        props:["pcd"],
+        data() {
+          return {
+            showPcdChoice: false,
+          }
+        },
         methods:{
           changeShowPcdChoice () {
             this.showPcdChoice = !this.showPcdChoice;

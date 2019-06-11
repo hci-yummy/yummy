@@ -88,11 +88,18 @@
       </div>
       <div style="border: 1px solid black;width: 600px; min-height: 300px;margin-left: 30px">
         <div class="box">
-          <div class="title">
-            收货地址
+          <div style="display: flex;margin-bottom: -10px">
+            <div class="title" style="width: 470px">
+              收货地址
+            </div>
+            <div style="color: #409EFF;cursor: pointer;text-decoration: underline" @click="add_address">
+              添加新地址
+            </div>
           </div>
+
+
           <div v-show="!isShow">
-            <addressCard :info="now_address" :test="now_address.isChoosed" @editAddressEvent="edit_address"></addressCard>
+            <addressCard :info="now_address" :test="now_address.isChoosed" @editAddressEvent="edit_address" />
           </div>
           <div v-show="isShow">
             <addressCard
@@ -100,28 +107,30 @@
               v-for="item in address_list"
               :test="item.isChoosed" :key="item.id"
               @chooseAddressEvent="choose_address"
-              @editAddressEvent="edit_address"
-            ></addressCard>
+              @editAddressEvent="edit_address" />
           </div>
 
           <modal v-show="isModalVisible" @close="close_modal">
             <div slot="header">{{title}}</div>
             <div slot="body">
-             <el-form ref="address_form" v-model="address_form" style="width: 500px;" label-width="80px">
-               <!--style="width: 500px;height: 300px"-->
-               <el-form-item label="姓名">
-                 <el-input v-model="address_form.name"></el-input>
-               </el-form-item>
-               <el-form-item label="位置">
+              <div style="width: 700px">
+                <el-form ref="address_form" v-model="address_form" style="width: 410px;" label-width="80px">
+                  <!--style="width: 500px;height: 300px"-->
+                  <el-form-item label="姓名">
+                    <el-input v-model="address_form.name" />
+                  </el-form-item>
+                  <el-form-item label="位置">
+                    <addressSelector :pcd="pcd"></addressSelector>
+                  </el-form-item>
+                  <el-form-item label="详细地址">
+                    <el-input v-model="address_form.detail_address" />
+                  </el-form-item>
+                  <el-form-item label="手机号">
+                    <el-input style="width: 200px " v-model="address_form.tele" />
+                  </el-form-item>
+                </el-form>
+              </div>
 
-               </el-form-item>
-               <el-form-item label="详细地址">
-                 <el-input v-model="address_form.detail_address"></el-input>
-               </el-form-item>
-               <el-form-item label="联系方式">
-                 <el-input style="width: 300px " v-model="address_form.tele"></el-input>
-               </el-form-item>
-             </el-form>
             </div>
             <div>C</div>
           </modal>
@@ -139,9 +148,10 @@
     import memberNavi from '../components/memberNavi'
     import addressCard from '../components/addressCard'
     import modal from '../components/modal'
+    import addressSelector from '../components/addressSelector'
     export default {
       name: "basket",
-      components: {memberNavi, addressCard, modal},
+      components: {memberNavi, addressCard, modal, addressSelector},
       mounted: function () {
 
         this.id = this.$route.params.id;
@@ -171,6 +181,7 @@
 
           title: "",
           address_form: {},
+          pcd:"",
           isShow: false,
           isModalVisible: false,
           now_address:{
@@ -179,24 +190,33 @@
           address_list:[
             {
               id: 1,
-              name: 1,
-              tele: 1234,
+              name: "1",
+              tele: "1234",
               address: "鼓楼区 广州路10号",
               isChoosed: true,
+              province: "江苏省",
+              city: "南京市",
+              district: "鼓楼区",
             },
             {
               id: 2,
-              name: 2,
-              tele: 5678,
+              name: "2",
+              tele: "5678",
               address: "栖霞区 仙林大道168号",
               isChoosed: false,
+              province: "江苏省",
+              city: "南京市",
+              district: "栖霞区",
             },
             {
               id: 3,
-              name: 3,
-              tele: 9101112,
+              name: "3",
+              tele: "9101112",
               address: "玄武区 中山路100号",
               isChoosed: false,
+              province: "江苏省",
+              city: "南京市",
+              district: "玄武区",
             }]
         }
       },
@@ -227,9 +247,18 @@
           }
         },
 
+        add_address() {
+          this.isModalVisible = true;
+          this.title = "添加新地址";
+          this.pcd = "选择您所在的位置";
+        },
+
         edit_address: function(info) {
           this.isModalVisible = true;
           this.title = "编辑地址";
+          this.pcd = info.province + " " + info.city + " " + info.district;
+          console.log(info);
+          this.address_form = info;
         },
 
         close_modal:function() {
@@ -392,7 +421,7 @@
 
 <style>
   .el-form-item__label{
-    color:black ;
+    color:black !important;
     font-size: 16px !important;
   }
 </style>
