@@ -2,7 +2,7 @@
   <memberNavi paneltitle="购物车">
     <div style="display:flex;">
       <div>
-        <el-card style="width: 500px;margin-bottom: 40px">
+        <el-card style="width: 500px;margin-bottom: 40px;">
           <div slot="header" class="clearfix">
             <span>订单详情</span>
             <el-button style="float: right; padding: 3px 0" type="text" v-on:click="return_to_rest">< 返回商家修改 </el-button>
@@ -86,7 +86,7 @@
           </div>
         </el-card>
       </div>
-      <div style="border: 1px solid black;width: 600px; min-height: 300px;margin-left: 30px">
+      <div style="width: 600px; min-height: 300px;margin-left: 30px">
         <div class="box">
           <div style="display: flex;margin-bottom: -10px">
             <div class="title" style="width: 470px">
@@ -111,10 +111,10 @@
           </div>
 
           <modal v-show="isModalVisible" @close="close_modal">
-            <div slot="header">{{title}}</div>
+            <div slot="header" style="margin-top: 5px">{{title}}</div>
             <div slot="body">
               <div style="width: 700px">
-                <el-form ref="address_form" v-model="address_form" style="width: 410px;" label-width="80px">
+                <el-form ref="address_form" v-model="address_form" style="width: 380px;" label-width="80px">
                   <!--style="width: 500px;height: 300px"-->
                   <el-form-item label="姓名">
                     <el-input v-model="address_form.name" />
@@ -126,7 +126,10 @@
                     <el-input v-model="address_form.detail_address" />
                   </el-form-item>
                   <el-form-item label="手机号">
-                    <el-input style="width: 200px " v-model="address_form.tele" />
+                    <el-input style="width: 210px " v-model="address_form.tele" />
+                  </el-form-item>
+                  <el-form-item>
+                    <span style="color: #c1c1c1;margin-left: 30px;margin-right: 30px;cursor: pointer" @click="close_modal">取消</span> <el-button type="primary" style="width: 120px">保存</el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -137,6 +140,23 @@
 
           <div v-show="!isShow" class="show" v-on:click="show_list"><span>显示更多地址 <i class="el-icon-arrow-down"></i></span></div>
           <div v-show="isShow" class="show" v-on:click="hide_list"><span>收起 <i class="el-icon-arrow-up"></i></span></div>
+
+          <div style="margin-top: 20px">
+            <div class="title">
+              其他信息
+            </div>
+            <el-form :model="other_form" ref="other_form" label-width="80px" style="width: 550px">
+              <el-form-item label="送达时间"> <span style="margin-left: 20px;font-size: 16px">{{time}}</span></el-form-item>
+              <el-form-item label="订单备注">
+                <div style="display: flex">
+                  <el-input v-model="other_form.remark" style="width: 200px;margin-right: 200px"></el-input><el-button type="danger">确认下单</el-button>
+                </div>
+
+              </el-form-item>
+
+            </el-form>
+
+          </div>
         </div>
       </div>
     </div>
@@ -179,8 +199,12 @@
           need_pay:false,
           time:'',
 
+          other_form: {},
+
           title: "",
-          address_form: {},
+          address_form: {
+            remark:'',
+          },
           pcd:"",
           isShow: false,
           isModalVisible: false,
@@ -251,6 +275,7 @@
           this.isModalVisible = true;
           this.title = "添加新地址";
           this.pcd = "选择您所在的位置";
+          this.address_form = {};
         },
 
         edit_address: function(info) {

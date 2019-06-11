@@ -12,12 +12,12 @@
             主体
           </slot>
         </div>
-        <div class="modal-footer">
+        <!--<div class="modal-footer">
           <slot name="footer">
             脚部
             <el-button @click="close">关闭</el-button>
           </slot>
-        </div>
+        </div>-->
 
       </div>
     </div>
@@ -64,11 +64,11 @@
   }
   .modal-body {
     position: relative;
-    padding: 20px 10px;
+    padding: 20px 20px;
   }
 
   .btn-close {
-    border: none 0; font-size: 20px; padding: 10px; cursor: pointer;
+    border: none 0; font-size: 20px; padding: 5px; cursor: pointer;
     font-weight: bold; color: #4aae9b; background-color: transparent; }
 
   .btn-green { color: #fff; background-color: #4aae9b; border: 1px solid #4aae9b; border-radius: 2px; }
