@@ -116,9 +116,9 @@
   }
 </style>
 
-<style>
+<!--<style>
   .el-form-item__label{
     color:white ;
     font-size: 16px !important;
   }
-</style>
+</style>-->
