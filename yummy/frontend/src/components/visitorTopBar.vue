@@ -1,5 +1,5 @@
 <template>
-  <el-menu :default-active="activeIndex" background-color="#409EFF" text-color="#FFF" mode="horizontal" @select="handleSelect">
+  <el-menu class="menu" :default-active="activeIndex" background-color="#409EFF" text-color="#FFF" mode="horizontal" @select="handleSelect">
     <el-menu-item index="1"><img src="../assets/logo.png" style="width: auto;height: auto;max-width: 150px;"></el-menu-item>
     <el-menu-item class="top-bar-style" index="2">|  商家</el-menu-item>
     <el-menu-item class="top-bar-style" index="3">注册</el-menu-item>
@@ -37,5 +37,8 @@
   .top-bar-style{
     font-size: 22px;
     float: right;
+  }
+  .menu{
+    border: 1px solid #409EFF;
   }
 </style>

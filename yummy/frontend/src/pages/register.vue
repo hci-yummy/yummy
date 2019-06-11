@@ -269,7 +269,7 @@
 
 </style>
 
-<style>
+<!--<style>
 
   .el-form-item__label{
     color:black !important;
@@ -282,4 +282,4 @@
     padding-right: 50px !important;
   }
 
-</style>
+</style>-->
