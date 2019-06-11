@@ -24,7 +24,7 @@
             }else if(this.activeIndex === '1'){
               this.$router.push({name: "welcome"})
             }else if(this.activeIndex === '3'){
-              this.$router.push({name:'register',params:{index:'1'}})
+              this.$router.push({name:'memberRegister'})
             }else if(this.activeIndex === '2'){
               this.$router.push({name: "restLogin"})
             }

@@ -71,7 +71,7 @@
           })
         },
         go(){
-          window.location.href = "http://localhost:3000/#/register";
+          window.location.href = "http://localhost:3000/#/restaurantRegister";
         },
       }
     }
