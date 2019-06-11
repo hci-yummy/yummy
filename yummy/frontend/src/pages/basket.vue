@@ -105,8 +105,24 @@
           </div>
 
           <modal v-show="isModalVisible" @close="close_modal">
-            <div slot="header">A</div>
-            <div >B</div>
+            <div slot="header">{{title}}</div>
+            <div slot="body">
+             <el-form ref="address_form" v-model="address_form" style="width: 500px;" label-width="80px">
+               <!--style="width: 500px;height: 300px"-->
+               <el-form-item label="姓名">
+                 <el-input v-model="address_form.name"></el-input>
+               </el-form-item>
+               <el-form-item label="位置">
+
+               </el-form-item>
+               <el-form-item label="详细地址">
+                 <el-input v-model="address_form.detail_address"></el-input>
+               </el-form-item>
+               <el-form-item label="联系方式">
+                 <el-input style="width: 300px " v-model="address_form.tele"></el-input>
+               </el-form-item>
+             </el-form>
+            </div>
             <div>C</div>
           </modal>
 
@@ -153,6 +169,8 @@
           need_pay:false,
           time:'',
 
+          title: "",
+          address_form: {},
           isShow: false,
           isModalVisible: false,
           now_address:{
@@ -211,6 +229,7 @@
 
         edit_address: function(info) {
           this.isModalVisible = true;
+          this.title = "编辑地址";
         },
 
         close_modal:function() {
@@ -369,4 +388,11 @@
 
 
 
+</style>
+
+<style>
+  .el-form-item__label{
+    color:black ;
+    font-size: 16px !important;
+  }
 </style>
