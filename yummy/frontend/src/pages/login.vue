@@ -138,10 +138,10 @@
 
 <style>
 
-  .el-form-item__label{
+  /*.el-form-item__label{
     color:white ;
     font-size: 16px !important;
-  }
+  }*/
   /*.el-form-item__label{
     color:white;
     font-size: 16px;
