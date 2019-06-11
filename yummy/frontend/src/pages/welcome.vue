@@ -7,9 +7,9 @@
     </div>
     <div style="width: 900px; margin:0 auto;display: flex; font-size: 20px;">
       <div style="width: 250px; background: #409EFF; color: white; font-size: 20px;
-      text-align: center; margin-right: 10px; padding: 10px;" @click="changeShowPcdChoice">
+      text-align: center; margin-right: 10px; height: 50px; line-height: 50px" @click="changeShowPcdChoice">
         <span>{{pcd}}</span>
-        <img src="../assets/down.svg" style="width: 30px; height: 30px; float: right; margin-right: 10px"/>
+        <i class = "el-icon-arrow-down" style="width: 30px; height: 30px;"></i>
       </div>
       <input style="width: 550px; font-size: 20px;" placeholder="  您的详细地址" v-model="detail_address"/>
       <div style="width: 10px"></div>

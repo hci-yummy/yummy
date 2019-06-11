@@ -5,10 +5,10 @@
     <div class="main-body">
       <div>
         <div style="width: 100%; display: flex;">
-          <div style="width: 350px; background: #409EFF; color: white; font-size: 20px;display: flex;
-      text-align: center; margin-right: 10px; padding: 10px" @click="changeShowPcdChoice">
-            <div style="width: 270px; height: 30px; overflow: hidden">当前位置：{{pcd}}</div>
-            <img src="../assets/down.svg" style="width: 30px; height: 30px; float: right; margin-right: 10px"/>
+          <div style="width: 350px; background: #409EFF; color: white; font-size: 20px;
+      text-align: center; margin-right: 10px; height: 50px; line-height: 50px;" @click="changeShowPcdChoice">
+            <div style="display: inline-block;">当前位置：{{pcd}}</div>
+            <i class = "el-icon-arrow-down" style="width: 30px; height: 30px;"></i>
           </div>
           <input style="width: 300px; font-size: 20px;" placeholder="  您的详细地址" v-model="detail_address"/>
           <div style="width: 10px"></div>
