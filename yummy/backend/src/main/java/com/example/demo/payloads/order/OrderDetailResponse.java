@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @Author: 王轩
- * @Description:
+ * @Description: 会员查看订单详情
  * @Date: 2019/2/27
  */
 public class OrderDetailResponse {
@@ -33,7 +33,7 @@ public class OrderDetailResponse {
     @JsonProperty("isCancel")
     private boolean isCancel;
 
-   public OrderDetailResponse(int id, double sum, double disByLevel, double disByRest, double fullMoney, List<FoodListResponse> foodList, boolean isCancel) {
+    public OrderDetailResponse(int id, double sum, double disByLevel, double disByRest, double fullMoney, List<FoodListResponse> foodList, boolean isCancel) {
         this.id = id;
         this.sum = sum;
         this.disByLevel = disByLevel;

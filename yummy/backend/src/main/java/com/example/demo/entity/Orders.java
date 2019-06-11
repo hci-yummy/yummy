@@ -27,12 +27,19 @@ public class Orders {
     @JoinColumn(name="restId") // 外键设置为rest_id
     private Restaurant restaurant;
 
-    @NotNull
+    /*@NotNull
     @ManyToOne(cascade={CascadeType.MERGE}, fetch= FetchType.EAGER)
     @JoinColumn(name="aId") // 外键设置为a_id
-    private Address address;
+    private Address address;*/
+
+    @NotNull
+    private String address;
+
+    private String phone;
 
     private double sum;
+
+    private String remark = "";  // 备注
 
     private double disByLevel;
 
@@ -48,14 +55,20 @@ public class Orders {
 
     private boolean isCancel;
 
+    private Integer grade = null;  // 用户评星（1~5）
+
+    private String expressState = "";    // 配送状态
+
     public Orders() {
     }
 
-    public Orders(@NotNull Member member, @NotNull Restaurant restaurant, @NotNull Address address, double sum, double disByLevel, double disByRest, double fullMoney, LocalDateTime orderTime, boolean isValid, boolean isPaid, boolean isCancel) {
+    public Orders(@NotNull Member member, @NotNull Restaurant restaurant, @NotNull String address, String phone, double sum, String remark, double disByLevel, double disByRest, double fullMoney, LocalDateTime orderTime, boolean isValid, boolean isPaid, boolean isCancel) {
         this.member = member;
         this.restaurant = restaurant;
         this.address = address;
+        this.phone = phone;
         this.sum = sum;
+        this.remark = remark;
         this.disByLevel = disByLevel;
         this.disByRest = disByRest;
         this.fullMoney = fullMoney;
@@ -89,12 +102,20 @@ public class Orders {
         this.restaurant = restaurant;
     }
 
-    public Address getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public double getSum() {
@@ -159,5 +180,29 @@ public class Orders {
 
     public void setCancel(boolean cancel) {
         isCancel = cancel;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Integer getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
+    }
+
+    public String getExpressState() {
+        return expressState;
+    }
+
+    public void setExpressState(String expressState) {
+        this.expressState = expressState;
     }
 }

@@ -16,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * @Author: 王轩
@@ -54,23 +51,26 @@ public class OrderServiceImpl implements OrderService {
         this.addressRepository = addressRepository;
     }
 
+    // 下单 备注、地址、电话
     @Override
     public void addNewOrder(NewOrderRequest request) {
         String email = request.getEmail();
         String restId = request.getRestId();
-        int aid = request.getAid();
+        String addressStr = request.getAddress();
+        String phone = request.getPhone();
         double sum = request.getSum();
-        double disBylevel = request.getDisByLevel();
+        double disByLevel = request.getDisByLevel();
         double disByRest = request.getDisByRest();
         double fullMoney = request.getFullMoney();
         LocalDateTime orderDate = LocalDateTime.now();
 
         Member member = memberRepository.findByEmail(email).get();
         Restaurant restaurant = restRepository.findById(restId).get();
-        Address address = addressRepository.findById(aid).get();
+//        Address address = addressRepository.findById(aid).get();
+//        String addressStr = address.getDistrict() + "  " + address.getAddress();
 
         // 保存订单
-        Orders orders = new Orders(member, restaurant, address, sum, disBylevel, disByRest, fullMoney, orderDate, true, false, false);
+        Orders orders = new Orders(member, restaurant, addressStr, phone, sum, request.getRemark(), disByLevel, disByRest, fullMoney, orderDate, true, false, false);
         Orders newOrder = orderRepository.save(orders);
         int oid = newOrder.getId();
 
@@ -112,7 +112,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<GetOrderResponse> getNotPaidOrders(String email) {
-
         List<Orders> orders = orderRepository.getNotPaidList(email);
         return getList(orders);
     }
@@ -131,6 +130,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    // 修改配送状态
     public boolean payOrder(int oid) {
         Orders order = orderRepository.findById(oid).get();
         if(!order.isValid()) {
@@ -150,43 +150,20 @@ public class OrderServiceImpl implements OrderService {
 
             order.setPaid(true);
             order.setValid(true);
+            order.setExpressState("等待商家接单");
             orderRepository.save(order);
 
-            ExpressState expressState = new ExpressState();
+            /*ExpressState expressState = new ExpressState();
             expressState.setOid(oid);
             expressState.setState("等待商家接单");
-            expressStateRepository.save(expressState);
+            expressStateRepository.save(expressState);*/
             return true;
         }
 
     }
 
     @Override
-    public Orders cancelOrder(int oid) {
-        Orders order = orderRepository.findById(oid).get();
-        order.setValid(false);
-        order.setPaid(false);
-        Orders newOrder = orderRepository.save(order);
-
-        // 恢复库存
-        List<OrderInfo> orderInfos = orderInfoRepository.findByOrder(order);
-        for(OrderInfo o: orderInfos) {
-            Food food = o.getFood();
-            int num = o.getNum();
-            int amount = food.getAmount();
-            amount += num;
-            food.setAmount(amount);
-            foodRepository.save(food);
-
-            o.setValid(false);
-            orderInfoRepository.save(o);
-        }
-
-        return newOrder;
-
-    }
-
-    @Override
+    // 会员查看订单详情
     public OrderDetailResponse getOrderDetail(int oid) {
 
         Orders order = orderRepository.findById(oid).get();
@@ -217,24 +194,42 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    // 修改配送状态
     public String getExpressState(int oid) {
 
-        ExpressState expressState = expressStateRepository.findByOid(oid).get();
-        String state = expressState.getState();
+        /*ExpressState expressState = expressStateRepository.findByOid(oid).get();
 
-        return state;
+        return expressState.getState();*/
+
+        Orders orders = orderRepository.findById(oid).get();
+        return orders.getExpressState();
     }
 
     @Override
+    // 查询待接单订单  不显示退订；加上用户姓名、电话、地址、备注
     public List<OrderExpressResponse> getNotReceiveOrders(String restId) {
         List<Orders> orders = orderRepository.getPaidList(restId);
+
+        int index = 0;
+        while(index < orders.size()) {
+            Orders o = orders.get(index);
+            if(o.isCancel() || !o.isValid()) {
+                orders.remove(index);
+            }else {
+                index++;
+            }
+        }
+
         return getExpressList(orders, "等待商家接单");
 
     }
 
     @Override
+    // 餐厅待发货  （加上退订状态）
     public List<OrderExpressResponse> getNotDeliverOrders(String restId) {
         List<Orders> orders = orderRepository.getPaidList(restId);
+        List<Orders> orders2 = orderRepository.findCanceledOrders(restId);
+        orders.addAll(orders2);
         return getExpressList(orders, "等待商家发货");
     }
 
@@ -244,32 +239,48 @@ public class OrderServiceImpl implements OrderService {
         List<OrderExpressResponse> list1 = getExpressList(orders, "配送中");
         List<OrderExpressResponse> list2 = getExpressList(orders, "已送达");
         list1.addAll(list2);
+        Collections.reverse(list1);
         return list1;
     }
 
     @Override
+    // 修改配送状态
     public void receiveOrder(int oid) {
 
-        ExpressState state = expressStateRepository.findByOid(oid).get();
+        /*ExpressState state = expressStateRepository.findByOid(oid).get();
         state.setState("等待商家发货");
-        expressStateRepository.save(state);
+        expressStateRepository.save(state);*/
+        Orders o = orderRepository.findById(oid).get();
+        o.setExpressState("等待商家发货");
+        orderRepository.save(o);
     }
 
     @Override
+    // 修改配送状态
     public void deliverOrder(int oid) {
-        ExpressState state = expressStateRepository.findByOid(oid).get();
+        /*ExpressState state = expressStateRepository.findByOid(oid).get();
         state.setState("配送中");
-        expressStateRepository.save(state);
+        expressStateRepository.save(state);*/
+
+        Orders o = orderRepository.findById(oid).get();
+        o.setExpressState("配送中");
+        orderRepository.save(o);
     }
 
     @Override
+    // 修改配送状态
     public void acceptOrder(int oid) {
-        ExpressState state = expressStateRepository.findByOid(oid).get();
+        /*ExpressState state = expressStateRepository.findByOid(oid).get();
         state.setState("已送达");
-        expressStateRepository.save(state);
+        expressStateRepository.save(state);*/
+
+        Orders o = orderRepository.findById(oid).get();
+        o.setExpressState("已送达");
+        orderRepository.save(o);
     }
 
     @Override
+    // 会员申请退订
     public void setOrderCancel(int oid) {
         Orders orders = orderRepository.findById(oid).get();
         orders.setCancel(true);
@@ -277,15 +288,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    // 修改配送状态
     public void agreeCancel(int oid) {
         // 减库存，改状态
-        cancelOrder(oid);
+        Orders orders = cancelOrder(oid);
 
-        Orders orders = orderRepository.findById(oid).get();
+//        orderRepository.findById(oid).get();
 
         // 退款
-        ExpressState expressState = expressStateRepository.findByOid(oid).get();
-        String state = expressState.getState();
+        /*ExpressState expressState = expressStateRepository.findByOid(oid).get();
+        String state = expressState.getState();*/
+        Orders o = orderRepository.findById(oid).get();
+        String state = o.getExpressState();
         double percent = OrderUtil.getOrderPercent(state);
         double sum = orders.getSum();
         double cancelMoney = twoBitDouble(sum * percent);
@@ -317,6 +331,33 @@ public class OrderServiceImpl implements OrderService {
         restRepository.save(restaurant);*/
 
     }
+
+    // 修改配送状态
+    public Orders cancelOrder(int oid) {
+        Orders order = orderRepository.findById(oid).get();
+        order.setCancel(true);
+        order.setValid(false);
+        order.setPaid(false);
+        Orders newOrder = orderRepository.save(order);
+
+        // 恢复库存
+        List<OrderInfo> orderInfos = orderInfoRepository.findByOrder(order);
+        for(OrderInfo o: orderInfos) {
+            Food food = o.getFood();
+            int num = o.getNum();
+            int amount = food.getAmount();
+            amount += num;
+            food.setAmount(amount);
+            foodRepository.save(food);
+
+            o.setValid(false);
+            orderInfoRepository.save(o);
+        }
+
+        return newOrder;
+
+    }
+
 
     @Override
     public List<MemberStatisticsResponse> getMemberStatistics(String email) {
@@ -357,6 +398,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    // 修改配送状态
     public List<RestStatisticsResponse> getRestStatistics(String restId) {
 
         Restaurant rest = restRepository.findById(restId).get();
@@ -365,15 +407,16 @@ public class OrderServiceImpl implements OrderService {
         ArrayList<RestStatisticsResponse> list = new ArrayList<>();
         for(Orders o: orders) {
             String username = o.getMember().getUsername();
-            Address address = o.getAddress();
+            String sendAddress = o.getAddress();
             LocalDateTime orderTime = o.getOrderTime();
-            String sendAddress = address.getDistrict() + " " + address.getAddress();
+//            String sendAddress = address.getDistrict() + " " + address.getAddress();
             double sum = o.getSum();
             boolean isCancel = o.isCancel();
             double earning;
             if(isCancel) {
-                ExpressState expressState = expressStateRepository.findByOid(o.getId()).get();
-                String state = expressState.getState();
+                /*ExpressState expressState = expressStateRepository.findByOid(o.getId()).get();
+                String state = expressState.getState();*/
+                String state = o.getExpressState();
                 double percent = OrderUtil.getOrderPercent(state);
                 earning = twoBitDouble(percent * sum * 0.7);
             }else {
@@ -418,13 +461,15 @@ public class OrderServiceImpl implements OrderService {
         return orderList;
     }
 
+    // 修改配送状态 增加用户信息（姓名、电话、地址、备注）
     private ArrayList<OrderExpressResponse> getExpressList(List<Orders> orders, String info) {
         ArrayList<OrderExpressResponse> orderList = new ArrayList<>();
 
         for(Orders o: orders) {
             int oid = o.getId();
-            ExpressState state = expressStateRepository.findByOid(oid).get();
-            if(state.getState().equals(info)) {
+            /*ExpressState state = expressStateRepository.findByOid(oid).get();
+            if(state.getState().equals(info)) {*/
+            if(o.getExpressState().equals(info)) {
                 List<OrderInfo> orderInfos = orderInfoRepository.findByOrder(o);
                 ArrayList<FoodInfo> foodList = new ArrayList<>();
                 for(OrderInfo o2: orderInfos) {
@@ -437,7 +482,7 @@ public class OrderServiceImpl implements OrderService {
 
                     foodList.add(foodInfo);
                 }
-                OrderExpressResponse response = new OrderExpressResponse(oid, o.getOrderTime(), o.getSum(), foodList, info, o.isCancel());
+                OrderExpressResponse response = new OrderExpressResponse(oid, o.getOrderTime(), o.getSum(), foodList, info, o.isCancel(), o.getMember().getUsername(), o.getPhone(), o.getAddress(), o.getRemark());
                 orderList.add(response);
             }
         }

@@ -6,6 +6,7 @@ import com.example.demo.entity.Restaurant;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,4 +38,9 @@ public interface OrderRepository extends CrudRepository<Orders, Integer> {
 
     @Query(value = "select * from orders", nativeQuery = true)
     List<Orders> getAll();
+
+    List<Orders> findDistinctByRestaurantAndOrderTimeBetween(Restaurant restaurant, LocalDateTime start, LocalDateTime end);
+
+    @Query(value = "SELECT * FROM orders o WHERE o.rest_id = ?1 and o.is_paid = true and o.is_valid = false", nativeQuery = true)
+    List<Orders> findCanceledOrders(String restId);
 }

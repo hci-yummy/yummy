@@ -42,4 +42,28 @@ public class MemberStatisticsResponse {
         this.sum = sum;
         this.isCancel = isCancel;
     }
+
+    public String getRestName() {
+        return restName;
+    }
+
+    public String getRestType() {
+        return restType;
+    }
+
+    public LocalDateTime getOrderTime() {
+        return orderTime;
+    }
+
+    public List<FoodListResponse> getFoodList() {
+        return foodList;
+    }
+
+    public double getSum() {
+        return sum;
+    }
+
+    public boolean isCancel() {
+        return isCancel;
+    }
 }

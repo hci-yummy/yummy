@@ -46,4 +46,32 @@ public class RestStatisticsResponse {
         this.isCancel = isCancel;
         this.earning = earning;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getSendAddress() {
+        return sendAddress;
+    }
+
+    public LocalDateTime getOrderTime() {
+        return orderTime;
+    }
+
+    public List<FoodListResponse> getFoodList() {
+        return foodList;
+    }
+
+    public double getSum() {
+        return sum;
+    }
+
+    public boolean isCancel() {
+        return isCancel;
+    }
+
+    public double getEarning() {
+        return earning;
+    }
 }

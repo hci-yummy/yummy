@@ -1,7 +1,6 @@
 package com.example.demo.payloads.order;
 
-import com.example.demo.entity.FoodInfo;
-
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +24,27 @@ public class NewOrderRequest {
 
     private double fullMoney;
 
-    private int aid;
+    private String address;
+
+    private String phone;   // 电话
+
+    private String remark = "";  // 备注
+
+    public NewOrderRequest() {
+    }
+
+    public NewOrderRequest(String email, String restId, double sum, List<FoodInfo> foodList, double disByLevel, double disByRest, double fullMoney, String address, String phone, String remark) {
+        this.email = email;
+        this.restId = restId;
+        this.sum = sum;
+        this.foodList = foodList;
+        this.disByLevel = disByLevel;
+        this.disByRest = disByRest;
+        this.fullMoney = fullMoney;
+        this.address = address;
+        this.phone = phone;
+        this.remark = remark;
+    }
 
     public String getEmail() {
         return email;
@@ -55,7 +74,15 @@ public class NewOrderRequest {
         return fullMoney;
     }
 
-    public int getAid() {
-        return aid;
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getRemark() {
+        return remark;
     }
 }
