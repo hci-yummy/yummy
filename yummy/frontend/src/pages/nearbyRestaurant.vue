@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background: ghostwhite; min-height: 900px; border-bottom: 1px solid ghostwhite">
     <div v-if="visitorMode">
       <visitorTopBar></visitorTopBar>
     </div>
@@ -18,7 +18,7 @@
           <div style="width: 10px"></div>
           <el-button type="primary" style="font-size: 20px;" @click="searchNearby">搜索</el-button>
           <el-input
-            style="margin-left: 700px;width: 200px"
+            style="margin-left: 250px;width: 200px"
             placeholder="输入餐厅名称"
             prefix-icon="el-icon-search"
             v-model="search">
@@ -30,9 +30,9 @@
       </div>
       <!--分类&具体餐厅-->
       <div style="width: 100%; margin-top: 50px">
-        <el-card style="width: 100%;">
-          <div style="display: flex">
-            <div style="margin-right: 50px;margin-top: 5px; font-size: 20px">选择您喜欢的分类：</div>
+        <div style="width: 100%;">
+          <div style="display: flex; border: 1px solid lightgrey; height: 60px; border-radius: 1%; line-height: 60px">
+            <div style="margin-right: 40px; font-size: 20px; margin-left: 10px; color: grey">选择您喜欢的分类：</div>
             <el-checkbox-group v-model="checkList">
               <el-checkbox-button v-for="item in type" :label="item" :key="item">{{item}}</el-checkbox-button>
             </el-checkbox-group>
@@ -42,18 +42,17 @@
             <div style="display: inline-block;" v-for="info in infos" :key="info.rid">
               <restaurantCard :info="info"></restaurantCard>
             </div>
-            <div v-if="infos.length===0" style="font-size: 36px; width: 100%; height: 300px; margin: 50px auto;line-height: 300px">
-              <div style="margin: 10px auto; width: 400px">请先选择地址并搜索！</div>
+            <div v-if="infos.length===0" style="font-size: 80px; width: 100%; height: 400px; margin: 50px auto;line-height: 300px">
+              <div style="margin: 10px auto; width: 800px; color: grey">请先选择地址并搜索！</div>
             </div>
           </div>
-        </el-card>
+        </div>
       </div>
 
       <img v-if="btnFlag" style="width:50px; height: 50px; position: fixed;z-index:9999;
       right: 50px; bottom: 50px;border:1px solid #409EFF; border-radius: 50%" src="../assets/up.svg" @click="backTop">
     </div>
   </div>
-
 </template>
 
 <script>
