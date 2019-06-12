@@ -76,7 +76,8 @@
             detail_address: "",
             type:['甜品饮品','快餐便当','小吃夜宵','特色菜系',"欧美西餐","日韩美食","异域美味"],
             checkList: [],
-            infos:[]
+            infos:[],
+            saveInfos:[]
           }
         },
         mounted(){
@@ -90,7 +91,26 @@
         destroyed () {
           window.removeEventListener('scroll', this.scrollToTop)
         },
+        watch: {
+          checkList:{
+            handler: function (val, oldVal) {
+              this.infos = this.searchNewInfos(val);
+            }
+          }
+        },
         methods:{
+          searchNewInfos(val){
+            if(val.length===0){
+              return this.saveInfos;
+            }
+            let newInfos = [];
+            for(var i = 0; i < this.saveInfos.length; i++){
+              if(val.indexOf(this.saveInfos[i].type)>=0){
+                newInfos.push(this.saveInfos[i]);
+              }
+            }
+            return newInfos
+          },
           changeShowPcdChoice () {
             this.showPcdChoice = !this.showPcdChoice;
           },
@@ -140,6 +160,7 @@
                 }
               }).then(function(response){
                 self.infos = response.data
+                self.saveInfos = response.data
                 console.log("nearby:")
                 console.log(response.data)
               }).catch(function (error) {
