@@ -1,22 +1,20 @@
 <template>
-    <el-card style="width: 500px; margin-top: 20px; margin-right: 5px;cursor: pointer" @click="enter_rest">
-      <div style="display: flex;">
-        <img :src="info.url" style="width: 200px; height: 200px; border: 1px solid gainsboro;"/>
-        <div style="margin-left: 40px; font-size: 16px; color: grey">
-          <div style="font-size: 30px; font-weight: bold; margin-bottom: 20px; color: black; max-width: 200px; overflow: hidden">{{info.name}}</div>
-          <el-tag style="margin-bottom: 10px">{{info.type}}</el-tag>
-          <div style="display: flex">
-            <el-rate
-              v-model="info.rate"
-              disabled
-              show-score
-              text-color="#ff9900"
-              score-template="{value}">
-            </el-rate>
-            <div style="font-size: 14px; margin-left: 10px">{{info.person}}人评价</div>
-          </div>
-          <div style="padding-top: 10px">预计送达时间：{{info.time}}</div>
-          <div style="padding-top: 10px">配送费：{{info.price}}</div>
+    <el-card style="width: 380px; margin-top: 20px; margin-right: 5px;cursor: pointer">
+      <div style="display: flex;" @click="enter_rest">
+        <img :src="info.url" style="width: 150px; height: 150px; border: 1px solid gainsboro;"/>
+        <div style="margin-left: 40px; font-size: 14px; color: grey">
+          <div style="font-size: 24px; font-weight: bold; margin-bottom: 10px; color: black; width: 200px; overflow: hidden;text-overflow: ellipsis"> <nobr>{{info.name}}</nobr></div>
+          <el-tag style="margin-bottom: 10px" size="mini">{{info.type}}</el-tag>
+          <el-rate
+            v-model="info.rate"
+            disabled
+            show-score
+            text-color="#ff9900"
+            score-template="{value}">
+          </el-rate>
+          <div style="font-size: 14px; margin-left: 2px">{{info.person}}人评价</div>
+          <div style="padding-top: 10px; margin-left: 2px">预计送达时间：{{info.time}}</div>
+          <div style="padding-top: 10px; margin-left: 2px">配送费：{{info.price}}</div>
         </div>
       </div>
     </el-card>
