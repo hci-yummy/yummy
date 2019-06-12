@@ -1,5 +1,5 @@
 <template>
-    <el-card style="width: 500px; margin-top: 20px; margin-right: 5px;">
+    <el-card style="width: 500px; margin-top: 20px; margin-right: 5px;cursor: pointer" @click="enter_rest">
       <div style="display: flex;">
         <img :src="info.url" style="width: 200px; height: 200px; border: 1px solid gainsboro;"/>
         <div style="margin-left: 40px; font-size: 16px; color: grey">
@@ -24,8 +24,13 @@
 
 <script>
     export default {
-        name: "restaurantCard",
-        props:['info'],
+      name: "restaurantCard",
+      props:['info'],
+      methods: {
+        enter_rest() {
+          this.$emit("enterRestEvent", this.info);
+        }
+      }
     }
 </script>
 

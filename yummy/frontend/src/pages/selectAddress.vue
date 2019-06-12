@@ -6,7 +6,7 @@
         {{this.username}}, 欢迎前来点单~
       </div>
       <el-form ref="address_form" :model="address_form" label-width="100px" v-show="!needAdd">
-        <el-form-item label="收货地址">
+        <el-form-item class="select_address" label="收货地址">
           <el-select v-model="address_form.value" placeholder="请选择你的收货地址" style="width: 380px">
             <el-option
               v-for="item in address_form.address_list"
@@ -200,7 +200,7 @@
 
 <style>
 
-  .el-form-item__label{
+  .select_address.el-form-item__label{
     color:white !important;
     font-size: 20px;
   }
