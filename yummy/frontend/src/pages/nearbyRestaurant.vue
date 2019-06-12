@@ -19,7 +19,7 @@
           <el-button type="primary" style="font-size: 20px;" @click="searchNearby">搜索</el-button>
           <el-input
             style="margin-left: 700px;width: 200px"
-            placeholder="请输入您想查找的餐厅"
+            placeholder="输入餐厅名称"
             prefix-icon="el-icon-search"
             v-model="search">
           </el-input>
@@ -96,6 +96,11 @@
             handler: function (val, oldVal) {
               this.infos = this.searchNewInfos(val);
             }
+          },
+          search:{
+            handler: function (val, oldVal) {
+              this.infos = this.searchCertainInfo(val);
+            }
           }
         },
         methods:{
@@ -106,6 +111,18 @@
             let newInfos = [];
             for(var i = 0; i < this.saveInfos.length; i++){
               if(val.indexOf(this.saveInfos[i].type)>=0){
+                newInfos.push(this.saveInfos[i]);
+              }
+            }
+            return newInfos
+          },
+          searchCertainInfo (val) {
+            if(val.length===0){
+              return this.saveInfos;
+            }
+            let newInfos = [];
+            for(var i = 0; i < this.saveInfos.length; i++){
+              if(this.saveInfos[i].name.indexOf(val)>=0){
                 newInfos.push(this.saveInfos[i]);
               }
             }
