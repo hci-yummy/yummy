@@ -191,7 +191,7 @@
             this.$router.push({name: 'login', params:{basket: this.basket, info: this.info}});
           }else {
             // member
-            this.$router.push({name: 'basket', params:{basket: this.basket, id: this.id}});
+            this.$router.push({name: 'basket', params:{basket: this.basket, info: this.info}});
           }
 
 

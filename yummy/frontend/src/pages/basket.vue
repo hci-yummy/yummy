@@ -101,7 +101,7 @@
           <div v-show="!isShow">
             <addressCard :info="now_address" :test="now_address.isChoosed" @editAddressEvent="edit_address" />
           </div>
-          <div v-show="isShow">
+          <div v-if="isShow">
             <addressCard
               :info="item"
               v-for="item in address_list"
@@ -174,22 +174,18 @@
       components: {memberNavi, addressCard, modal, addressSelector},
       mounted: function () {
 
-        this.id = this.$route.params.id;
-
+        this.info = this.$route.params.info;
         this.basket = this.$route.params.basket;
 
+        this.get_address_list();
+
         this.cal_sum();
-
-        this.now_address = localStorage.district + " " + localStorage.address;
-
         this.get_time();
-
-        this.now_address = this.address_list[0];
 
       },
       data() {
         return {
-          id:'',
+          info: {},
           basket:[],
           all:0,
           disMoneyByLevel: 0,
@@ -213,7 +209,6 @@
           },
           address_list:[
             {
-              id: 1,
               name: "1",
               tele: "1234",
               address: "鼓楼区 广州路10号",
@@ -245,6 +240,28 @@
         }
       },
       methods: {
+
+        get_address_list() {
+          let email = localStorage.user_email;
+          let self = this;
+          this.$axios.get('/user/get_address',{
+            params:{
+              email:email,
+            }
+          }).then(
+            function(response) {
+              console.log(response.data);
+              self.address_list = response.data;
+              self.address_list.isChoosed = true;
+              for(let i = 1; i < self.address_list.length; i++) {
+                self.address_list.isChoosed = false;
+              }
+              self.now_address = self.address_list[0];
+            }
+          ).catch(function(error){
+              console.log(error);
+          })
+        },
 
         show_list() {
           this.isShow = true;
@@ -329,7 +346,7 @@
             console.log(error);
           });
 
-          let restId = this.id;
+          let restId = this.info.rid;
           let self = this;
           this.$axios.post('/rest/cal_order',{
             restId: restId,
@@ -363,7 +380,7 @@
 
         submit() {
           let email = localStorage.user_email;
-          let restId = this.id;
+          let restId = this.info.rid;
           let sum = this.all;
           let foodList = this.basket;
           let disByLevel = this.disMoneyByLevel;
@@ -394,7 +411,7 @@
         },
 
         return_to_rest() {
-          this.$router.push({name:'restInfo', params: {basket: this.basket, id: this.id}})
+          this.$router.push({name:'restInfo', params: {basket: this.basket, info: this.info}})
         },
 
         handleChange() {

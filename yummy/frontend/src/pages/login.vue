@@ -34,12 +34,22 @@
     export default {
       name: "login",
       components: {visitorTopBar},
+      mounted: function () {
+        this.rest_info = this.$route.params.info;
+        this.basket = this.$route.params.basket;
+
+        console.log(this.rest_info);
+        console.log(this.basket);
+
+      },
       data() {
         return {
           login_form:{
             email:'',
             password:''
-          }
+          },
+          rest_info:{},
+          basket:[],
         }
       },
       methods: {
@@ -79,7 +89,13 @@
               }else {
                 localStorage.user_email = email;
                 localStorage.username = response.data;
-                self.$router.push({name:'welcome'});
+
+                if(self.basket !== undefined && self.rest_info !== undefined) {
+                  self.$router.push({name:'restInfo',params:{info:self.rest_info, basket:self.basket}});
+                }else {
+                  self.$router.push({name:'welcome'});
+                }
+
               }
               /*if(response.data !== "" && response.data !== "-1") {
 
