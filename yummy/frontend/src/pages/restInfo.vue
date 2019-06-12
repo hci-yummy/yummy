@@ -6,14 +6,12 @@
     <div v-else>
       <memberTopBar></memberTopBar>
     </div>
-    <div>
+    <div style="width: 100%;margin-top: 50px;margin-left: 20px">
       <div  style="display: flex">
         <div class="pane">
           <foodInfo :food_info="item" v-for="(item, index) in food_list" :key="index" v-on:getFoodEvent="add_basket"></foodInfo>
         </div>
-        <!--<div>
-          <el-button v-on:click="get_basket">查看购物车</el-button>
-        </div>-->
+
       </div>
 
       <div class="basket">
@@ -71,10 +69,9 @@
         this.info = this.$route.params.info;
         console.log(this.info);
 
-        this.id = this.info.id;
-        this.name = this.info.name;
+        this.id = this.info.rid;
         console.log(this.id);
-        console.log(this.name);
+
         this.get_food_list();
 
         let basket = this.$route.params.basket;
@@ -90,29 +87,14 @@
       },
       data() {
         return {
+
+          visitorMode: localStorage.username === undefined || localStorage.username === null ||  localStorage.username === "",
+
           info:{},
           id:'',
-          name:'',
           sum: 0,
 
-          food_list:[
-            {
-              name:'冒菜',
-              type:'主食',
-              image:'http://localhost:8000/images/upload/1.jpg',
-              price:20,
-              amount:1000,
-              num:1
-            },
-            {
-              name:'里脊肉',
-              type:'小食',
-              image:'http://localhost:8000/images/upload/1.jpg',
-              price:4,
-              amount:1000,
-              num:1
-            }
-          ],
+          food_list:[],
           basket:[]
         }
       },
@@ -203,7 +185,16 @@
           /*console.log(this.basket);*/
         },
         get_basket() {
-          this.$router.push({name: 'basket', params:{basket: this.basket, id: this.id}});
+
+          if(this.visitorMode) {
+            // visitor
+            this.$router.push({name: 'login', params:{basket: this.basket, info: this.info}});
+          }else {
+            // member
+            this.$router.push({name: 'basket', params:{basket: this.basket, id: this.id}});
+          }
+
+
         }
       }
     }

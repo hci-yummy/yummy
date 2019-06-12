@@ -78,7 +78,6 @@
             checkList: [],
             infos:[],
             saveInfos:[],
-            info:{},
           }
         },
         mounted(){
@@ -106,7 +105,7 @@
         },
         methods:{
           enter_rest:function(info) {
-            this.$router.push({name:'restInfo',params:{info:this.info}});
+            this.$router.push({name:'restInfo',params:{info:info}});
           },
           searchNewInfos(val){
             if(val.length===0){

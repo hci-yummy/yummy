@@ -12,7 +12,7 @@
               分类：{{food_info.type}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 剩余：{{food_info.amount}}
             </div>
             <div style="font-size: 14px">
-              描述：藤椒炸鸡腿
+              描述：{{food_info.description}}
             </div>
           </div>
           <div>
@@ -36,14 +36,7 @@
 
       data() {
           return {
-            /*food_info:{
-              name:'精品冒菜',
-              type:'主食',
-              image:'http://localhost:8000/images/upload/1.jpg',
-              price:20,
-              amount:1000,
-              num:1
-            }*/
+
           }
       },
       methods: {
