@@ -29,6 +29,7 @@
           setPcd(pcdChoice){
             console.log("pcd: "+pcdChoice);
             this.pcd = pcdChoice;
+            this.$emit("setPcd", this.pcd)
           },
         }
 

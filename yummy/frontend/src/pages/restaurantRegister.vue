@@ -16,7 +16,7 @@
             <el-input style="width: 300px;margin-left: 30px" v-model="rest_form.rest_name"></el-input>
           </el-form-item>
           <el-form-item class="form-label" label="所在城区">
-            <addressSelector :pcd="rest_form.pcd" style="margin-left: 30px"></addressSelector>
+            <addressSelector :pcd="rest_form.pcd" @setPcd="setAddress" style="margin-left: 30px"></addressSelector>
           </el-form-item>
           <el-form-item class="form-label" label="详细地址">
             <el-input style="width: 300px;margin-left: 30px" v-model="rest_form.address"></el-input>
@@ -95,19 +95,22 @@
         },
 
         methods: {
-          rest_register() {
-
+          setAddress (pcd){
             var token = this.rest_form.pcd.split(' ');
-            if(token.length!==3){
-              console.log(token)
+            if(token.length===3){
+              this.rest_form.province = token[0];
+              this.rest_form.city = token[1];
+              this.rest_form.district = token[2];
+            }
+          },
+          rest_register() {
+            if(this.rest_form.province===""||this.rest_form.city===""||this.rest_form.district===""){
               this.$message({
                 message: "请选择完整的省-市-区！",
                 type: "error"
               })
             }else{
-              this.rest_form.province = token[0];
-              this.rest_form.city = token[1];
-              this.rest_form.district = token[2];
+
             }
 
             let name = this.rest_form.rest_name;
