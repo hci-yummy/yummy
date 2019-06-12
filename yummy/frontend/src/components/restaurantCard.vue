@@ -1,5 +1,5 @@
 <template>
-    <el-card style="width: 380px; margin-top: 20px; margin-right: 5px;cursor: pointer">
+    <el-card style="width: 380px; margin-top: 20px; margin-right: 5px;">
       <div style="display: flex;" @click="enter_rest">
         <img :src="info.url" style="width: 150px; height: 150px; border: 1px solid gainsboro;"/>
         <div style="margin-left: 40px; font-size: 14px; color: grey">

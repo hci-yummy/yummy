@@ -40,7 +40,7 @@
           <!--具体餐厅-->
           <div style="margin-top: 50px;">
             <div style="display: inline-block;" v-for="info in infos" :key="info.rid">
-              <restaurantCard :info="info"></restaurantCard>
+              <restaurantCard :info="info" @enterRestEvent="enter_rest"></restaurantCard>
             </div>
             <div v-if="infos.length===0" style="font-size: 80px; width: 100%; height: 400px; margin: 50px auto;line-height: 300px">
               <div style="margin: 10px auto; width: 800px; color: grey">请先选择地址并搜索！</div>
@@ -76,7 +76,8 @@
             type:['甜品饮品','快餐便当','小吃夜宵','特色菜系',"欧美西餐","日韩美食","异域美味"],
             checkList: [],
             infos:[],
-            saveInfos:[]
+            saveInfos:[],
+            info:{},
           }
         },
         mounted(){
@@ -103,6 +104,9 @@
           }
         },
         methods:{
+          enter_rest:function(info) {
+            this.$router.push({name:'restInfo',params:{info:this.info}});
+          },
           searchNewInfos(val){
             if(val.length===0){
               return this.saveInfos;

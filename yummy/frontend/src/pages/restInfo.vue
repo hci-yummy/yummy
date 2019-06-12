@@ -1,5 +1,11 @@
 <template>
-  <memberNavi>
+  <div>
+    <div v-if="visitorMode">
+      <visitorTopBar></visitorTopBar>
+    </div>
+    <div v-else>
+      <memberTopBar></memberTopBar>
+    </div>
     <div>
       <div  style="display: flex">
         <div class="pane">
@@ -47,21 +53,26 @@
         </div>
       </div>
     </div>
+  </div>
 
-  </memberNavi>
 </template>
 
 <script>
 
+    import visitorTopBar from '../components/visitorTopBar'
+    import memberTopBar from '../components/memberTopBar'
     import foodInfo from '../components/foodInfo'
-    import memberNavi from '../components/memberNavi'
     import foodInCart from '../components/foodInCart'
     export default {
       name: "rest-info",
-      components: {foodInfo, memberNavi, foodInCart},
+      components: {foodInfo, foodInCart, visitorTopBar, memberTopBar},
       mounted:function () {
-        this.id = this.$route.params.id;
-        this.name = this.$route.params.name;
+
+        this.info = this.$route.params.info;
+        console.log(this.info);
+
+        this.id = this.info.id;
+        this.name = this.info.name;
         console.log(this.id);
         console.log(this.name);
         this.get_food_list();
@@ -79,6 +90,7 @@
       },
       data() {
         return {
+          info:{},
           id:'',
           name:'',
           sum: 0,
