@@ -1,5 +1,5 @@
 <template>
-  <div style="background: ghostwhite; min-height: 900px; border-bottom: 1px solid ghostwhite">
+  <div style=" min-height: 900px;">
     <div v-if="visitorMode">
       <visitorTopBar></visitorTopBar>
     </div>
@@ -9,16 +9,17 @@
     <div class="main-body">
       <div>
         <div style="width: 100%; display: flex;">
-          <div style="width: 350px; background: #409EFF; color: white; font-size: 20px;
-      text-align: center; margin-right: 10px; height: 50px; line-height: 50px;" @click="changeShowPcdChoice">
+          <div style="width: 280px; background: #409EFF; color: white; font-size: 16px; border-radius: 2%;
+      text-align: center; margin-right: 10px; height: 40px; line-height: 40px;" @click="changeShowPcdChoice">
             <div style="display: inline-block;">当前位置：{{pcd}}</div>
             <i class = "el-icon-arrow-down" style="width: 30px; height: 30px;"></i>
           </div>
-          <input style="width: 300px; font-size: 20px;" placeholder="  您的详细地址" v-model="detail_address"/>
+          <el-input style="width: 300px; font-size: 16px;" placeholder="  您的详细地址" v-model="detail_address"></el-input>
           <div style="width: 10px"></div>
-          <el-button type="primary" style="font-size: 20px;" @click="searchNearby">搜索</el-button>
+          <el-button size="mini" type="primary" style="font-size: 16px;" @click="searchNearby">搜索</el-button>
           <el-input
-            style="margin-left: 250px;width: 200px"
+            size="medium"
+            style="margin-left: 350px;width: 200px; font-size: 16px"
             placeholder="输入餐厅名称"
             prefix-icon="el-icon-search"
             v-model="search">
@@ -31,14 +32,14 @@
       <!--分类&具体餐厅-->
       <div style="width: 100%; margin-top: 50px">
         <div style="width: 100%;">
-          <div style="display: flex; border: 1px solid lightgrey; height: 60px; border-radius: 1%; line-height: 60px">
-            <div style="margin-right: 40px; font-size: 20px; margin-left: 10px; color: grey">选择您喜欢的分类：</div>
+          <div style="display: flex; border: 1px dashed lightgrey; height: 60px; border-radius: 1%; line-height: 60px; background: white">
+            <div style="margin-right: 20px; font-size: 16px; margin-left: 10px; color: grey">选择您喜欢的分类：</div>
             <el-checkbox-group v-model="checkList">
               <el-checkbox-button v-for="item in type" :label="item" :key="item">{{item}}</el-checkbox-button>
             </el-checkbox-group>
           </div>
           <!--具体餐厅-->
-          <div style="margin-top: 50px;">
+          <div style="margin-top: 20px;margin-left: 2px">
             <div style="display: inline-block;" v-for="info in infos" :key="info.rid">
               <restaurantCard :info="info" @enterRestEvent="enter_rest"></restaurantCard>
             </div>
