@@ -8,12 +8,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import static org.junit.Assert.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 /**
  * @Author: 许杨
@@ -23,24 +24,60 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-public class OrderControllerTest {
+public class RestaurantControllerTest {
     @Autowired
     private MockMvc mvc;
 
     @Test
-    public void addNewOrder() {
+    public void register() {
         try {
             mvc.perform(
-                    post("/order/new_order")
-                            .param("email", "479026126@qq.com")
+                    post("/rest/register")
+                            .param("name", "测试餐厅2")
+                            .param("province", "江苏省")
+                            .param("city", "南京市")
+                            .param("district", "鼓楼区")
+                            .param("address", "广州路2号")
+                            .param("type", "快餐")
+                            .param("imageUrl", "image url")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andDo(MockMvcResultHandlers.print())
+                    .andReturn();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void login() {
+        try {
+            mvc.perform(
+                    get("/rest/login")
+                            .param("id", "e6797b0")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andDo(MockMvcResultHandlers.print())
+                    .andReturn();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void addNewFood() {
+        try {
+            mvc.perform(
+                    post("/rest/new_food")
                             .param("restId", "1da3409")
-                            .param("sum", "0")
-//                            .param("foodList", "null")
-                            .param("disByLevel", "0")
-                            .param("disByRest", "0")
-                            .param("fullMoney", "0")
-                            .param("address", "鼓楼区  汉口路22号")
-                            .param("remark", "")
+                            .param("name", "测试单品2")
+                            .param("type", "快餐")
+                            .param("price", "20")
+                            .param("amount", "100")
+//                            .param("startDate", "快餐")
+//                            .param("endDate", "image url")
+                            .param("image", "food image 2")
+                            .param("description", "the second food")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(MockMvcResultHandlers.print())
@@ -51,27 +88,13 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void getNotPaidList() {
-    }
-
-    @Test
-    public void getPaidList() {
-    }
-
-    @Test
-    public void getInvalidList() {
-    }
-
-    @Test
-    public void getOrderDetail() {
-    }
-
-    @Test
-    public void cancelOrder() {
+    public void getRestByDistrict() {
         try {
             mvc.perform(
-                    get("/order/cancel_order")
-                            .param("oid", "1")
+                    get("/rest/get_rests")
+                            .param("province", "江苏省")
+                            .param("city", "南京市")
+                            .param("district", "鼓楼区")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(MockMvcResultHandlers.print())
@@ -82,11 +105,11 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void payOrder() {
+    public void getFoodList() {
         try {
             mvc.perform(
-                    get("/order/pay_order")
-                            .param("oid", "2")
+                    get("/rest/get_food_list")
+                            .param("id", "1da3409")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(MockMvcResultHandlers.print())
@@ -97,12 +120,15 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void evaluateOrder() {
+    public void setNewSetMeal() {
         try {
             mvc.perform(
-                    get("/order/evaluate_order")
-                            .param("oid", "1")
-                            .param("grade", "4")
+                    post("/rest/new_setmeal")
+                            .param("name", "测试套餐")
+                            .param("restId", "1da3409")
+                            .param("price", "20")
+                            .param("amount", "100")
+                            .param("image", "set meal image 2")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(MockMvcResultHandlers.print())
@@ -113,11 +139,11 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void getExpressState() {
+    public void getDiscountList() {
         try {
             mvc.perform(
-                    get("/order/get_express_state")
-                            .param("oid", "2")
+                    get("/rest/get_discount_list")
+                            .param("restId", "1da3409")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(MockMvcResultHandlers.print())
@@ -128,11 +154,13 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void getNotReceiveList() {
+    public void setDiscount() {
         try {
             mvc.perform(
-                    get("/order/get_not_receive")
-                            .param("restId", "e6797b0")
+                    post("/rest/set_discount")
+                            .param("restId", "1da3409")
+                            .param("fullMoney", "15")
+                            .param("disMoney", "2")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(MockMvcResultHandlers.print())
@@ -143,19 +171,18 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void getNotDeliverList() {
-    }
-
-    @Test
-    public void getDeliveredList() {
-    }
-
-    @Test
-    public void receiveOrder() {
+    public void saveInfo() {
         try {
             mvc.perform(
-                    get("/order/receive_order")
-                            .param("oid", "2")
+                    post("/rest/save_info")
+                            .param("id", "1da3409")
+                            .param("name", "测试餐厅2")
+                            .param("province", "江苏省")
+                            .param("city", "南京市")
+                            .param("district", "玄武区")
+                            .param("address", "玄武大道2号")
+                            .param("type", "中餐厅")
+                            .param("imageUrl", "shop 2 image")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(MockMvcResultHandlers.print())
@@ -166,11 +193,13 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void deliverOrder() {
+    public void calOrder() {
         try {
             mvc.perform(
-                    get("/order/deliver_order")
-                            .param("oid", "2")
+                    post("/rest/cal_order")
+                            .param("restId", "1da3409")
+                            .param("level", "5")
+                            .param("sum", "50")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(MockMvcResultHandlers.print())
@@ -181,71 +210,13 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void acceptOrder() {
+    public void getStatistics() {
         try {
             mvc.perform(
-                    get("/order/accept_order")
-                            .param("oid", "2")
-                            .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void setOrderCancel() {
-        try {
-            mvc.perform(
-                    get("/order/set_order_cancel")
-                            .param("oid", "3")
-                            .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void agreeCancel() {
-        try {
-            mvc.perform(
-                    get("/order/agree_cancel")
-                            .param("oid", "3")
-                            .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void getMemberStatistics() {
-        try {
-            mvc.perform(
-                    get("/order/get_member_statistics")
-                            .param("email", "479026126@qq.com")
-                            .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void getRestStatistics() {
-        try {
-            mvc.perform(
-                    get("/order/get_rest_statistics")
-                            .param("restId", "e6797b0")
+                    get("/rest/get_statistics")
+                            .param("rid", "1da3409")
+                            .param("start", "2018-05")
+                            .param("end", "2019-01")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(MockMvcResultHandlers.print())

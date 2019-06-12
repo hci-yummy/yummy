@@ -56,4 +56,5 @@ public interface OrderService {
 
     List<RestStatisticsResponse> getRestStatistics(String restId);
 
+    boolean evaluateOrder(int oid, int grade);
 }

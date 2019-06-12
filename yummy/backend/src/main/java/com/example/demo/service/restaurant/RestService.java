@@ -11,15 +11,13 @@ import java.util.List;
  * @Date: 2019/2/13
  */
 public interface RestService {
-    String register(String restName, String district, String address, String type);
-
-    String getID();
+    String register(String restName, String province, String city, String district, String address, String type, String image);
 
     Restaurant login(String id);
 
     void addNewFood(NewFoodRequest foodRequest);
 
-    List<FindRestByDistResponse> getRestByDistric(String district);
+    List<FindRestByDistResponse> getRestByDistrict(String province, String city, String district);
 
     List<FoodListResponse> getFoodList(String id);
 
@@ -29,9 +27,11 @@ public interface RestService {
 
     List<DiscountInfoResponse> getDiscountList(String restId);
 
-    void saveInfo(EditRestInfoResquest resquest);
+    void saveInfo(EditRestInfoRequest request);
 
     OrderResponse calOrder(CalOrderRequest request);
 
     boolean isApproved(String restId);
+
+    RestStatisticResponse getStatistics(String rid, String start, String end);
 }

@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 /**
  * @Author: 王轩
- * @Description:
+ * @Description: 餐厅优惠
  * @Date: 2019/2/25
  */
 @Entity
@@ -19,15 +19,15 @@ public class Discount {
     @NotNull
     @ManyToOne(cascade={CascadeType.MERGE}, fetch= FetchType.EAGER)
     @JoinColumn(name="restId") // 外键设置为rest_id
-    private Restaurant restaurant;
+    private Restaurant restaurant;  // 餐厅
 
-    private double fullMoney;
+    private double fullMoney;   // 满
 
-    private double disMoney;
+    private double disMoney;    // 减
 
-    private LocalDate startDate;
+    private LocalDate startDate;    // 开始时间
 
-    private LocalDate endDate;
+    private LocalDate endDate;  // 结束时间
 
     public Discount() {
     }

@@ -5,6 +5,7 @@ import com.example.demo.dao.member.MemberRepository;
 import com.example.demo.entity.Address;
 import com.example.demo.entity.Member;
 import com.example.demo.payloads.user.AddressInfo;
+import com.example.demo.payloads.user.AddressResponse;
 import com.example.demo.payloads.user.EditMemberInfoRequest;
 import com.example.demo.payloads.user.MemberInfoResponse;
 import com.example.demo.service.mail.MailService;
@@ -28,7 +29,6 @@ public class MemberServiceImpl implements MemberService {
 
     private MemberRepository memberRepository;
     private AddressRepository addressRepository;
-
     private MailService mailService;
 
     @Autowired
@@ -93,18 +93,19 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    // 地址
     public MemberInfoResponse getInfo(String email) {
         Optional<Member> optional = memberRepository.findByEmail(email);
 
         if(optional.isPresent()) {
             Member member = optional.get();
 
-            List<Address> addresses = addressRepository.findAllByMember(member);
+            List<Address> addresses = addressRepository.findUsableAddress(email);
             ArrayList<AddressInfo> addressList = new ArrayList<>();
 
             if(addressList != null) {
                 for(Address a: addresses){
-                    AddressInfo info = new AddressInfo(a.getId(), a.getDistrict(), a.getAddress());
+                    AddressInfo info = new AddressInfo(a.getId(), a.getProvince(), a.getCity(), a.getDistrict(), a.getAddress(), a.getPhone(), a.getName());
                     addressList.add(info);
                 }
             }
@@ -121,6 +122,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    // 付款密码
     public void saveInfo(EditMemberInfoRequest request) {
 
         String email = request.getEmail();
@@ -131,18 +133,19 @@ public class MemberServiceImpl implements MemberService {
         member.setEmail(email);
         member.setUsername(username);
         member.setPhone(phone);
+        member.setPayPassword(request.getPayPassword());
 
         memberRepository.save(member);
 
-        List<AddressInfo> addressList = request.getAddressList();
+        /*List<AddressInfo> addressList = request.getAddressList();
 
         for(AddressInfo a: addressList) {
-            Address address = new Address(member, a.getDistrict(), a.getAddress());
+            Address address = new Address(member,a.getProvince(), a.getCity(), a.getDistrict(), a.getAddress(), a.getPhone(), a.getName());
             if(a.getId() > 0){
                address.setId(a.getId());
             }
             addressRepository.save(address);
-        }
+        }*/
     }
 
     @Override
@@ -156,5 +159,24 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findByEmail(email).get();
         member.setUsable(false);
         memberRepository.save(member);
+    }
+
+    @Override
+    public List<AddressResponse> selectAddresses(String email, String province, String city) {
+        List<Address> addressList = addressRepository.selectAddresses(email, province, city);
+
+        List<AddressResponse> addressInfos = new ArrayList<>();
+        for(Address address : addressList) {
+            AddressResponse info = new AddressResponse(address);
+            addressInfos.add(info);
+        }
+
+        return addressInfos;
+    }
+
+    @Override
+    public boolean checkPayPassword(String email, String password) {
+        Member member = memberRepository.findByEmail(email).get();
+        return member.getPayPassword().equals(password);
     }
 }

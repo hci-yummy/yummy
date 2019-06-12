@@ -446,6 +446,31 @@ public class OrderServiceImpl implements OrderService {
         return list;
     }
 
+    @Override
+    // 评价订单
+    public boolean evaluateOrder(int oid, int grade) {
+        Orders orders = orderRepository.findById(oid).get();
+        if(orders.getGrade() != null) {
+            return false;
+        }
+
+        orders.setGrade(grade);
+        orderRepository.save(orders);
+
+        Restaurant restaurant = orders.getRestaurant();
+        double stars = restaurant.getStars();
+        int evaluationNum = restaurant.getEvaluationNum();
+
+        stars = (stars * evaluationNum + grade) / (evaluationNum + 1);
+        evaluationNum++;
+
+        restaurant.setStars(stars);
+        restaurant.setEvaluationNum(evaluationNum);
+
+        restRepository.save(restaurant);
+
+        return true;
+    }
 
     private ArrayList<GetOrderResponse> getList(List<Orders> orders) {
         ArrayList<GetOrderResponse> orderList = new ArrayList<>();

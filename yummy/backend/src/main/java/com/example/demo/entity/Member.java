@@ -28,7 +28,9 @@ public class Member {
 
     private double balance;
 
-    private boolean usable;
+    private boolean usable = true;
+
+    private String payPassword;
 
     public void setEmail(String email) {
         this.email = email;
@@ -94,6 +96,14 @@ public class Member {
         this.balance = balance;
     }
 
+    public String getPayPassword() {
+        return payPassword;
+    }
+
+    public void setPayPassword(String payPassword) {
+        this.payPassword = payPassword;
+    }
+
     public Member(String email, String username, String password, String phone, int level, double score, double balance, boolean usable) {
         this.email = email;
         this.username = username;
@@ -103,6 +113,7 @@ public class Member {
         this.score = score;
         this.balance = balance;
         this.usable = usable;
+        this.payPassword = password;
     }
 
     public Member(){

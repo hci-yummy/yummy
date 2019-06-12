@@ -1,7 +1,11 @@
 package com.example.demo.service.member;
 
+import com.example.demo.payloads.user.AddressInfo;
+import com.example.demo.payloads.user.AddressResponse;
 import com.example.demo.payloads.user.EditMemberInfoRequest;
 import com.example.demo.payloads.user.MemberInfoResponse;
+
+import java.util.List;
 
 /**
  * @Author: 王轩
@@ -18,4 +22,7 @@ public interface MemberService {
     void saveInfo(EditMemberInfoRequest request);
     int getLevel(String email);
     void deleteMember(String email);
+    List<AddressResponse> selectAddresses(String email, String province, String city);
+
+    boolean checkPayPassword(String email, String password);
 }

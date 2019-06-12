@@ -1,10 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Address;
-import com.example.demo.payloads.user.AddressResponse;
-import com.example.demo.payloads.user.EditMemberInfoRequest;
-import com.example.demo.payloads.user.MemberInfoResponse;
-import com.example.demo.payloads.user.MemberRegisterRequest;
+import com.example.demo.payloads.user.*;
 import com.example.demo.service.member.AddressService;
 import com.example.demo.service.member.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +21,7 @@ public class MemberController {
 
     private MemberService memberService;
     private AddressService addressService;
-
+    @Autowired
     public MemberController(MemberService memberService, AddressService addressService){
         this.memberService = memberService;
         this.addressService = addressService;
@@ -54,23 +50,46 @@ public class MemberController {
     }
 
     @GetMapping("/get_address")
+    // 地址
     public List<AddressResponse> getAllAddress(String email) {
         return addressService.getAllAddress(email);
     }
 
     @GetMapping("/get_the_address")
-    public AddressResponse getTheAddress(int aid) {return addressService.getTheAddress(aid);}
+    // 地址
+    public AddressResponse getTheAddress(int aid) {
+        return addressService.getTheAddress(aid);
+    }
 
     @GetMapping("/new_address")
-    public boolean addAddress(String email, String district, String address){return addressService.addNewAddress(email, district, address);}
+    // 地址
+    public boolean addAddress(@RequestBody AddAddressRequest request){
+        return addressService.addNewAddress(request.getAddress(), request.getProvince(), request.getCity(), request.getDistrict(), request.getAddress(), request.getName(), request.getPhone());
+    }
+
+    @GetMapping("/modify_address")
+    //
+    public boolean modifyAddress(@RequestBody ModifyAddressRequest request) {
+        return addressService.modifyAddress(request);
+    }
+
+    @GetMapping("/delete_address")
+    public void deleteAddress(int aid) {
+        addressService.deleteAddress(aid);
+    }
+
+    @GetMapping("/select_address")
+    public List<AddressResponse> selectAddresses(String email, String province, String city) {
+        return memberService.selectAddresses(email, province, city);
+    }
 
     @GetMapping("/get_info")
+    // 地址
     public MemberInfoResponse getInfo(String email){return memberService.getInfo(email);}
 
-    @RequestMapping("/edit_info")
+    @PostMapping("/edit_info")
+    // 地址
     public void saveInfo(@RequestBody EditMemberInfoRequest request){
-        System.out.println("in controller:");
-        System.out.println(request.getEmail());
         memberService.saveInfo(request);
     }
 
@@ -82,5 +101,8 @@ public class MemberController {
     @GetMapping("/delete_member")
     public void deleteMember(String email) {memberService.deleteMember(email);}
 
-
+    @GetMapping("/check_paypassword")
+    public boolean checkPayPassword(String email, String password) {
+        return memberService.checkPayPassword(email, password);
+    }
 }

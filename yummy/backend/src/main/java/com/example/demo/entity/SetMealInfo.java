@@ -1,13 +1,16 @@
+/*
 package com.example.demo.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+*/
 /**
  * @Author: 王轩
  * @Description:
  * @Date: 2019/2/24
- */
+ *//*
+
 
 @Entity
 public class SetMealInfo {
@@ -69,3 +72,4 @@ public class SetMealInfo {
         this.num = num;
     }
 }
+*/

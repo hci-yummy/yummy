@@ -21,4 +21,6 @@ public interface RestRepository extends CrudRepository<Restaurant, String> {
 
     @Query(value = "select * from restaurant", nativeQuery = true)
     List<Restaurant> getAll();
+
+    List<Restaurant> findDistinctByProvinceAndCityAndUsable(String province, String city, boolean usable);
 }

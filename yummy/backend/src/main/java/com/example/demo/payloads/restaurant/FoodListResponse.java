@@ -30,6 +30,9 @@ public class FoodListResponse {
     @JsonProperty("num")
     private int num;
 
+    @JsonProperty("description")
+    private String description;
+
     public FoodListResponse() {
     }
 
@@ -41,6 +44,17 @@ public class FoodListResponse {
         this.amount = amount;
         this.image = image;
         this.num = 1;
+    }
+
+    public FoodListResponse(int id, String name, String type, double price, int amount, String image, String description) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.price = price;
+        this.amount = amount;
+        this.image = image;
+        this.num = 1;
+        this.description = description;
     }
 
     public void setId(int id) {
@@ -69,5 +83,41 @@ public class FoodListResponse {
 
     public void setNum(int num) {
         this.num = num;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

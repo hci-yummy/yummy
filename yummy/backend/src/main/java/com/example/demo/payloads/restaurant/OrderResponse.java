@@ -31,4 +31,24 @@ public class OrderResponse {
         this.disMoneyByRest = disMoneyByRest;
         this.disMoneyByLevel = disMoneyByLevel;
     }
+
+    public String getRestId() {
+        return restId;
+    }
+
+    public double getSum() {
+        return sum;
+    }
+
+    public double getFullMoney() {
+        return fullMoney;
+    }
+
+    public double getDisMoneyByRest() {
+        return disMoneyByRest;
+    }
+
+    public double getDisMoneyByLevel() {
+        return disMoneyByLevel;
+    }
 }

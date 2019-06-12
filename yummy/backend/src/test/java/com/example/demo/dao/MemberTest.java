@@ -32,4 +32,10 @@ public class MemberTest {
         member.setUsable(true);
         memberRepository.save(member);
     }
+
+    @Test
+    public void add() {
+        Member member = new Member("479026126@qq.com", "xiang", "password", "18260199930", 1, 10.0, 1000.0, true);
+        memberRepository.save(member);
+    }
 }

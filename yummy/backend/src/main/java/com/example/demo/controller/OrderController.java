@@ -55,6 +55,12 @@ public class OrderController {
     // 付款
     public boolean payOrder(int oid) { return orderService.payOrder(oid);}
 
+    @GetMapping("/evaluate_order")
+    // 评价订单
+    public boolean evaluateOrder(int oid, int grade) {
+        return orderService.evaluateOrder(oid, grade);
+    }
+
     @GetMapping("/get_express_state")
     // 查询订单派送状态
     public String getExpressState(int oid) {return orderService.getExpressState(oid);}

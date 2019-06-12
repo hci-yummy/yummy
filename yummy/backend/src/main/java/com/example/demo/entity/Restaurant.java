@@ -1,11 +1,12 @@
 package com.example.demo.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 /**
  * @Author: 王轩
- * @Description:
+ * @Description: 餐厅信息
  * @Date: 2019/2/13
  */
 
@@ -13,17 +14,36 @@ import java.util.Set;
 public class Restaurant {
 
     @Id
-    private String id;
+    private String id;  // 餐厅编号
 
-    private String name;
+    @NotNull
+    private String name;    // 餐厅名称
 
-    private String district;
+    @NotNull
+    private String province;    // 省
 
-    private String address;
+    @NotNull
+    private String city;    // 市
 
-    private String type;
+    @NotNull
+    private String district;    // 街道
 
-    private boolean usable;
+    @NotNull
+    private String address;     // 详细地址
+
+    @NotNull
+    private String type;        // 类型
+
+    @NotNull
+    private boolean usable = true;     // 信息未审批时不可用
+
+    @NotNull
+    private String image;   // 图片url
+
+    @NotNull
+    private Double stars = 0.0;    // 餐厅评星（1~5，若无评分：-1）
+
+    private int evaluationNum = 0;  // 评价人数
 
    /* @OneToMany(cascade={CascadeType.MERGE},fetch= FetchType.LAZY)
     @JoinColumn(name="id")
@@ -39,6 +59,17 @@ public class Restaurant {
         this.address = address;
         this.type = type;
         this.usable = usable;
+    }
+
+    public Restaurant(String id, @NotNull String name, @NotNull String province, @NotNull String city, @NotNull String district, @NotNull String address, @NotNull String type, @NotNull String image) {
+        this.id = id;
+        this.name = name;
+        this.province = province;
+        this.city = city;
+        this.district = district;
+        this.address = address;
+        this.type = type;
+        this.image = image;
     }
 
     public String getId() {
@@ -87,6 +118,46 @@ public class Restaurant {
 
     public void setUsable(boolean usable) {
         this.usable = usable;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Double getStars() {
+        return stars;
+    }
+
+    public void setStars(Double stars) {
+        this.stars = stars;
+    }
+
+    public int getEvaluationNum() {
+        return evaluationNum;
+    }
+
+    public void setEvaluationNum(int evaluationNum) {
+        this.evaluationNum = evaluationNum;
     }
 
     /*public Set<Food> getFoodSet() {

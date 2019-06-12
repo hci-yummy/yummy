@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 /**
  * @Author: 王轩
- * @Description:
+ * @Description: 商品信息
  * @Date: 2019/2/16
  */
 
@@ -15,26 +15,34 @@ public class Food {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //自增
-    private Integer id;
+    private Integer id; // 主键
 
     @NotNull
     @ManyToOne(cascade={CascadeType.MERGE}, fetch= FetchType.EAGER)
     @JoinColumn(name="restId") // 外键设置为rest_id
-    private Restaurant rest;
+    private Restaurant rest;    // 餐厅
 
-    private String name;
+    @NotNull
+    private String name;    // 名字
 
-    private String type;
+    @NotNull
+    private String type;    // 类型
 
-    private double price;
+    @NotNull
+    private Double price;   // 价格
 
-    private int amount;
+    @NotNull
+    private Integer amount;     // 数量
 
-    private LocalDate startDate;
+    private LocalDate startDate;    // 开始时间
 
-    private LocalDate endDate;
+    private LocalDate endDate;      // 结束时间
 
-    private String image;
+    @NotNull
+    private String image;   // 图片url
+
+    @NotNull
+    private String description; // 商品介绍
 
     public Food() {
     }
@@ -48,6 +56,18 @@ public class Food {
         this.startDate = startDate;
         this.endDate = endDate;
         this.image = image;
+    }
+
+    public Food(@NotNull Restaurant rest, @NotNull String name, @NotNull String type, @NotNull Double price, @NotNull Integer amount, LocalDate startDate, LocalDate endDate, @NotNull String image, @NotNull String description) {
+        this.rest = rest;
+        this.name = name;
+        this.type = type;
+        this.price = price;
+        this.amount = amount;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.image = image;
+        this.description = description;
     }
 
     public Integer getId() {
@@ -120,5 +140,13 @@ public class Food {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

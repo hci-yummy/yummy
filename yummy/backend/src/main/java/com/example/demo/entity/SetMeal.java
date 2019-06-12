@@ -1,38 +1,49 @@
+/*
 package com.example.demo.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+*/
 /**
  * @Author: 王轩
- * @Description:
+ * @Description: 套餐
  * @Date: 2019/2/24
- */
+ *//*
+
 
 @Entity
 public class SetMeal {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //自增
-    private int id;
+    private int id; // 主键
 
     @NotNull
     @ManyToOne(cascade={CascadeType.MERGE}, fetch= FetchType.EAGER)
     @JoinColumn(name="rest_id") // 外键设置为rest_id
-    private Restaurant restaurant;
+    private Restaurant restaurant;  // 餐厅
 
-    private String name;
+    @NotNull
+    private String name;    // 套餐名
 
-    private double price;
+    @NotNull
+    private Double price;   // 价格
 
-    private int amount;
+    @NotNull
+    private Integer amount; // 库存
 
-    private LocalDate startDate;
+    @NotNull
+    private LocalDate startDate;    // 开始时间
 
-    private LocalDate endDate;
+    @NotNull
+    private LocalDate endDate;  // 结束时间
 
-    private String image;
+    @NotNull
+    private String image;   // 图片url
+
+    @NotNull
+    private String description; // 介绍
 
     public SetMeal() {
     }
@@ -45,6 +56,17 @@ public class SetMeal {
         this.startDate = startDate;
         this.endDate = endDate;
         this.image = image;
+    }
+
+    public SetMeal(@NotNull Restaurant restaurant, @NotNull String name, @NotNull Double price, @NotNull Integer amount, @NotNull LocalDate startDate, @NotNull LocalDate endDate, @NotNull String image, @NotNull String description) {
+        this.restaurant = restaurant;
+        this.name = name;
+        this.price = price;
+        this.amount = amount;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.image = image;
+        this.description = description;
     }
 
     public int getId() {
@@ -110,4 +132,13 @@ public class SetMeal {
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
+*/

@@ -15,7 +15,20 @@ public class EditMemberInfoRequest {
 
     private String phone;
 
-    private List<AddressInfo> addressList;
+    private String payPassword;
+
+//    private List<AddressInfo> addressList;
+
+    public EditMemberInfoRequest() {
+    }
+
+    public EditMemberInfoRequest(String username, String email, String phone, String payPassword) {
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
+        this.payPassword = payPassword;
+//        this.addressList = addressList;
+    }
 
     public String getUsername() {
         return username;
@@ -29,7 +42,11 @@ public class EditMemberInfoRequest {
         return phone;
     }
 
-    public List<AddressInfo> getAddressList() {
+    /*public List<AddressInfo> getAddressList() {
         return addressList;
+    }*/
+
+    public String getPayPassword() {
+        return payPassword;
     }
 }

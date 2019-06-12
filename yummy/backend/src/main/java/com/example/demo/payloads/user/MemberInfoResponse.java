@@ -37,4 +37,28 @@ public class MemberInfoResponse {
         this.score = score;
         this.addressList = addressList;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public List<AddressInfo> getAddressList() {
+        return addressList;
+    }
 }

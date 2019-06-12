@@ -36,6 +36,14 @@ public class DiscountInfoResponse {
         this.endDate = endDate;
     }
 
+    public DiscountInfoResponse(String restId, double fullMoney, double disMoney, LocalDate startDate, LocalDate endDate) {
+        this.restId = restId;
+        this.fullMoney = fullMoney;
+        this.disMoney = disMoney;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     public void setFullMoney(double fullMoney) {
         this.fullMoney = fullMoney;
     }

@@ -2,16 +2,16 @@ package com.example.demo.payloads.restaurant;
 
 /**
  * @Author: 王轩
- * @Description:
+ * @Description: 计算订单优惠后金额
  * @Date: 2019/2/26
  */
 public class CalOrderRequest {
 
-    private String restId;
+    private String restId;  // 餐厅
 
-    private int level;
+    private int level;  // 会员等级
 
-    private double sum;
+    private double sum; // 订单优惠前金额
 
     public CalOrderRequest() {
     }

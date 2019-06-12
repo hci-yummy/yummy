@@ -196,4 +196,12 @@ public class OrderServiceTest {
         System.out.println("earning: " + response.getEarning());
         System.out.println("====================");
     }
+
+    @Test
+    public void evaluateOrder() {
+        int oid = 1;
+        int grade = 5;
+        boolean result = orderService.evaluateOrder(oid, grade);
+        System.out.println("result: " + result);
+    }
 }
