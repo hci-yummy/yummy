@@ -96,7 +96,7 @@
 
         methods: {
           setAddress (pcd){
-            var token = this.rest_form.pcd.split(' ');
+            var token = pcd.split(' ');
             if(token.length===3){
               this.rest_form.province = token[0];
               this.rest_form.city = token[1];
@@ -110,7 +110,7 @@
                 type: "error"
               })
             }else{
-
+              console.log(this.rest_form)
             }
 
             let name = this.rest_form.rest_name;

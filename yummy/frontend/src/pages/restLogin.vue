@@ -8,7 +8,7 @@
           <!--<h1 class="title">登 录</h1>-->
         </div>
         <div>
-          <p> <router-link :to="{name:'register',params:{index:'2'}}"><i> >>>没有账号，去注册</i></router-link><!--<a v-on:click="go"><i> >>>没有账号，去注册</i></a>--></p>
+          <p> <router-link :to="{name:'restaurantRegister'}"><i> >>>没有账号，去注册</i></router-link><!--<a v-on:click="go"><i> >>>没有账号，去注册</i></a>--></p>
         </div>
         <div class="login">
           <el-form ref="login_form" :model="login_form" label-width="100px" style="margin-top: 30px">
