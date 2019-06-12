@@ -1,7 +1,11 @@
 <template>
   <div>
-    <visitorTopBar></visitorTopBar>
-
+    <div v-if="visitorMode">
+      <visitorTopBar></visitorTopBar>
+    </div>
+    <div v-else>
+      <memberTopBar></memberTopBar>
+    </div>
     <div style="width: 700px; margin:100px auto 20px auto;">
       <img src="../assets/logo.png" style="width: auto;height: auto;max-width: 100%;">
     </div>
@@ -24,14 +28,16 @@
 <script>
     import addressChoice from '../components/addressChoice'
     import visitorTopBar from '../components/visitorTopBar'
+    import memberTopBar from '../components/memberTopBar'
     export default {
       name: "welcome",
-      components: {addressChoice, visitorTopBar},
+      components: {addressChoice, visitorTopBar,memberTopBar},
         data () {
           return {
             pcd: "选择您所在的位置",
             detail_address: "",
-            showPcdChoice: false
+            showPcdChoice: false,
+            visitorMode: localStorage.username === undefined || localStorage.username === null ||  localStorage.username === ""
           }
         },
         methods:{

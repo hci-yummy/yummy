@@ -79,7 +79,7 @@
               }else {
                 localStorage.user_email = email;
                 localStorage.username = response.data;
-                self.$router.push({name:'selectAddress'});
+                self.$router.push({name:'welcome'});
               }
               /*if(response.data !== "" && response.data !== "-1") {
 

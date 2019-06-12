@@ -1,7 +1,7 @@
 <template>
     <el-card style="width: 500px; margin-top: 20px; margin-right: 5px;">
       <div style="display: flex;">
-        <img src="../assets/logo.png" style="width: 200px; height: 200px; border: 1px solid gainsboro;"/>
+        <img :src="info.url" style="width: 200px; height: 200px; border: 1px solid gainsboro;"/>
         <div style="margin-left: 40px; font-size: 16px; color: grey">
           <div style="font-size: 30px; font-weight: bold; margin-bottom: 20px; color: black; max-width: 200px; overflow: hidden">{{info.name}}</div>
           <el-tag style="margin-bottom: 10px">{{info.type}}</el-tag>
@@ -26,9 +26,6 @@
     export default {
         name: "restaurantCard",
         props:['info'],
-        mounted(){
-          document.getElementsByTagName('img')[0].src = this.info.url;
-        }
     }
 </script>
 

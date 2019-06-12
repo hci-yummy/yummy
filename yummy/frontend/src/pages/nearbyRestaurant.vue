@@ -1,7 +1,11 @@
 <template>
   <div>
-    <!--TODO 登录后切换top bar-->
-    <visitorTopBar></visitorTopBar>
+    <div v-if="visitorMode">
+      <visitorTopBar></visitorTopBar>
+    </div>
+    <div v-else>
+      <memberTopBar></memberTopBar>
+    </div>
     <div class="main-body">
       <div>
         <div style="width: 100%; display: flex;">
@@ -38,6 +42,9 @@
             <div style="display: inline-block;" v-for="info in infos" :key="info.rid">
               <restaurantCard :info="info"></restaurantCard>
             </div>
+            <div v-if="infos.length===0" style="font-size: 36px; width: 100%; height: 300px; margin: 50px auto;line-height: 300px">
+              <div style="margin: 10px auto; width: 400px">请先选择地址并搜索！</div>
+            </div>
           </div>
         </el-card>
       </div>
@@ -53,11 +60,13 @@
   import addressChoice from '../components/addressChoice'
   import visitorTopBar from '../components/visitorTopBar'
   import restaurantCard from '../components/restaurantCard'
+  import memberTopBar from '../components/memberTopBar'
     export default {
         name: "nearbyRestaurant",
-        components: {visitorTopBar, addressChoice,restaurantCard},
+        components: {visitorTopBar, addressChoice,restaurantCard,memberTopBar},
         data(){
           return{
+            visitorMode: localStorage.username === undefined || localStorage.username === null ||  localStorage.username === "",
             address:"",
             search: "",
             btnFlag: false,
@@ -67,20 +76,16 @@
             detail_address: "",
             type:['甜品饮品','快餐便当','小吃夜宵','特色菜系',"欧美西餐","日韩美食","异域美味"],
             checkList: [],
-            infos:[{name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5", url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 1},
-              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5" , url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 2},
-              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5",  url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 3},
-              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5", url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 4},
-              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5" , url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 5},
-              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5",  url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 6},
-              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5" , url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 7},
-              {name:"mock餐厅", rate:3.7, time:"40分钟", price: "￥5",  url:"../assets/logo.png",person: 10, type: "甜品饮品", rid: 8},]
+            infos:[]
           }
         },
         mounted(){
             this.pcd = this.$route.params.pcd;
             this.detail_address = this.$route.params.detail_address
             window.addEventListener('scroll', this.scrollToTop)
+            if(this.pcd && this.pcd.split(' ').length===3){
+
+            }
         },
         destroyed () {
           window.removeEventListener('scroll', this.scrollToTop)
@@ -126,7 +131,20 @@
               localStorage.province = token[0];
               /*this.$router.push({name:"nearbyRestaurant", params:{pcd:this.pcd, detail_address: this.detail_address}});*/
               console.log(localStorage)
-              //TODO
+              var self = this;
+              this.$axios.get('/rest/get_rests',{
+                params:{
+                  province: token[0],
+                  city: token[1],
+                  district: token[2]
+                }
+              }).then(function(response){
+                self.infos = response.data
+                console.log("nearby:")
+                console.log(response.data)
+              }).catch(function (error) {
+
+              });
             }
 
           },

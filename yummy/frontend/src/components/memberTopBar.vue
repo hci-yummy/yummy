@@ -1,0 +1,44 @@
+<template>
+  <el-menu class="menu" :default-active="activeIndex" background-color="#409EFF" text-color="#FFF" mode="horizontal" @select="handleSelect">
+    <el-menu-item class="top-bar-style" index="1"><img src="../assets/logo.png" style="width: auto;height: auto;max-width: 150px;"></el-menu-item>
+    <el-menu-item class="top-bar-style" index="2">附近的餐厅</el-menu-item>
+    <el-menu-item class="top-bar-style" index="3">我的订单</el-menu-item>
+    <el-menu-item class="top-bar-style" style="float: right;" index="4">你好，{{user}}</el-menu-item>
+  </el-menu>
+</template>
+
+<script>
+    export default {
+        name: "memberTopBar",
+      data(){
+        return{
+          activeIndex: "1",
+          user: localStorage.username
+        }
+      },
+      methods: {
+        handleSelect(key, keyPath) {
+          this.activeIndex = key;
+          console.log(this.activeIndex)
+          if(this.activeIndex === '4'){
+            //TODO 个人中心
+          }else if(this.activeIndex === '1'){
+            this.$router.push({name: "welcome"})
+          }else if(this.activeIndex === '3'){
+            //TODO 我的订单
+          }else if(this.activeIndex === '2'){
+            this.$router.push({name: "nearbyRestaurant"})
+          }
+        },
+      }
+    }
+</script>
+
+<style scoped>
+  .top-bar-style{
+    font-size: 22px;
+  }
+  .menu{
+    border: 1px solid #409EFF;
+  }
+</style>
