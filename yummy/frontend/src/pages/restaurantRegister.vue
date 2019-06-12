@@ -47,8 +47,8 @@
           <el-form-item>
             <div style="width: 875px;margin-top: 20px;">
               <div style="float: right">
-                <el-button type="primary" v-on:click="rest_register">注册</el-button>
                 <el-button v-on:click=clear>清空</el-button>
+                <el-button type="primary" v-on:click="rest_register">注册</el-button>
               </div>
             </div>
           </el-form-item>
@@ -129,6 +129,7 @@
         methods: {
           uploadSuccess(response, file, fileList) {
             console.log("uploadSuccess");
+            this.rest_form.image = "";
             this.rest_form.image += 'http://localhost:8000/';
             this.rest_form.image += response;
             console.log("this.rest_form.image:" + this.rest_form.image);
@@ -148,30 +149,30 @@
                 type: "error"
               })
             }else{
-
+              let name = this.rest_form.rest_name;
+              let address = this.rest_form.address;
+              let type = this.rest_form.value;
+              let self = this;
+              this.$axios.post('/rest/register',{
+                name: name,
+                province: self.rest_form.province,
+                city: self.rest_form.city,
+                district: self.rest_form.district,
+                address: address,
+                type: type,
+                imageUrl: self.rest_form.image
+              }).then(
+                function (response) {
+                  console.log(response.data);
+                  let id = response.data;
+                  alert("您餐厅的7位识别码是："+id+"\n 你可使用该识别码登录");
+                  localStorage.rest_register_id = id;
+                  self.$router.push({name:'restLogin'});
+                }
+              ).catch(function (error) {
+                console.log(error);
+              })
             }
-
-            let name = this.rest_form.rest_name;
-            let district = this.rest_form.district;
-            let address = this.rest_form.address;
-            let type = this.rest_form.value;
-
-            let self = this;
-            /*this.$axios.post('/rest/register',{
-              name: name,
-              district:district,
-              address: address,
-              type: type
-            }).then(
-              function (response) {
-                console.log(response.data);
-                let id = response.data;
-                alert("您餐厅的7位识别码是："+id+"\n 你可使用该识别码登录");
-                self.$router.push({name:'restLogin'});
-              }
-            ).catch(function (error) {
-              console.log(error);
-            })*/
           },
           clear() {
 

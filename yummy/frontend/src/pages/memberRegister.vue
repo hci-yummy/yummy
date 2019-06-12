@@ -24,8 +24,8 @@
           </el-form-item>
           <el-form-item>
             <div style="margin-top: 20px; float: right">
-              <el-button type="primary" v-on:click="member_register">注册</el-button>
               <el-button>清空</el-button>
+              <el-button type="primary" v-on:click="member_register">注册</el-button>
             </div>
           </el-form-item>
         </el-form>

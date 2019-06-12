@@ -41,6 +41,12 @@
           }
         }
       },
+      mounted() {
+        //预填充
+        if(localStorage.rest_register_id !== undefined){
+          this.login_form.id = localStorage.rest_register_id;
+        }
+      },
       methods: {
         login() {
           let id = this.login_form.id;

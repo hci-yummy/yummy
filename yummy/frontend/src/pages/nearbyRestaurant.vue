@@ -84,7 +84,7 @@
             this.detail_address = this.$route.params.detail_address
             window.addEventListener('scroll', this.scrollToTop)
             if(this.pcd && this.pcd.split(' ').length===3){
-
+                this.searchNearby();
             }
         },
         destroyed () {
