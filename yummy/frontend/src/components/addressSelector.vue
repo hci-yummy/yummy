@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div style="width: 300px; border: 1px solid gainsboro;border-radius: 5px; color: #7e7e7e; font-size: 16px;
-        height: 40px;line-height: 40px;display: flex" @click="changeShowPcdChoice" >
+    <div class="selector" @click="changeShowPcdChoice" >
       <div style="width: 265px; height: 40px; margin-left: 10px;overflow: hidden;text-overflow: ellipsis;"><nobr>{{pcd}} </nobr></div>
       <div><i class="el-icon-arrow-down" style="font-size: 16px"></i></div>
     </div>
@@ -30,6 +29,7 @@
             console.log("pcd: "+pcdChoice);
             this.pcd = pcdChoice;
             this.$emit("setPcd", this.pcd)
+            document.getElementsByClassName("selector")[0].style.border = "1px solid #67C23A"
           },
         }
 
@@ -37,5 +37,14 @@
 </script>
 
 <style scoped>
-
+  .selector{
+    width: 300px;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+    color: #7e7e7e;
+    font-size: 16px;
+    height: 40px;
+    line-height: 40px;
+    display: flex
+  }
 </style>

@@ -3,7 +3,7 @@
     <visitorTopBar></visitorTopBar>
     <div class="top">
       <div style="padding-left: 40px">
-        <i>Take Out</i> 餐厅注册
+        <i>Yummy!</i> 餐厅注册
       </div>
     </div>
     <div>
@@ -11,18 +11,12 @@
         <!--<div class="tab_title">
           餐厅基本信息填写：
         </div>-->
-        <el-form :label-position="rest_form.labelPosition" ref="rest_form" :model="rest_form" label-width="100px" style="width: 430px;">
-          <el-form-item class="form-label" label="餐厅名">
-            <el-input style="width: 300px;margin-left: 30px" v-model="rest_form.rest_name"></el-input>
+        <el-form :inline="true" :label-position="rest_form.labelPosition" ref="rest_form" :rules="rules" :model="rest_form" label-width="130px" style="width: 1000px;">
+          <el-form-item class="form-label" label="餐厅名" prop="rest_name">
+            <el-input style="width: 300px;" v-model="rest_form.rest_name"></el-input>
           </el-form-item>
-          <el-form-item class="form-label" label="所在城区">
-            <addressSelector :pcd="rest_form.pcd" @setPcd="setAddress" style="margin-left: 30px"></addressSelector>
-          </el-form-item>
-          <el-form-item class="form-label" label="详细地址">
-            <el-input style="width: 300px;margin-left: 30px" v-model="rest_form.address"></el-input>
-          </el-form-item>
-          <el-form-item class="form-label" label="餐厅类型">
-            <el-select v-model="rest_form.value" style="width: 300px;margin-left: 30px">
+          <el-form-item class="form-label" label="餐厅类型" prop="value">
+            <el-select v-model="rest_form.value" style="width: 300px;">
               <el-option
                 v-for="item in rest_form.type"
                 :key="item.value"
@@ -32,10 +26,30 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item class="form-label" label="所在城区" prop="pcd">
+            <addressSelector :pcd="rest_form.pcd" @setPcd="setAddress" style=""></addressSelector>
+          </el-form-item>
+          <el-form-item class="form-label" label="详细地址" prop="address">
+            <el-input style="width: 300px;" v-model="rest_form.address"></el-input>
+          </el-form-item>
+          <el-form-item class="form-label" label="餐厅图片" prop="pic">
+            <el-upload
+              class="register-pic"
+              drag
+              action="http://localhost:8000/upload/image"
+              :onSuccess="uploadSuccess"
+            >
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+              <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+          </el-form-item>
           <el-form-item>
-            <div style="margin-top: 20px;float: right">
-              <el-button type="primary" v-on:click="rest_register">注册</el-button>
-              <el-button v-on:click=clear>清空</el-button>
+            <div style="width: 875px;margin-top: 20px;">
+              <div style="float: right">
+                <el-button type="primary" v-on:click="rest_register">注册</el-button>
+                <el-button v-on:click=clear>清空</el-button>
+              </div>
             </div>
           </el-form-item>
         </el-form>
@@ -90,11 +104,35 @@
               province:'',
               city:'',
               district:'',
+              image:''
             },
+            rules:{
+              rest_name: [
+                { required: true, message: '请输入餐厅名称', trigger: 'blur' },
+              ],
+              address: [
+                { required: true, message: '请填写详细地址', trigger: 'blur' }
+              ],
+              value: [
+                { required: true, message: '请选择餐厅类型', trigger: 'change' }
+              ],
+              pcd: [
+                {required: true }
+              ],
+              pic:[
+                {required: true }
+              ]
+            }
           }
         },
 
         methods: {
+          uploadSuccess(response, file, fileList) {
+            console.log("uploadSuccess");
+            this.rest_form.image += 'http://localhost:8000/';
+            this.rest_form.image += response;
+            console.log("this.rest_form.image:" + this.rest_form.image);
+          },
           setAddress (pcd){
             var token = pcd.split(' ');
             if(token.length===3){
@@ -110,7 +148,7 @@
                 type: "error"
               })
             }else{
-              console.log(this.rest_form)
+
             }
 
             let name = this.rest_form.rest_name;
@@ -157,11 +195,11 @@
   }
 
   .member{
-    width: 500px;
+    width: 900px;
     height: 600px;
     /*margin-top: 10px;*/
     margin: 80px auto;
-    /*border: 1px solid black;*/
+   /* border: 1px solid black;*/
   }
 
 /*  .tab_title{
@@ -169,5 +207,19 @@
     font-size: 20px;
     margin-bottom: 20px;
   }*/
+  .register-pic{
+    ;
+  }
 
+</style>
+
+
+<style>
+  .form-label .el-form-item__label{
+    font-size: 20px !important;
+  }
+
+  .register-pic .el-upload-dragger{
+    width: 745px;
+  }
 </style>
