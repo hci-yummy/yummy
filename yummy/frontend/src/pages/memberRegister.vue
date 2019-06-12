@@ -25,7 +25,7 @@
           <el-form-item>
             <div style="margin-top: 20px; float: right">
               <el-button>清空</el-button>
-              <el-button type="primary" v-on:click="member_register">注册</el-button>
+              <el-button type="primary" v-on:click="member_register" v-loading.fullscreen.lock="fullscreenLoading">注册</el-button>
             </div>
           </el-form-item>
         </el-form>
@@ -48,6 +48,7 @@
               password: '',
               phone: ''
             },
+            fullscreenLoading: false
           }
       },
       methods: {
@@ -59,6 +60,8 @@
           let phone = this.member_form.phone;
           console.log(username, email, password);
 
+          this.fullscreenLoading = true;//遮罩
+
           let self = this;
 
           this.$axios.post("/user/register",{
@@ -68,8 +71,9 @@
             phone: phone
           }).then(
             function (response) {
+              self.fullscreenLoading = false;
               let self2 = self;
-              self.$alert('注册成功！', '', {
+              self.$alert('注册成功，点击邮箱链接后账号生效！', '', {
                 confirmButtonText: '确定',
                 callback: action => {
                   self2.$router.push({name: 'login'});
