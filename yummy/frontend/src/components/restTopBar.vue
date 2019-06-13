@@ -1,5 +1,5 @@
 <template>
-  <el-menu class="menu" :default-active="activeIndex" background-color="#409EFF" text-color="#FFF" mode="horizontal" @select="handleSelect">
+  <el-menu class="menu" :default-active="activeIndex" background-color="#409EFF" text-color="#FFF" mode="horizontal" @select="handleSelect" :router="routerBool">
     <el-menu-item class="top-bar-style" index="1"><img src="../assets/logo.png" style="width: auto;height: auto;max-width: 150px;"></el-menu-item>
 
     <el-menu-item class="top-bar-style" index="/expressRecord"><span slot="title">订单记录</span></el-menu-item>
@@ -29,7 +29,8 @@
       data() {
         return {
           activeIndex: "1",
-          user: localStorage.rest_name
+          user: localStorage.rest_name,
+          routerBool:true
         }
       },
 
@@ -37,7 +38,6 @@
         logout() {
           localStorage.rest_id = "";
           localStorage.rest_name = "";
-          this.$router.push({name: 'restLogin'});
         },
 
         handleSelect(key, keyPath) {
