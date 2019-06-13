@@ -24,6 +24,8 @@ public class NewOrderRequest {
 
     private double fullMoney;
 
+    private String receiverName;
+
     private String address;
 
     private String phone;   // 电话
@@ -35,7 +37,7 @@ public class NewOrderRequest {
     public NewOrderRequest() {
     }
 
-    public NewOrderRequest(String email, String restId, double sum, List<FoodInfo> foodList, double disByLevel, double disByRest, double fullMoney, String address, String phone, String remark, double deliverFee) {
+    public NewOrderRequest(String email, String restId, double sum, List<FoodInfo> foodList, double disByLevel, double disByRest, double fullMoney, String address, String phone, String remark, double deliverFee, String receiverName) {
         this.email = email;
         this.restId = restId;
         this.sum = sum;
@@ -47,6 +49,7 @@ public class NewOrderRequest {
         this.phone = phone;
         this.remark = remark;
         this.deliverFee = deliverFee;
+        this.receiverName = receiverName;
     }
 
     public String getEmail() {
@@ -91,5 +94,9 @@ public class NewOrderRequest {
 
     public double getDeliverFee() {
         return deliverFee;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
     }
 }

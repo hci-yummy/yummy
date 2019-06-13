@@ -71,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
 //        String addressStr = address.getDistrict() + "  " + address.getAddress();
 
         // 保存订单
-        Orders orders = new Orders(member, restaurant, addressStr, phone, sum, request.getRemark(), disByLevel, disByRest, fullMoney, orderDate, true, false, false, deliverFee);
+        Orders orders = new Orders(member, restaurant, addressStr, phone, sum, request.getRemark(), disByLevel, disByRest, fullMoney, orderDate, true, false, false, deliverFee, request.getReceiverName());
         Orders newOrder = orderRepository.save(orders);
         int oid = newOrder.getId();
 
@@ -508,7 +508,7 @@ public class OrderServiceImpl implements OrderService {
 
                     foodList.add(foodInfo);
                 }
-                OrderExpressResponse response = new OrderExpressResponse(oid, o.getOrderTime(), o.getSum(), foodList, info, o.isCancel(), o.getMember().getUsername(), o.getPhone(), o.getAddress(), o.getRemark());
+                OrderExpressResponse response = new OrderExpressResponse(oid, o.getOrderTime(), o.getSum(), foodList, info, o.isCancel(), o.getReceiverName(), o.getPhone(), o.getAddress(), o.getRemark());
                 orderList.add(response);
             }
         }

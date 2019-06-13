@@ -40,7 +40,8 @@ public class OrderServiceTest {
         String address = "鼓楼区  汉口路22号";
         String phone = "18260199930";
         String remark = "";  // 备注
-        NewOrderRequest request = new NewOrderRequest(email, restId, sum, foodList, disByLevel, disByRest, fullMoney, address, phone, remark, 3.5);
+        String receiverName = "王轩";
+        NewOrderRequest request = new NewOrderRequest(email, restId, sum, foodList, disByLevel, disByRest, fullMoney, address, phone, remark, 3.5, receiverName);
         orderService.addNewOrder(request);
     }
 

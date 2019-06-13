@@ -61,10 +61,12 @@ public class Orders {
 
     private double deliverFee = 0;  // 配送费
 
+    private String receiverName = "";   // 联系人姓名
+
     public Orders() {
     }
 
-    public Orders(@NotNull Member member, @NotNull Restaurant restaurant, @NotNull String address, String phone, double sum, String remark, double disByLevel, double disByRest, double fullMoney, LocalDateTime orderTime, boolean isValid, boolean isPaid, boolean isCancel, double deliverFee) {
+    public Orders(@NotNull Member member, @NotNull Restaurant restaurant, @NotNull String address, String phone, double sum, String remark, double disByLevel, double disByRest, double fullMoney, LocalDateTime orderTime, boolean isValid, boolean isPaid, boolean isCancel, double deliverFee, String receiverName) {
         this.member = member;
         this.restaurant = restaurant;
         this.address = address;
@@ -79,6 +81,7 @@ public class Orders {
         this.isPaid = isPaid;
         this.isCancel = isCancel;
         this.deliverFee = deliverFee;
+        this.receiverName = receiverName;
     }
 
     public int getId() {
@@ -215,5 +218,17 @@ public class Orders {
 
     public void setDeliverFee(double deliverFee) {
         this.deliverFee = deliverFee;
+    }
+
+    public void setGrade(Integer grade) {
+        this.grade = grade;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
     }
 }
