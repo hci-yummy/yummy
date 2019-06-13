@@ -61,13 +61,13 @@ public class MemberController {
         return addressService.getTheAddress(aid);
     }
 
-    @GetMapping("/new_address")
+    @PostMapping("/new_address")
     // 地址
     public boolean addAddress(@RequestBody AddAddressRequest request){
         return addressService.addNewAddress(request.getAddress(), request.getProvince(), request.getCity(), request.getDistrict(), request.getAddress(), request.getName(), request.getPhone());
     }
 
-    @GetMapping("/modify_address")
+    @PostMapping("/modify_address")
     //
     public boolean modifyAddress(@RequestBody ModifyAddressRequest request) {
         return addressService.modifyAddress(request);
