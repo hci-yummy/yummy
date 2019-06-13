@@ -36,7 +36,10 @@ public class OrderDetailResponse {
     @JsonProperty("deliverFee")
     private double deliverFee;
 
-    public OrderDetailResponse(int id, double sum, double disByLevel, double disByRest, double fullMoney, List<FoodListResponse> foodList, boolean isCancel, double deliverFee) {
+    @JsonProperty("remark")
+    private String remark;
+
+    public OrderDetailResponse(int id, double sum, double disByLevel, double disByRest, double fullMoney, List<FoodListResponse> foodList, boolean isCancel, double deliverFee, String remark) {
         this.id = id;
         this.sum = sum;
         this.disByLevel = disByLevel;
@@ -45,6 +48,7 @@ public class OrderDetailResponse {
         this.foodList = foodList;
         this.isCancel = isCancel;
         this.deliverFee = deliverFee;
+        this.remark = remark;
     }
 
     public OrderDetailResponse() {
@@ -80,5 +84,9 @@ public class OrderDetailResponse {
 
     public double getDeliverFee() {
         return deliverFee;
+    }
+
+    public String getRemark() {
+        return remark;
     }
 }

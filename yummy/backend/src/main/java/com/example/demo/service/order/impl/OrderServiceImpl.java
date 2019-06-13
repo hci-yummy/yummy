@@ -189,7 +189,7 @@ public class OrderServiceImpl implements OrderService {
             foodList.add(response);
         }
 
-        OrderDetailResponse orderDetail = new OrderDetailResponse(oid, sum, disByLevel, disByRest, fullMoney, foodList, isCancel, order.getDeliverFee());
+        OrderDetailResponse orderDetail = new OrderDetailResponse(oid, sum, disByLevel, disByRest, fullMoney, foodList, isCancel, order.getDeliverFee(), order.getRemark());
 
         return orderDetail;
     }

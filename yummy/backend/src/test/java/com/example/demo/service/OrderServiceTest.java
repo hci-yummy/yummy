@@ -102,6 +102,7 @@ public class OrderServiceTest {
         System.out.println("foodList: " + response.getFoodList().size());
         System.out.println("isCancel: " + response.isCancel());
         System.out.println("deliverFee: " + response.getDeliverFee());
+        System.out.println("remark: " + response.getRemark());
         System.out.println("====================");
     }
 
