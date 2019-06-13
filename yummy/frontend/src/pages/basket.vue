@@ -137,7 +137,7 @@
               </div>
 
             </div>
-            <div>C</div>
+            <div slot="footer"></div>
           </modal>
 
           <div v-show="!isShow" class="show" v-on:click="show_list"><span>显示更多地址 <i class="el-icon-arrow-down"></i></span></div>

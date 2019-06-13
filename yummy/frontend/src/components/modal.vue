@@ -12,12 +12,12 @@
             主体
           </slot>
         </div>
-        <!--<div class="modal-footer">
+        <div class="modal-footer">
           <slot name="footer">
             脚部
             <el-button @click="close">关闭</el-button>
           </slot>
-        </div>-->
+        </div>
 
       </div>
     </div>
