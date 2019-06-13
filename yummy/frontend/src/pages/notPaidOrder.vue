@@ -4,8 +4,8 @@
     <div style="width: 100%" >
       <div style="width: 70%;margin:50px auto">
         <div style="margin-top: 20px; margin-bottom: 20px; display: flex">
-          <div style="font-size: 25px;width: 250px">
-            订单状态：<span style="color: #409EFF" v-show="!isCancel">未支付</span><span style="color: #409EFF" v-show="isCancel">申请退货中</span>
+          <div style="font-size: 25px;">
+            订单状态：<span style="color: #409EFF">未支付</span>
           </div>
           <div style="margin-left: 50%; margin-top: 10px">
             <router-link :to="{name:'order'}" style="color: #409EFF">>>>返回订单列表</router-link>
@@ -53,26 +53,45 @@
         </div>
 
         <div style="font-size: 20px;">
-          <div style="margin-bottom: 10px">
+          <div style="margin-bottom: 10px" v-show="remark !== ''">
             订单备注：{{remark}}
           </div>
         </div>
 
-        <el-row style="margin-top: 25px; margin-left: auto;margin-right: auto; width: 20%;" v-show="express_state !== '已送达' || express_state.isCancel">
+        <el-row style="margin-top: 25px; margin-left: auto;margin-right: auto; width: 30%;">
           <el-button v-on:click="cancel_order">取消付款</el-button>
-          <el-button type="primary"  v-on:click="payOrder">确认付款</el-button>
+          <el-button type="primary"  v-on:click="click_pay">确认付款</el-button>
         </el-row>
       </div>
     </div>
+
+    <modal v-show="isModalVisible" @close="close_modal">
+      <div slot="header">输入支付密码</div>
+      <div slot="body">
+        <el-form :model="pay_form" ref="pay_form" label-width="100px" style="margin-right: 40px">
+          <el-form-item label="支付密码">
+            <el-input type="password" v-model="pay_form.password"></el-input>
+          </el-form-item>
+          <div style="height: 20px;color: red;font-size: 12px;margin-left: 100px;margin-top: -10px">
+            <span v-show="isPasswordFalse">*密码输入错误</span>
+          </div>
+        </el-form>
+      </div>
+      <div slot="footer" style="display: flex">
+        <el-button @click="close_modal">取消</el-button>
+        <el-button type="primary" @click="check_password">确认</el-button>
+      </div>
+    </modal>
 
   </div>
 </template>
 
 <script>
   import memberTopBar from '../components/memberTopBar'
+  import modal from '../components/modal'
     export default {
       name: "not-paid-order",
-      components: {memberTopBar},
+      components: {memberTopBar, modal},
       mounted: function () {
         this.oid = this.$route.params.id;
         this.get_order_info();
@@ -85,6 +104,13 @@
           disByRest: 0,
           fullMoney: 0,
           sum: 0,
+          remark:'',
+
+          isModalVisible: false,
+          pay_form:{
+            password:'',
+          },
+          isPasswordFalse: false,
         }
       },
 
@@ -104,16 +130,41 @@
               self.disByRest = info.disByRest;
               self.fullMoney = info.fullMoney;
               self.sum = info.sum;
+              self.remark = info.remark;
             }
           ).catch(function (error) {
             console.log(error);
           })
         },
 
-        payOrder() {
-          let oid = this.oid;
+        click_pay() {
+          this.isModalVisible = true;
+        },
+
+        check_password() {
+          let password = this.pay_form.password;
+          let email = localStorage.user_email;
           let self = this;
-          this.$axios.get('/order/pay_order',{
+          this.$axios.get("/user/check_paypassword",{
+            params:{
+              email: email,
+              password: password
+            }
+          }).then(function (response) {
+            if(response.data === true) {
+              self.payOrder(self);
+            }else {
+              self.isPasswordFalse = true;
+            }
+          }).catch(function (error) {
+            console.log(error);
+          })
+        },
+
+        payOrder(_self) {
+          let oid = _self.oid;
+          let self = _self;
+          _self.$axios.get('/order/pay_order',{
             params: {
               oid: oid
             }
@@ -148,7 +199,13 @@
           ).catch(function (error) {
             console.log(error);
           })
-        }
+        },
+
+        close_modal:function() {
+          this.isModalVisible = false;
+          this.pay_form.password = "";
+          this.isPasswordFalse = false;
+        },
       }
     }
 </script>

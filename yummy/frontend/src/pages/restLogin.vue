@@ -66,6 +66,7 @@
                 let usable = rest.usable;
                 if(usable === true) {
                   localStorage.rest_id = id;
+                  localStorage.rest_name = rest.name;
                   self.$router.push({name:'restPage'});
                 }else {
                   alert("该餐厅还在审核中，请等待！")

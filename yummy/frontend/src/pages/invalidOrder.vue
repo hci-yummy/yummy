@@ -4,8 +4,8 @@
     <div style="width: 100%" >
       <div style="width: 70%;margin:50px auto">
         <div style="margin-top: 20px; margin-bottom: 20px; display: flex">
-          <div style="font-size: 25px;width: 250px">
-            订单状态：<span style="color: #409EFF" v-show="!isCancel">已失效</span><span style="color: #409EFF" v-show="isCancel">申请退货中</span>
+          <div style="font-size: 25px;">
+            订单状态：<span style="color: #409EFF">已失效</span>
           </div>
           <div style="margin-left: 50%; margin-top: 10px">
             <router-link :to="{name:'order', params:{name:'3'}}" style="color: #409EFF">>>>返回订单列表</router-link>
@@ -52,7 +52,7 @@
 
         </div>
         <div style="font-size: 20px;">
-          <div style="margin-bottom: 10px">
+          <div style="margin-bottom: 10px" v-show="remark !== ''">
             订单备注：{{remark}}
           </div>
         </div>
@@ -79,6 +79,7 @@
         disByRest: 0,
         fullMoney: 0,
         sum: 0,
+        remark: ""
       }
     },
 
@@ -98,6 +99,7 @@
             self.disByRest = info.disByRest;
             self.fullMoney = info.fullMoney;
             self.sum = info.sum;
+            self.remark = info.remark;
           }
         ).catch(function (error) {
           console.log(error);

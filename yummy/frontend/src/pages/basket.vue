@@ -2,7 +2,7 @@
   <div>
     <memberTopBar></memberTopBar>
 
-    <div style="display:flex;margin-top: 50px;margin-left: 20px">
+    <div style="display:flex;margin-top: 50px;margin-left: 50px">
       <div>
         <el-card style="width: 500px;margin-bottom: 40px;">
           <div slot="header" class="clearfix">
@@ -122,7 +122,7 @@
                     <el-input v-model="address_form.name" />
                   </el-form-item>
                   <el-form-item label="位置">
-                    <addressSelector :pcd="pcd"></addressSelector>
+                    <addressSelector :pcd="pcd" @setPcd="setAddress"></addressSelector>
                   </el-form-item>
                   <el-form-item label="详细地址">
                     <el-input v-model="address_form.address" />
@@ -203,7 +203,11 @@
 
           title: "", // 模态框的标题
           address_form: {},
-          pcd:"",
+          pcd:{
+            province:'',
+            city:'',
+            district:'',
+          },
           isShow: false, // 是否显示地址列表
           isModalVisible: false,
           now_address:{}, // 当前缩略显示的地址
@@ -403,16 +407,27 @@
         add_address() {
           this.isModalVisible = true;
           this.title = "添加新地址";
-          this.pcd = "选择您所在的位置";
+          this.pcd = {
+            province:'',
+            city:'',
+            district:'',
+          };
           this.address_form = {};
         },
 
         edit_address: function(info) {
           this.isModalVisible = true;
           this.title = "编辑地址";
-          this.pcd = info.province + " " + info.city + " " + info.district;
+          //this.pcd = info.province + " " + info.city + " " + info.district;
           console.log(info);
           this.address_form = info;
+          this.pcd.province = info.province;
+          this.pcd.city = info.city;
+          this.pcd.district = info.district;
+        },
+
+        setAddress (pcd){
+          this.pcd = pcd;
         },
 
         close_modal:function() {
