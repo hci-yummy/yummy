@@ -1,6 +1,13 @@
 <template>
-  <memberNavi paneltitle="购物车">
-    <div style="display:flex;">
+  <div>
+    <div v-if="visitorMode">
+      <visitorTopBar></visitorTopBar>
+    </div>
+    <div v-else>
+      <memberTopBar></memberTopBar>
+    </div>
+
+    <div style="display:flex;margin-top: 50px;margin-left: 20px">
       <div>
         <el-card style="width: 500px;margin-bottom: 40px;">
           <div slot="header" class="clearfix">
@@ -105,7 +112,7 @@
             <addressCard
               :info="item"
               v-for="item in address_list"
-              :test="item.isChoosed" :key="item.id"
+              :test="item.isChoosed" :key="item.aid"
               @chooseAddressEvent="choose_address"
               @editAddressEvent="edit_address" />
           </div>
@@ -123,10 +130,10 @@
                     <addressSelector :pcd="pcd"></addressSelector>
                   </el-form-item>
                   <el-form-item label="详细地址">
-                    <el-input v-model="address_form.detail_address" />
+                    <el-input v-model="address_form.address" />
                   </el-form-item>
                   <el-form-item label="手机号">
-                    <el-input style="width: 210px " v-model="address_form.tele" />
+                    <el-input style="width: 210px " v-model="address_form.phone" />
                   </el-form-item>
                   <el-form-item>
                     <span style="color: #c1c1c1;margin-left: 30px;margin-right: 30px;cursor: pointer" @click="close_modal">取消</span> <el-button type="primary" style="width: 120px">保存</el-button>
@@ -160,24 +167,25 @@
         </div>
       </div>
     </div>
-
-  </memberNavi>
+  </div>
 </template>
 
 <script>
-    import memberNavi from '../components/memberNavi'
+    import visitorTopBar from '../components/visitorTopBar'
+    import memberTopBar from '../components/memberTopBar'
     import addressCard from '../components/addressCard'
     import modal from '../components/modal'
     import addressSelector from '../components/addressSelector'
     export default {
       name: "basket",
-      components: {memberNavi, addressCard, modal, addressSelector},
+      components: {visitorTopBar, memberTopBar, addressCard, modal, addressSelector},
       mounted: function () {
 
         this.info = this.$route.params.info;
         this.basket = this.$route.params.basket;
 
         this.get_address_list();
+        //this.now_address = this.address_list[0];
 
         this.cal_sum();
         this.get_time();
@@ -185,6 +193,7 @@
       },
       data() {
         return {
+          visitorMode: localStorage.username === undefined || localStorage.username === null ||  localStorage.username === "",
           info: {},
           basket:[],
           all:0,
@@ -209,6 +218,7 @@
           },
           address_list:[
             {
+              aid:1,
               name: "1",
               tele: "1234",
               address: "鼓楼区 广州路10号",
@@ -218,7 +228,7 @@
               district: "鼓楼区",
             },
             {
-              id: 2,
+              aid: 2,
               name: "2",
               tele: "5678",
               address: "栖霞区 仙林大道168号",
@@ -228,7 +238,7 @@
               district: "栖霞区",
             },
             {
-              id: 3,
+              aid: 3,
               name: "3",
               tele: "9101112",
               address: "玄武区 中山路100号",
@@ -242,6 +252,7 @@
       methods: {
 
         get_address_list() {
+          console.log("get_address");
           let email = localStorage.user_email;
           let self = this;
           this.$axios.get('/user/get_address',{
@@ -250,13 +261,13 @@
             }
           }).then(
             function(response) {
-              console.log(response.data);
               self.address_list = response.data;
-              self.address_list.isChoosed = true;
+              self.address_list[0].isChoosed = true;
               for(let i = 1; i < self.address_list.length; i++) {
-                self.address_list.isChoosed = false;
+                self.address_list[i].isChoosed = false;
               }
               self.now_address = self.address_list[0];
+              console.log(self.address_list);
             }
           ).catch(function(error){
               console.log(error);
@@ -278,14 +289,19 @@
         },
 
         choose_address: function(id) {
+          console.log(id);
+          let info;
           for(let i = 0; i < this.address_list.length; i++) {
-            if(id === this.address_list[i].id) {
+            if(id === this.address_list[i].aid) {
               this.address_list[i].isChoosed = true;
 
             }else {
               this.address_list[i].isChoosed = false;
             }
+            info = JSON.parse(JSON.stringify(this.address_list[i]));
+            this.$set(this.address_list, i, info);
           }
+          console.log(this.address_list);
         },
 
         add_address() {

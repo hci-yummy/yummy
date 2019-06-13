@@ -5,7 +5,7 @@
       <div style="border-left: 1px solid #dadada;height: 50px; width: 0px;margin-left: 15px"></div>
       <div style="margin-left: 20px">
         <div class="content">{{info.name}} {{info.tele}}</div>
-        <div class="content">{{info.address}}</div>
+        <div class="content">{{info.district + " " +info.address}}</div>
       </div>
     </div>
     <div style="width: 50px">
@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div v-show="test">
+      <div v-show="info.isChoosed">
         <div class="tick">
         </div>
         <div style="margin-top: -18px;margin-left: 48px">
@@ -40,18 +40,15 @@
       },
       methods: {
         move_in: function() {
-          // console.log("in");
           this.is_move = true;
         },
 
         move_out: function () {
-          // console.log("out");
           this.is_move = false;
         },
 
         choose_address() {
-          //console.log("id:"+this.info.id);
-          this.$emit("chooseAddressEvent", this.info.id);
+          this.$emit("chooseAddressEvent", this.info.aid);
         },
 
         edit_address() {
