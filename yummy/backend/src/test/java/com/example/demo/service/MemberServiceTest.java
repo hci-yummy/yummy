@@ -103,4 +103,5 @@ public class MemberServiceTest {
         boolean result = memberService.checkPayPassword(email, password);
         System.out.println("result: " + result);
     }
-}
+
+ }

@@ -46,14 +46,15 @@ public class AddressServiceTest {
 
     @Test
     public void addNewAddress() {
-        String email = "479026126@qq.com";
+        String email = "2273461589@qq.com";
         String province = "江苏省";
         String city = "南京市";
         String district = "栖霞区";
         String address = "南京大学6栋";
         String name = "王轩";
         String phone = "18251838318";
-        addressService.addNewAddress(email, province, city, district, address, name, phone);
+        int result = addressService.addNewAddress(email, province, city, district, address, name, phone);
+        System.out.println("result: " + result);
     }
 
     @Test

@@ -18,16 +18,23 @@ public class AddAddressRequest {
 
     private String name;
 
+    private String email;
+
     public AddAddressRequest() {
     }
 
-    public AddAddressRequest(String province, String city, String district, String address, String phone, String name) {
+    public AddAddressRequest(String email, String province, String city, String district, String address, String phone, String name) {
+        this.email = email;
         this.province = province;
         this.city = city;
         this.district = district;
         this.address = address;
         this.phone = phone;
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getProvince() {

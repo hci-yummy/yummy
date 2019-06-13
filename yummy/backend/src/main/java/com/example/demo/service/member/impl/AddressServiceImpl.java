@@ -53,7 +53,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public boolean addNewAddress(String email, String province, String city, String district, String address, String name, String phone) {
+    public int addNewAddress(String email, String province, String city, String district, String address, String name, String phone) {
 
         Member member = new Member();
         member.setEmail(email);
@@ -66,7 +66,7 @@ public class AddressServiceImpl implements AddressService {
         }*/
         Address newAddress = new Address(member, province, city, district, address, phone, name);
         addressRepository.save(newAddress);
-        return true;
+        return newAddress.getId();
     }
 
     @Override

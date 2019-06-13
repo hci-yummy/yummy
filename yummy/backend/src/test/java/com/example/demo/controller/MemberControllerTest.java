@@ -65,7 +65,8 @@ public class MemberControllerTest {
     public void addAddress() {
         try {
             mvc.perform(
-                    get("/user/new_address")
+                    post("/user/new_address")
+                            .param("email", "2273461589@qq.com")
                             .param("province", "江苏省")
                             .param("city", "苏州市")
                             .param("district", "姑苏区")

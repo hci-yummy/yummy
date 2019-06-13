@@ -63,8 +63,8 @@ public class MemberController {
 
     @PostMapping("/new_address")
     // 地址
-    public boolean addAddress(@RequestBody AddAddressRequest request){
-        return addressService.addNewAddress(request.getAddress(), request.getProvince(), request.getCity(), request.getDistrict(), request.getAddress(), request.getName(), request.getPhone());
+    public int addAddress(@RequestBody AddAddressRequest request){
+        return addressService.addNewAddress(request.getEmail(), request.getProvince(), request.getCity(), request.getDistrict(), request.getAddress(), request.getName(), request.getPhone());
     }
 
     @PostMapping("/modify_address")
