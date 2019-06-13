@@ -92,7 +92,7 @@
     color: white;
     font-size: 50px;
     width: 100%;
-    height: 180px;
+    height: 150px;
     line-height: 200px;
     background-color: #409EFF;
     margin-bottom: 30px;

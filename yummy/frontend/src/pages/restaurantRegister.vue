@@ -141,6 +141,7 @@
               this.rest_form.city = token[1];
               this.rest_form.district = token[2];
             }
+            this.rest_form.pcd = pcd;
           },
           rest_register() {
             if(this.rest_form.province===""||this.rest_form.city===""||this.rest_form.district===""){
@@ -187,10 +188,9 @@
     color: white;
     font-size: 50px;
     width: 100%;
-    height: 180px;
+    height: 150px;
     line-height: 200px;
     background-color: #409EFF;
-    margin-bottom: 30px;
     /*background-image: url("/static/top-back.jpg");*/
     /* background-size: 100% 100%;*/
   }

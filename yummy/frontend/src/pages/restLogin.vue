@@ -98,8 +98,8 @@
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    width: 50%;
-    height: 65%;
+    width: 60%;
+    height: 60%;
     border: 1px solid #409EFF;
     background: rgba(255,255,255,0.7);
   }

@@ -43,8 +43,8 @@
             <div style="display: inline-block;" v-for="info in infos" :key="info.rid">
               <restaurantCard :info="info" @enterRestEvent="enter_rest"></restaurantCard>
             </div>
-            <div v-if="infos.length===0" style="font-size: 80px; width: 100%; height: 400px; margin: 50px auto;line-height: 300px">
-              <div style="margin: 10px auto; width: 800px; color: grey">请先选择地址并搜索！</div>
+            <div v-if="infos.length===0" style="font-size: 40px; width: 100%; height: 40px; margin: 50px auto;line-height: 40px">
+              <div style="margin: 10px auto; width: 400px; color: grey">请先选择地址并搜索！</div>
             </div>
           </div>
         </div>
