@@ -30,13 +30,13 @@ INSERT INTO discount (id, dis_money, full_money, rest_id, end_date, start_date) 
 
 #INSERT INTO modify_info (id, address, district, request_time, name, type, rest_id) VALUES (5,'珠江路1号','鼓楼区','2019-03-19 22:10:22','KFC','快餐便当','1877104');
 
-INSERT INTO address (id, email, district, address, city, is_usable, name, phone, province) VALUES (1,'2273461589@qq.com','鼓楼区','汉口路22号','南京市',0,'王轩','18251838318','江苏');
-INSERT INTO address (id, email, district, address, city, is_usable, name, phone, province) VALUES (2,'2273461589@qq.com','栖霞区','广州路8号','南京市',0,'王轩','18251838318','江苏');
-INSERT INTO address (id, email, district, address, city, is_usable, name, phone, province) VALUES (3,'2273461589@qq.com','江宁区','陶园南楼','南京市',0,'唐佳未','15996235505','江苏');
-INSERT INTO address (id, email, district, address, city, is_usable, name, phone, province) VALUES (6,'2273461589@qq.com','鼓楼区','南京大学鼓楼校区','南京市',0,'唐佳未','15996235505','江苏');
-INSERT INTO address (id, email, district, address, city, is_usable, name, phone, province) VALUES (19,'2273461589@qq.com','江宁区','东大九龙湖校区','南京市',0,'许杨','18260199930','江苏');
-INSERT INTO address (id, email, district, address, city, is_usable, name, phone, province) VALUES (20,'yeyuewangxuan@126.com','鼓楼区','南京大学','南京市',0,'许杨','18260199930','江苏');
-INSERT INTO address (id, email, district, address, city, is_usable, name, phone, province) VALUES (21,'2273461589@qq.com','浦口区','南京大学金陵学院','南京市',0,'王轩','18251838318','江苏');
+INSERT INTO address (id, email, district, address, city, is_usable, name, phone, province) VALUES (1,'2273461589@qq.com','鼓楼区','汉口路22号','南京市',1,'王轩','18251838318','江苏');
+INSERT INTO address (id, email, district, address, city, is_usable, name, phone, province) VALUES (2,'2273461589@qq.com','栖霞区','广州路8号','南京市',1,'王轩','18251838318','江苏');
+INSERT INTO address (id, email, district, address, city, is_usable, name, phone, province) VALUES (3,'2273461589@qq.com','江宁区','陶园南楼','南京市',1,'唐佳未','15996235505','江苏');
+INSERT INTO address (id, email, district, address, city, is_usable, name, phone, province) VALUES (6,'2273461589@qq.com','鼓楼区','南京大学鼓楼校区','南京市',1,'唐佳未','15996235505','江苏');
+INSERT INTO address (id, email, district, address, city, is_usable, name, phone, province) VALUES (19,'2273461589@qq.com','江宁区','东大九龙湖校区','南京市',1,'许杨','18260199930','江苏');
+INSERT INTO address (id, email, district, address, city, is_usable, name, phone, province) VALUES (20,'yeyuewangxuan@126.com','鼓楼区','南京大学','南京市',1,'许杨','18260199930','江苏');
+INSERT INTO address (id, email, district, address, city, is_usable, name, phone, province) VALUES (21,'2273461589@qq.com','浦口区','南京大学金陵学院','南京市',1,'王轩','18251838318','江苏');
 
 INSERT INTO orders (id, is_paid, is_valid, order_time, sum, email, rest_id, dis_by_level, dis_by_rest, full_money, is_cancel, address, express_state, grade, phone, remark) VALUES (1,0,0,'2019-02-26 19:45:53',23.65,'2273461589@qq.com','6293602',1.85,15,30,1,'鼓楼区  汉口路22号','已送达', 5,'18260199930','不要小葱，不要香菜，少放辣');
 INSERT INTO orders (id, is_paid, is_valid, order_time, sum, email, rest_id, dis_by_level, dis_by_rest, full_money, is_cancel, address, express_state, grade, phone, remark) VALUES (2,0,0,'2019-02-26 20:17:29',26.5,'2273461589@qq.com','6293602',2,15,30,0,'鼓楼区  汉口路22号','已送达', 5,'18260199930','不要小葱，不要香菜');
