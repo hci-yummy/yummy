@@ -69,14 +69,25 @@
       </div>
     </div>
 
+    <modal v-show="rateAndConfirm" @close="close_modal">
+      <span slot="header" style="font-size: 20px; margin-top: 5px">评分并收货</span>
+      <div slot="body" style="width: 400px">
+        <el-rate v-model="rate"></el-rate>
+        <div style="height: 20px"></div>
+        <el-button style="float: right; margin-right: 5px" size="mini" type="primary" @click="confirmModal">确认</el-button>
+        <el-button style="float: right; margin-right: 5px" size="mini" @click="cancelModal">取消</el-button>
+      </div>
+      <div slot="footer"></div>
+    </modal>
   </div>
 </template>
 
 <script>
   import memberTopBar from '../components/memberTopBar'
+  import modal from '../components/modal'
   export default {
     name: "paid-order",
-    components: {memberTopBar},
+    components: {memberTopBar,modal},
     mounted: function () {
       this.oid = this.$route.params.id;
       this.get_order_info();
@@ -84,6 +95,7 @@
     },
     data() {
       return {
+        rateAndConfirm: false,
         oid: 0,
         foodList:[],
         disByLevel: 0,
@@ -93,10 +105,29 @@
         remark: '',
         express_state: '',
         isCancel: false,
+        rate: 0,
       }
     },
 
     methods: {
+      close_modal(){
+        this.rateAndConfirm = false;
+      },
+      cancelModal(){
+        this.rateAndConfirm = false;
+      },
+      confirmModal(){
+        if(this.rate===0){
+          this.$message({
+            message: '请先评分！',
+            type: 'error'
+          })
+        }else{
+          this.rateAndAcceptOrder();
+          this.rateAndConfirm = false;
+        }
+
+      },
       get_order_info() {
         let oid = this.oid;
         let self = this;
@@ -138,67 +169,39 @@
       },
 
       accept_order() {
+        this.rateAndConfirm = true;
+      },
+
+      rateAndAcceptOrder(){
         let self = this;
-        const h = this.$createElement
-        this.$msgbox({
-          title: '评分并收货',
-          message: h('p', '在收货前，先给出评分吧', [
-            h('span', null, '请给出您的评分哦 '),
-            h('p', { style: 'color: teal' }, 'VNode')
-          ]),
-          showCancelButton: true,
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          beforeClose: (action, instance, done) => {
-            if (action === 'confirm') {
-              instance.confirmButtonLoading = true;
-              instance.confirmButtonText = '执行中...';
-              setTimeout(() => {
-                done();
-                setTimeout(() => {
-                  instance.confirmButtonLoading = false;
-                }, 300);
-              }, 3000);
-            } else {
-              done();
-            }
+        let oid = this.oid;
+        let grade = this.rate;
+        this.$axios.get('/order/evaluate_order', {
+          params: {
+            oid: oid,
+            grade: grade
           }
-        }).then(action => {
-          this.$message({
-            type: 'info',
-            message: 'action: ' + action
-          });
+        }).then(
+          function (response) {
+            self.$axios.get('/order/accept_order', {
+              params: {
+                oid: oid
+              }
+            }).then(
+              function (response) {
+                self.$message({
+                  message:'感谢您的评价！收货成功！祝您用餐愉快！',
+                  type: 'success'
+                });
+                self.$router.push({name: 'order'});
+              }
+            ).catch(function (error) {
+              console.log(error);
+            });
+          }
+        ).catch(function (error) {
+          console.log(error);
         });
-        /*this.$confirm('收货前，给出您的评分吧', '', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'success',
-          center: true
-        }).then(() => {
-          //TODO 给出评分
-          let oid = this.oid;
-          this.$axios.get('/order/accept_order', {
-            params: {
-              oid: oid
-            }
-          }).then(
-            function (response) {
-              alert("收货成功！");
-              self.$router.push({name: 'order'});
-            }
-          ).catch(function (error) {
-            console.log(error);
-          });
-          this.$message({
-            type: 'success',
-            message: '评分并收货成功!'
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消评分和收货操作'
-          });
-        });*/
       },
 
       cancel_order() {
