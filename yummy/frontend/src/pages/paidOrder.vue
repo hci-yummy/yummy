@@ -45,13 +45,11 @@
             <div class="title" v-show="fullMoney !== 0">
               店铺满{{this.fullMoney}}减{{this.disByRest}}：-{{this.disByRest}}元
             </div>
+            <div style="font-size: 40px;color: red;">
+              ￥{{this.sum}}
+            </div>
           </div>
 
-        </div>
-        <div style="font-size: 40px;color: red;padding-left: 67%; margin-top: 10px">
-          <div align="center" style="width: 200px;">
-            ￥{{this.sum}}
-          </div>
         </div>
 
         <div style="font-size: 20px;">
