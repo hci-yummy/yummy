@@ -22,6 +22,7 @@
           console.log(this.activeIndex)
           if(this.activeIndex === '4'){
             //TODO 个人中心
+            this.logout();
           }else if(this.activeIndex === '1'){
             this.$router.push({name: "welcome"})
           }else if(this.activeIndex === '3'){
@@ -30,6 +31,12 @@
             this.$router.push({name: "nearbyRestaurant"})
           }
         },
+        logout() {
+          localStorage.user_email = "";
+          localStorage.address = "";
+          localStorage.district = "";
+          localStorage.username = "";
+        }
       }
     }
 </script>
