@@ -23,7 +23,7 @@
           if(this.activeIndex === '4'){
             //TODO 个人中心
             this.logout();
-            this.$router.push({name: "welcome"})
+            this.$router.push({name: "login"})
           }else if(this.activeIndex === '1'){
             this.$router.push({name: "welcome"})
           }else if(this.activeIndex === '3'){
