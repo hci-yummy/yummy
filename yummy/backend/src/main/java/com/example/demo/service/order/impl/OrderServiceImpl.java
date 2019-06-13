@@ -62,6 +62,7 @@ public class OrderServiceImpl implements OrderService {
         double disByLevel = request.getDisByLevel();
         double disByRest = request.getDisByRest();
         double fullMoney = request.getFullMoney();
+        double deliverFee = request.getDeliverFee();
         LocalDateTime orderDate = LocalDateTime.now();
 
         Member member = memberRepository.findByEmail(email).get();
@@ -70,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
 //        String addressStr = address.getDistrict() + "  " + address.getAddress();
 
         // 保存订单
-        Orders orders = new Orders(member, restaurant, addressStr, phone, sum, request.getRemark(), disByLevel, disByRest, fullMoney, orderDate, true, false, false);
+        Orders orders = new Orders(member, restaurant, addressStr, phone, sum, request.getRemark(), disByLevel, disByRest, fullMoney, orderDate, true, false, false, deliverFee);
         Orders newOrder = orderRepository.save(orders);
         int oid = newOrder.getId();
 
@@ -188,7 +189,7 @@ public class OrderServiceImpl implements OrderService {
             foodList.add(response);
         }
 
-        OrderDetailResponse orderDetail = new OrderDetailResponse(oid, sum, disByLevel, disByRest, fullMoney, foodList, isCancel);
+        OrderDetailResponse orderDetail = new OrderDetailResponse(oid, sum, disByLevel, disByRest, fullMoney, foodList, isCancel, order.getDeliverFee());
 
         return orderDetail;
     }

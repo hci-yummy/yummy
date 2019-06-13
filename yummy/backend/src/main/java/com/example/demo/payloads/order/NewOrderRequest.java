@@ -30,10 +30,12 @@ public class NewOrderRequest {
 
     private String remark = "";  // 备注
 
+    private double deliverFee;  // 配送费
+
     public NewOrderRequest() {
     }
 
-    public NewOrderRequest(String email, String restId, double sum, List<FoodInfo> foodList, double disByLevel, double disByRest, double fullMoney, String address, String phone, String remark) {
+    public NewOrderRequest(String email, String restId, double sum, List<FoodInfo> foodList, double disByLevel, double disByRest, double fullMoney, String address, String phone, String remark, double deliverFee) {
         this.email = email;
         this.restId = restId;
         this.sum = sum;
@@ -44,6 +46,7 @@ public class NewOrderRequest {
         this.address = address;
         this.phone = phone;
         this.remark = remark;
+        this.deliverFee = deliverFee;
     }
 
     public String getEmail() {
@@ -84,5 +87,9 @@ public class NewOrderRequest {
 
     public String getRemark() {
         return remark;
+    }
+
+    public double getDeliverFee() {
+        return deliverFee;
     }
 }

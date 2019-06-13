@@ -25,12 +25,12 @@ public class OrderServiceTest {
 
     @Test
     public void addNewOrder() {
-        String email = "479026126@qq.com";
-        String restId = "e6797b0";
-        double sum = 10;
+        String email = "2273461589@qq.com";
+        String restId = "6293602";
+        double sum = 23.5;
         FoodInfo foodInfo = new FoodInfo();
-        foodInfo.setId(1);
-        foodInfo.setName("测试单品1");
+        foodInfo.setId(2);
+        foodInfo.setName("冒菜");
         foodInfo.setNum(1);
         List<FoodInfo> foodList = new ArrayList<>();
         foodList.add(foodInfo);
@@ -40,7 +40,7 @@ public class OrderServiceTest {
         String address = "鼓楼区  汉口路22号";
         String phone = "18260199930";
         String remark = "";  // 备注
-        NewOrderRequest request = new NewOrderRequest(email, restId, sum, foodList, disByLevel, disByRest, fullMoney, address, phone, remark);
+        NewOrderRequest request = new NewOrderRequest(email, restId, sum, foodList, disByLevel, disByRest, fullMoney, address, phone, remark, 3.5);
         orderService.addNewOrder(request);
     }
 
@@ -88,6 +88,21 @@ public class OrderServiceTest {
 
     @Test
     public void getOrderDetail() {
+        int oid =1;
+        OrderDetailResponse response = orderService.getOrderDetail(oid);
+        print(response);
+    }
+    private void print(OrderDetailResponse response) {
+        System.out.println("OrderDetailResponse: ");
+        System.out.println("id: " + response.getId());
+        System.out.println("sum: " + response.getSum());
+        System.out.println("disByLevel: " + response.getDisByLevel());
+        System.out.println("disByRest: " + response.getDisByRest());
+        System.out.println("fullMoney: " + response.getFullMoney());
+        System.out.println("foodList: " + response.getFoodList().size());
+        System.out.println("isCancel: " + response.isCancel());
+        System.out.println("deliverFee: " + response.getDeliverFee());
+        System.out.println("====================");
     }
 
     @Test

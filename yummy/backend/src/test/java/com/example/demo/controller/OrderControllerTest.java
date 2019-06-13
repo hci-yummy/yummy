@@ -64,6 +64,17 @@ public class OrderControllerTest {
 
     @Test
     public void getOrderDetail() {
+        try {
+            mvc.perform(
+                    get("/order/get_order_detail")
+                            .param("oid", "1")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andDo(MockMvcResultHandlers.print())
+                    .andReturn();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test

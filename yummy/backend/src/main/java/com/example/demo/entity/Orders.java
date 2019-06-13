@@ -59,10 +59,12 @@ public class Orders {
 
     private String expressState = "";    // 配送状态
 
+    private double deliverFee = 0;  // 配送费
+
     public Orders() {
     }
 
-    public Orders(@NotNull Member member, @NotNull Restaurant restaurant, @NotNull String address, String phone, double sum, String remark, double disByLevel, double disByRest, double fullMoney, LocalDateTime orderTime, boolean isValid, boolean isPaid, boolean isCancel) {
+    public Orders(@NotNull Member member, @NotNull Restaurant restaurant, @NotNull String address, String phone, double sum, String remark, double disByLevel, double disByRest, double fullMoney, LocalDateTime orderTime, boolean isValid, boolean isPaid, boolean isCancel, double deliverFee) {
         this.member = member;
         this.restaurant = restaurant;
         this.address = address;
@@ -76,6 +78,7 @@ public class Orders {
         this.isValid = isValid;
         this.isPaid = isPaid;
         this.isCancel = isCancel;
+        this.deliverFee = deliverFee;
     }
 
     public int getId() {
@@ -204,5 +207,13 @@ public class Orders {
 
     public void setExpressState(String expressState) {
         this.expressState = expressState;
+    }
+
+    public double getDeliverFee() {
+        return deliverFee;
+    }
+
+    public void setDeliverFee(double deliverFee) {
+        this.deliverFee = deliverFee;
     }
 }
