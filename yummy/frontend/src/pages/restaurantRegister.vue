@@ -27,7 +27,7 @@
             </el-select>
           </el-form-item>
           <el-form-item class="form-label" label="所在城区" prop="pcd">
-            <addressSelector :pcd="rest_form.pcd" @setPcd="setAddress" style=""></addressSelector>
+            <addressSelector :pcd="rest_form.pcd" @setPcd="setAddress"></addressSelector>
           </el-form-item>
           <el-form-item class="form-label" label="详细地址" prop="address">
             <el-input style="width: 300px;" v-model="rest_form.address"></el-input>
@@ -67,6 +67,11 @@
         data() {
           return {
             rest_form:{
+              pcd:{
+                province:'',
+                city:'',
+                district:'',
+              },
               labelPosition:'right',
               rest_name:'',
               address:'',
@@ -101,9 +106,6 @@
                 }
               ],
               value:'',
-              province:'',
-              city:'',
-              district:'',
               image:''
             },
             rules:{
@@ -135,12 +137,6 @@
             console.log("this.rest_form.image:" + this.rest_form.image);
           },
           setAddress (pcd){
-            var token = pcd.split(' ');
-            if(token.length===3){
-              this.rest_form.province = token[0];
-              this.rest_form.city = token[1];
-              this.rest_form.district = token[2];
-            }
             this.rest_form.pcd = pcd;
           },
           rest_register() {

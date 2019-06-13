@@ -33,6 +33,7 @@
 <script>
     export default {
         name: "addressChoice",
+        props:["pcd"],
         data(){
             return{
               address: [
@@ -1651,26 +1652,31 @@
                   ]
                 }
               ],
-              province: "",
-              city: "",
-              district: "",
-              pcd: "",
+              province: this.pcd.province,
+              city: this.pcd.city,
+              district: this.pcd.district,
               choice: "first",
               all_cities: [],
               all_districts: [],
             }
+        },
+        mounted(){
+          for(var i=0; i< this.address.length; i++){
+            if(this.address[i].name === this.province){
+              this.all_cities = this.address[i].city;
+            }
+          }
+          for(var i=0; i< this.all_cities.length; i++){
+            if(this.all_cities[i].name === this.city){
+              this.all_districts = this.all_cities[i].districtAndCounty;
+            }
+          }
         },
         methods:{
           handleAddressClick(tab, event) {
             /*console.log(tab.name);
             console.log(this.address);*/
             this.choice = tab.name;
-            if(this.choice === "first" ){
-              this.city = ""
-              this.district = "";
-            }else if(this.choice === "second"){
-              this.district = "";
-            }
           },
           setProvince(provinceChoice){
             this.province = provinceChoice;
@@ -1679,6 +1685,8 @@
                 this.all_cities = this.address[i].city;
               }
             }
+            this.city = "";
+            this.district = "";
             this.changeAddress();
             this.choice = "second";
           },
@@ -1689,6 +1697,7 @@
                 this.all_districts = this.all_cities[i].districtAndCounty;
               }
             }
+            this.district = "";
             this.changeAddress();
             this.choice = "third";
           },
@@ -1698,8 +1707,8 @@
             this.$emit('changeState');
           },
           changeAddress () {
-            this.pcd = this.province +" "+ this.city + " " + this.district;
-            this.$emit('changeAddress',this.pcd);
+            this.$emit('changeAddress',{province: this.province, city: this.city, district: this.district});
+
           }
         }
     }

@@ -12,7 +12,8 @@
     <div style="width: 900px; margin:0 auto;display: flex; font-size: 20px;">
       <div style="width: 250px; background: #409EFF; color: white; font-size: 20px;
       text-align: center; margin-right: 10px; height: 50px; line-height: 50px" @click="changeShowPcdChoice">
-        <span>{{pcd}}</span>
+        <span v-if="pcd.province !=='' ">{{pcd.province+" "+pcd.city+" "+pcd.district}}</span>
+        <span v-else>请选择所在地</span>
         <i class = "el-icon-arrow-down" style="width: 30px; height: 30px;"></i>
       </div>
       <input style="width: 550px; font-size: 20px;" placeholder="  您的详细地址" v-model="detail_address"/>
@@ -20,7 +21,7 @@
       <el-button type="primary" style="font-size: 20px;" @click="searchNearby">搜索</el-button>
     </div>
     <div v-if="showPcdChoice" style="width: 900px; min-height: 100px;margin:5px auto;font-size: 20px;">
-      <addressChoice @changeAddress="setPcd" @changeState="changeShowPcdChoice"></addressChoice>
+      <addressChoice :pcd="pcd" @changeAddress="setPcd" @changeState="changeShowPcdChoice"></addressChoice>
     </div>
   </div>
 </template>
@@ -34,7 +35,11 @@
       components: {addressChoice, visitorTopBar,memberTopBar},
         data () {
           return {
-            pcd: "选择您所在的位置",
+            pcd: {
+              province: "",
+              city: "",
+              district: ""
+            },
             detail_address: "",
             showPcdChoice: false,
             visitorMode: localStorage.username === undefined || localStorage.username === null ||  localStorage.username === ""
@@ -42,7 +47,7 @@
         },
         methods:{
           setPcd(pcdChoice){
-            console.log("pcd: "+pcdChoice);
+            console.log(pcdChoice);
             this.pcd = pcdChoice;
           },
           changeShowPcdChoice () {
