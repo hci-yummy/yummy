@@ -1,103 +1,121 @@
 <template>
-    <memberNavi paneltitle="我的订单">
-      <div style="padding-left:20px; padding-top: 30px; width: 600px">
-        <el-tabs v-model="index" @tab-click="handleClick">
+    <div>
+      <memberTopBar></memberTopBar>
+
+      <div style="width: 100%;min-height: 800px;padding-left: 20px;margin-top: 50px">
+        <el-tabs v-model="index" @tab-click="handleClick" :tab-position="tabPosition">
           <el-tab-pane label="待支付订单" name="1">
-            <el-table
-              :data="not_paid_list"
-              stripe
-              width="100%"
-              style="margin-top: 15px"
-            >
-              <el-table-column
-                prop="orderTime"
-                label="下单时间"
-                align="center"
-              ></el-table-column>
-              <el-table-column
-                prop="sum"
-                label="订单价格(元)"
-                align="center"
-              ></el-table-column>
-              <el-table-column
-                label="操作"
-                align="center"
+            <div class="table_style">
+              <el-table
+                :data="not_paid_list"
+                stripe
+                width="100%"
+                style="margin-top: 15px"
               >
-                <template slot-scope="scope">
-                  <el-button size="small" v-on:click="check_not_paid(scope.row.id)">查看详情</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+                <el-table-column
+                  prop="orderTime"
+                  label="下单时间"
+                  align="center"
+                ></el-table-column>
+                <el-table-column
+                  prop="sum"
+                  label="订单价格(元)"
+                  align="center"
+                ></el-table-column>
+                <el-table-column
+                  label="操作"
+                  align="center"
+                >
+                  <template slot-scope="scope">
+                    <el-button size="small" v-on:click="check_not_paid(scope.row.id)">查看详情</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+
           </el-tab-pane>
           <el-tab-pane label="已支付订单" name="2">
-            <el-table
-              :data="complete_list"
-              stripe
-              width="100%"
-              style="margin-top: 15px"
-            >
-              <el-table-column
-                prop="orderTime"
-                label="下单时间"
-                align="center"
-              ></el-table-column>
-              <el-table-column
-                prop="sum"
-                label="订单价格(元)"
-                align="center"
-              ></el-table-column>
-              <el-table-column
-                label="操作"
-                align="center"
+            <div class="table_style">
+              <el-table
+                :data="complete_list"
+                stripe
+                width="100%"
+                style="margin-top: 15px"
               >
-                <template slot-scope="scope">
-                  <el-button size="small" v-on:click="check_paid(scope.row.id)">查看详情</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+                <el-table-column
+                  prop="orderTime"
+                  label="下单时间"
+                  align="center"
+                ></el-table-column>
+                <el-table-column
+                  prop="sum"
+                  label="订单价格(元)"
+                  align="center"
+                ></el-table-column>
+                <el-table-column
+                  label="操作"
+                  align="center"
+                >
+                  <template slot-scope="scope">
+                    <el-button size="small" v-on:click="check_paid(scope.row.id)">查看详情</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+
           </el-tab-pane>
           <el-tab-pane label="已失效订单" name="3">
-            <el-table
-              :data="invalid_list"
-              stripe
-              width="100%"
-              style="margin-top: 15px"
-            >
-              <el-table-column
-                prop="orderTime"
-                label="下单时间"
-                align="center"
-              ></el-table-column>
-              <el-table-column
-                prop="sum"
-                label="订单价格(元)"
-                align="center"
-              ></el-table-column>
-              <el-table-column
-                label="操作"
-                align="center"
+            <div class="table_style">
+              <el-table
+                :data="invalid_list"
+                stripe
+                width="100%"
+                style="margin-top: 15px"
               >
-                <template slot-scope="scope">
-                  <el-button size="small" v-on:click="check_invalid(scope.row.id)">查看详情</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+                <el-table-column
+                  prop="orderTime"
+                  label="下单时间"
+                  align="center"
+                ></el-table-column>
+                <el-table-column
+                  prop="sum"
+                  label="订单价格(元)"
+                  align="center"
+                ></el-table-column>
+                <el-table-column
+                  label="操作"
+                  align="center"
+                >
+                  <template slot-scope="scope">
+                    <el-button size="small" v-on:click="check_invalid(scope.row.id)">查看详情</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+
           </el-tab-pane>
         </el-tabs>
       </div>
-    </memberNavi>
+    </div>
 </template>
 
 <script>
-    import memberNavi from '../components/memberNavi'
+    import memberTopBar from '../components/memberTopBar'
     export default {
       name: "order",
-      components: {memberNavi},
+      components: {memberTopBar},
       mounted: function () {
-        this.get_list('1');
+        let index = this.$route.params.name;
+        console.log("index:"+index);
+        if(index === undefined) {
+          index = '1';
+        }
+        this.get_list(index);
+        this.index = index;
       },
       data() {
         return {
+          tabPosition:'left',
           index: '1',
           not_paid_list:[],
           complete_list: [],
@@ -196,6 +214,12 @@
 </script>
 
 <style scoped>
+
+  .table_style{
+    margin-left: 30px;
+    width: 800px;
+    margin-top: -20px;
+  }
 
 </style>
 

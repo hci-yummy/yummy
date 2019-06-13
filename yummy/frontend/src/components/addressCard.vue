@@ -4,7 +4,7 @@
       <div style="margin-top: 5px;margin-left: 5px"><i class="el-icon-location-information" style="font-size: 35px; color: #c1c1c1"></i></div>
       <div style="border-left: 1px solid #dadada;height: 50px; width: 0px;margin-left: 15px"></div>
       <div style="margin-left: 20px">
-        <div class="content">{{info.name}} {{info.tele}}</div>
+        <div class="content">{{info.name}} {{info.phone}}</div>
         <div class="content">{{info.district + " " +info.address}}</div>
       </div>
     </div>

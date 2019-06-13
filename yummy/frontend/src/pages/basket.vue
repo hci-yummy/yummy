@@ -1,11 +1,6 @@
 <template>
   <div>
-    <div v-if="visitorMode">
-      <visitorTopBar></visitorTopBar>
-    </div>
-    <div v-else>
-      <memberTopBar></memberTopBar>
-    </div>
+    <memberTopBar></memberTopBar>
 
     <div style="display:flex;margin-top: 50px;margin-left: 20px">
       <div>
@@ -136,7 +131,7 @@
                     <el-input style="width: 210px " v-model="address_form.phone" />
                   </el-form-item>
                   <el-form-item>
-                    <span style="color: #c1c1c1;margin-left: 30px;margin-right: 30px;cursor: pointer" @click="close_modal">取消</span> <el-button type="primary" style="width: 120px">保存</el-button>
+                    <span style="color: #c1c1c1;margin-left: 30px;margin-right: 30px;cursor: pointer" @click="close_modal">取消</span> <el-button type="primary" style="width: 120px" @click="save_address">保存</el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -156,7 +151,7 @@
               <el-form-item label="送达时间"> <span style="margin-left: 20px;font-size: 16px">{{time}}</span></el-form-item>
               <el-form-item label="订单备注">
                 <div style="display: flex">
-                  <el-input v-model="other_form.remark" style="width: 200px;margin-right: 200px"></el-input><el-button type="danger">确认下单</el-button>
+                  <el-input v-model="other_form.remark" style="width: 200px;margin-right: 200px"></el-input><el-button type="danger" @click="submit">确认下单</el-button>
                 </div>
 
               </el-form-item>
@@ -171,14 +166,13 @@
 </template>
 
 <script>
-    import visitorTopBar from '../components/visitorTopBar'
     import memberTopBar from '../components/memberTopBar'
     import addressCard from '../components/addressCard'
     import modal from '../components/modal'
     import addressSelector from '../components/addressSelector'
     export default {
       name: "basket",
-      components: {visitorTopBar, memberTopBar, addressCard, modal, addressSelector},
+      components: {memberTopBar, addressCard, modal, addressSelector},
       mounted: function () {
 
         this.info = this.$route.params.info;
@@ -193,10 +187,9 @@
       },
       data() {
         return {
-          visitorMode: localStorage.username === undefined || localStorage.username === null ||  localStorage.username === "",
           info: {},
           basket:[],
-          all:0,
+          all:0, // 订单实付总额
           disMoneyByLevel: 0,
           fullMoney: 0,
           disMoneyByRest: 0,
@@ -204,18 +197,17 @@
           need_pay:false,
           time:'',
 
-          other_form: {},
-
-          title: "",
-          address_form: {
-            remark:'',
+          other_form: {
+            remark: '' // 备注
           },
+
+          title: "", // 模态框的标题
+          address_form: {},
           pcd:"",
-          isShow: false,
+          isShow: false, // 是否显示地址列表
           isModalVisible: false,
-          now_address:{
-
-          },
+          now_address:{}, // 当前缩略显示的地址
+          choose_id:'', // 当前选择的地址id
           address_list:[
             {
               aid:1,
@@ -252,7 +244,6 @@
       methods: {
 
         get_address_list() {
-          console.log("get_address");
           let email = localStorage.user_email;
           let self = this;
           this.$axios.get('/user/get_address',{
@@ -267,11 +258,13 @@
                 self.address_list[i].isChoosed = false;
               }
               self.now_address = self.address_list[0];
-              console.log(self.address_list);
+              self.choose_id = self.now_address.aid;
             }
           ).catch(function(error){
               console.log(error);
           })
+
+          return true;
         },
 
         show_list() {
@@ -280,21 +273,16 @@
 
         hide_list() {
           this.isShow = false;
-          for(let i = 0; i < this.address_list.length; i++) {
-            if(this.address_list[i].isChoosed) {
-              this.now_address = this.address_list[i];
-              break;
-            }
-          }
         },
 
         choose_address: function(id) {
           console.log(id);
+          this.choose_id = id;
           let info;
           for(let i = 0; i < this.address_list.length; i++) {
             if(id === this.address_list[i].aid) {
               this.address_list[i].isChoosed = true;
-
+              this.now_address = this.address_list[i];
             }else {
               this.address_list[i].isChoosed = false;
             }
@@ -302,6 +290,114 @@
             this.$set(this.address_list, i, info);
           }
           console.log(this.address_list);
+        },
+
+        save_address() {
+          if(this.title === "编辑地址") {
+            this.save_edit_address();
+          }else if(this.title === "添加新地址") {
+            this.save_add_address();
+          }
+        },
+
+        save_edit_address() {
+
+          let info = this.address_form;
+          let self = this;
+          this.$axios.post('/user/modify_address', {
+            aid: info.aid,
+            province: info.province,
+            city: info.city,
+            district: info.district,
+            address: info.address,
+            phone: info.phone,
+            name: info.name,
+          }).then(function (response) {
+            if(response.data === true) {
+
+              let choose_id = self.choose_id;
+
+              new Promise(
+                function (resolve, reject) {
+                  let test = self.get_address_list();
+                  if(test) {
+                    resolve("OK");
+                  }else {
+                    reject("error");
+                  }
+                }
+              )
+                .then(function (result) {
+                  console.log(result);
+                  console.log("in promise:"+choose_id);
+
+                  /*self.choose_address(choose_id);*/
+                  setTimeout(function () {
+                    self.choose_address(choose_id);
+                  }, 200);
+                  self.close_modal();
+
+              }).catch(function () {
+                console.log("error");
+              })
+
+
+            }
+
+          }).catch(function (error) {
+              console.log(error);
+          })
+        },
+
+        save_add_address() {
+          let info = this.address_form;
+          let self = this;
+
+          this.$axios.post('/user/new_address', {
+            province: info.province,
+            city: info.city,
+            district: info.district,
+            address: info.address,
+            phone: info.phone,
+            name: info.name,
+          }).then(function (response) {
+            if(response.data === true) {
+
+              let choose_id = self.choose_id;
+
+              new Promise(
+                function (resolve, reject) {
+                  let test = self.get_address_list();
+                  if(test) {
+                    resolve("OK");
+                  }else {
+                    reject("error");
+                  }
+                }
+              )
+                .then(function (result) {
+                  console.log(result);
+                  console.log("in promise:"+choose_id);
+
+                  /*self.choose_address(choose_id);*/
+                  setTimeout(function () {
+                    self.choose_address(choose_id);
+                  }, 200);
+                  self.close_modal();
+
+                }).catch(function () {
+                console.log("error");
+              })
+
+
+            }
+
+          }).catch(function (error) {
+            console.log(error);
+          })
+
+
+          this.close_modal();
         },
 
         add_address() {
@@ -402,7 +498,9 @@
           let disByLevel = this.disMoneyByLevel;
           let disByRest = this.disMoneyByRest;
           let fullMoney = this.fullMoney;
-          let aid = parseInt(localStorage.aid);
+          let address = this.now_address.district + " " + this.now_address.address;
+          let phone = this.now_address.phone;
+          let remark = this.other_form.remark;
 
           let self = this;
           this.$axios.post('/order/new_order',{
@@ -413,7 +511,9 @@
             disByLevel: disByLevel,
             disByRest: disByRest,
             fullMoney: fullMoney,
-            aid: aid
+            address: address,
+            phone: phone,
+            remark: remark,
           }).then(
             function (response) {
               alert("订单提交完成！\n请在2分钟内在‘我的订单’中完成支付");

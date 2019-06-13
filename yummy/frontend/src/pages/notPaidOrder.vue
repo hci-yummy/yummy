@@ -1,11 +1,13 @@
 <template>
-    <memberNavi paneltitle="未支付订单">
-      <div style="width: 600px;margin-bottom: 50px">
+  <div>
+    <memberTopBar></memberTopBar>
+    <div style="width: 100%" >
+      <div style="width: 70%;margin:50px auto">
         <div style="margin-top: 20px; margin-bottom: 20px; display: flex">
-          <div style="font-size: 25px;">
-            订单状态：<span style="color: #409EFF">未支付</span>
+          <div style="font-size: 25px;width: 250px">
+            订单状态：<span style="color: #409EFF" v-show="!isCancel">未支付</span><span style="color: #409EFF" v-show="isCancel">申请退货中</span>
           </div>
-          <div style="margin-left: 230px; margin-top: 10px">
+          <div style="margin-left: 50%; margin-top: 10px">
             <router-link :to="{name:'order'}" style="color: #409EFF">>>>返回订单列表</router-link>
           </div>
         </div>
@@ -52,19 +54,27 @@
           </div>
         </div>
 
-        <el-row style="padding-left: 35%;margin-top: 15px">
-          <el-button type="primary" v-on:click="payOrder">确定支付</el-button>
-          <el-button v-on:click="cancel_order">取消支付</el-button>
+        <div style="font-size: 20px;">
+          <div style="margin-bottom: 10px">
+            订单备注：{{remark}}
+          </div>
+        </div>
+
+        <el-row style="margin-top: 25px; margin-left: auto;margin-right: auto; width: 20%;" v-show="express_state !== '已送达' || express_state.isCancel">
+          <el-button v-on:click="cancel_order">取消付款</el-button>
+          <el-button type="primary"  v-on:click="payOrder">确认付款</el-button>
         </el-row>
       </div>
-    </memberNavi>
+    </div>
+
+  </div>
 </template>
 
 <script>
-    import memberNavi from '../components/memberNavi'
+  import memberTopBar from '../components/memberTopBar'
     export default {
       name: "not-paid-order",
-      components: {memberNavi},
+      components: {memberTopBar},
       mounted: function () {
         this.oid = this.$route.params.id;
         this.get_order_info();

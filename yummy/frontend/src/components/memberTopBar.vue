@@ -33,7 +33,7 @@
           }else if(this.activeIndex === '1'){
             this.$router.push({name: "welcome"})
           }else if(this.activeIndex === '3'){
-            //TODO 我的订单
+            this.$router.push({name: "order"})
           }else if(this.activeIndex === '2'){
             this.$router.push({name: "nearbyRestaurant"})
           }
