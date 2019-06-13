@@ -11,7 +11,8 @@
         <div style="width: 100%; display: flex;">
           <div style="width: 280px; background: #409EFF; color: white; font-size: 16px; border-radius: 2%;
       text-align: center; margin-right: 10px; height: 40px; line-height: 40px;" @click="changeShowPcdChoice">
-            <div style="display: inline-block;">当前位置：{{pcd}}</div>
+            <div style="display: inline-block;" v-if="pcd.province !=='' ">当前位置：{{pcd.province+" "+pcd.city+" "+pcd.district}}</div>
+            <div style="display: inline-block;" v-else>请选择所在地</div>
             <i class = "el-icon-arrow-down" style="width: 30px; height: 30px;"></i>
           </div>
           <el-input style="width: 300px; font-size: 16px;" placeholder="  您的详细地址" v-model="detail_address"></el-input>
@@ -26,7 +27,7 @@
           </el-input>
         </div>
         <div v-if="showPcdChoice" style="min-height: 100px;margin:5px auto;font-size: 20px; position: absolute;z-index:9999">
-          <addressChoice @changeAddress="setPcd" @changeState="changeShowPcdChoice"></addressChoice>
+          <addressChoice :pcd="pcd" @changeAddress="setPcd" @changeState="changeShowPcdChoice"></addressChoice>
         </div>
       </div>
       <!--分类&具体餐厅-->
@@ -72,7 +73,11 @@
             btnFlag: false,
             scrollTop: 0,
             showPcdChoice: false,
-            pcd: "选择您所在的位置",
+            pcd: {
+              province: "",
+              city: "",
+              district: ""
+            },
             detail_address: "",
             type:['甜品饮品','快餐便当','小吃夜宵','特色菜系',"欧美西餐","日韩美食","异域美味"],
             checkList: [],
@@ -81,10 +86,10 @@
           }
         },
         mounted(){
-            this.pcd = this.$route.params.pcd;
-            this.detail_address = this.$route.params.detail_address
-            window.addEventListener('scroll', this.scrollToTop)
-            if(this.pcd && this.pcd.split(' ').length===3){
+            this.pcd = this.$route.params.pcd === undefined ? this.pcd : this.$route.params.pcd;
+            this.detail_address = this.$route.params.detail_address === undefined ? this.detail_address : this.$route.params.detail_address;
+            window.addEventListener('scroll', this.scrollToTop);
+            if( this.pcd.province!==''&&this.pcd.city!==''&&this.pcd.district!==''){
                 this.searchNearby();
             }
         },
@@ -139,15 +144,8 @@
             this.pcd = pcdChoice;
           },
           searchNearby () {
-            var token = this.pcd.split(' ');
+            var token = [this.pcd.province, this.pcd.city, this.pcd.district];
             var valid = true;
-            if(token.length !== 3){
-              valid = false;
-              this.$message({
-                message: '请先选择完整的省-市-区',
-                type: 'error'
-              });
-            }
             for(var i = 0; i < token.length; i++){
               if(token[i].length === 0){
                 this.$message({

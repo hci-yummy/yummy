@@ -54,15 +54,8 @@
             this.showPcdChoice = !this.showPcdChoice;
           },
           searchNearby () {
-            var token = this.pcd.split(' ');
+            var token = [this.pcd.province, this.pcd.city, this.pcd.district];
             var valid = true;
-            if(token.length !== 3){
-              valid = false;
-              this.$message({
-                message: '请先选择完整的省-市-区',
-                type: 'error'
-              });
-            }
             for(var i = 0; i < token.length; i++){
               if(token[i].length === 0){
                 this.$message({

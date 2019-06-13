@@ -62,7 +62,7 @@
 
         </div>
 
-        <el-row style="margin-top: 25px; margin-left: auto;margin-right: auto; width: 20%;" v-show="express_state !== '已送达' || express_state.isCancel">
+        <el-row style="float: right;margin: 20px 0px" v-show="express_state !== '已送达' || express_state.isCancel">
           <el-button v-on:click="cancel_order">退订</el-button>
           <el-button type="primary"  v-on:click="accept_order">确认收货</el-button>
         </el-row>
@@ -138,20 +138,67 @@
       },
 
       accept_order() {
-        let oid = this.oid;
         let self = this;
-        this.$axios.get('/order/accept_order', {
-          params: {
-            oid: oid
+        const h = this.$createElement
+        this.$msgbox({
+          title: '评分并收货',
+          message: h('p', '在收货前，先给出评分吧', [
+            h('span', null, '请给出您的评分哦 '),
+            h('p', { style: 'color: teal' }, 'VNode')
+          ]),
+          showCancelButton: true,
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          beforeClose: (action, instance, done) => {
+            if (action === 'confirm') {
+              instance.confirmButtonLoading = true;
+              instance.confirmButtonText = '执行中...';
+              setTimeout(() => {
+                done();
+                setTimeout(() => {
+                  instance.confirmButtonLoading = false;
+                }, 300);
+              }, 3000);
+            } else {
+              done();
+            }
           }
-        }).then(
-          function (response) {
-            alert("收货成功！");
-            self.$router.push({name: 'order'});
-          }
-        ).catch(function (error) {
-          console.log(error);
-        })
+        }).then(action => {
+          this.$message({
+            type: 'info',
+            message: 'action: ' + action
+          });
+        });
+        /*this.$confirm('收货前，给出您的评分吧', '', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'success',
+          center: true
+        }).then(() => {
+          //TODO 给出评分
+          let oid = this.oid;
+          this.$axios.get('/order/accept_order', {
+            params: {
+              oid: oid
+            }
+          }).then(
+            function (response) {
+              alert("收货成功！");
+              self.$router.push({name: 'order'});
+            }
+          ).catch(function (error) {
+            console.log(error);
+          });
+          this.$message({
+            type: 'success',
+            message: '评分并收货成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消评分和收货操作'
+          });
+        });*/
       },
 
       cancel_order() {
