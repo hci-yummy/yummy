@@ -2,14 +2,14 @@
     <div>
       <el-card class="order">
         <div slot="header" class="clearfix">
-          <span>{{order.time}}</span>
-          <el-button style="float: right; padding: 3px 0" type="text">接单&nbsp&nbsp&nbsp</el-button>
+          <span>{{order.orderTime}}</span>
+          <el-button style="float: right; padding: 3px 0" type="text" @click="receive_order">接单&nbsp&nbsp&nbsp</el-button>
         </div>
         <div>
           <div style="display: flex">
             <div class="person">
               <p>
-                <strong>{{order.name}}</strong>
+                <strong>{{order.memberName}}</strong>
               </p>
 
               <div>
@@ -17,15 +17,15 @@
               </div>
             </div>
             <div class="tele">
-              <p style="color: #409EFF;"> <i class="el-icon-phone"></i>{{order.tele}}</p>
+              <p style="color: #409EFF;"> <i class="el-icon-phone"></i>{{order.phone}}</p>
             </div>
           </div>
           <el-divider></el-divider>
         </div>
 
 
-        <div v-show="order.tip.length !== 0">
-          <div> <span style="color: #ff6445;">备注： </span>{{order.tip}}</div>
+        <div v-show="order.remark.length !== 0">
+          <div> <span style="color: #ff6445;">备注： </span>{{order.remark}}</div>
           <el-divider></el-divider>
         </div>
 
@@ -33,7 +33,7 @@
           <div>
             <strong>商品</strong>
           </div>
-          <foodInWaitOrder :food="item" v-for="item in order.food" :key="item.name"></foodInWaitOrder>
+          <foodInWaitOrder :food="item" v-for="item in order.foodList" :key="item.name"></foodInWaitOrder>
 
         </div>
       </el-card>
@@ -45,9 +45,10 @@
     export default {
       name: "wait-receive-order",
       components:{foodInWaitOrder},
+      props:['order'],
       data() {
         return {
-          order: {
+          /*order: {
             time: '2019/06/08 12:03:07',
             name: '某翔',
             tele: '18861524027',
@@ -64,8 +65,15 @@
                 num: 1,
                 sum: 25.9
               }]
-          }
+          }*/
         }
+      },
+
+      methods: {
+        receive_order() {
+          let oid = this.order.oid;
+          this.$emit("receiveEvent", oid);
+        },
       }
 
     }

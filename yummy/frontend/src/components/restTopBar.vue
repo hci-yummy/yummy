@@ -16,8 +16,8 @@
     <el-menu-item class="top-bar-style" index="/restStatistics">统计信息</el-menu-item>
     <!--<el-menu-item class="top-bar-style" style="float: right;" index="4">你好，{{user}}</el-menu-item>-->
     <el-submenu style="width:150px; float: right;" index="4">
-      <span class="top-bar-style" slot="title">你好，{{user}}</span>
-      <el-menu-item class="sub-menu" index="4-1">登出</el-menu-item>
+      <span class="top-bar-style" slot="title">&nbsp;&nbsp;{{user}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <el-menu-item class="sub-menu" index="/restLogin">登出</el-menu-item>
       <el-menu-item class="sub-menu" index="4-2">基本信息</el-menu-item>
     </el-submenu>
   </el-menu>
@@ -30,6 +30,21 @@
         return {
           activeIndex: "1",
           user: localStorage.rest_name
+        }
+      },
+
+      methods: {
+        logout() {
+          localStorage.rest_id = "";
+          localStorage.rest_name = "";
+          this.$router.push({name: 'restLogin'});
+        },
+
+        handleSelect(key, keyPath) {
+          console.log(key,keyPath);
+          if(key === "/restLogin") {
+            this.logout();
+          }
         }
       }
 

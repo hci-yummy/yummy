@@ -167,7 +167,7 @@
             }
           }).then(
             function (response) {
-              self.complete_list = response.data;
+              self.complete_list = response.data.reverse();
               for(let i = 0; i < self.complete_list.length; i++) {
                 let time = self.complete_list[i].orderTime + "";
                 time = time.substring(0, 10) + " " + time.substring(11,20);
@@ -187,7 +187,7 @@
             }
           }).then(
             function (response) {
-              self.invalid_list = response.data;
+              self.invalid_list = response.data.reverse();
               for(let i = 0; i < self.invalid_list.length; i++) {
                 let time = self.invalid_list[i].orderTime + "";
                 time = time.substring(0, 10) + " " + time.substring(11,20);

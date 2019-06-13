@@ -516,6 +516,7 @@
           let address = this.now_address.district + " " + this.now_address.address;
           let phone = this.now_address.phone;
           let remark = this.other_form.remark;
+          let receiverName = this.now_address.name;
 
           let self = this;
           this.$axios.post('/order/new_order',{
@@ -529,10 +530,16 @@
             address: address,
             phone: phone,
             remark: remark,
+            receiverName:receiverName
           }).then(
             function (response) {
-              alert("订单提交完成！\n请在2分钟内在‘我的订单’中完成支付");
-              self.$router.push({name: 'foodList'});
+              let self2 = self;
+              self.$alert('订单提交完成！\n请在2分钟内在‘我的订单’中完成支付', '', {
+                confirmButtonText: '确定',
+                callback: action => {
+                  self2.$router.push({name: 'order'});
+                }
+              })
             }
           ).catch(
             function (error) {

@@ -2,7 +2,7 @@
   <div style="display:flex;width: 100%;margin-top: 10px">
     <div style="width: 80%">{{food.name}}</div>
     <div style="width: 11%">x{{food.num}}</div>
-    <div style="width: 9%">{{food.sum}}</div>
+    <div style="width: 9%">{{food.num * food.cost}}</div>
   </div>
 </template>
 

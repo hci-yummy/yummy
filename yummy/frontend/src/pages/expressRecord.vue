@@ -1,63 +1,29 @@
 <template>
-    <restNavi paneltitle="送餐记录">
-      <div style="padding-top: 30px; padding-left: 20px; width: 750px">
-        <el-tabs v-model="index" @tab-click="handleClick">
+    <div>
+      <restTopBar></restTopBar>
+      <div style="width: 100%;padding-top: 50px; padding-left: 20px;">
+        <el-tabs v-model="index" @tab-click="handleClick" :tab-position="tabPosition">
           <el-tab-pane label="待接单订单" name="1">
-            <el-table
-              :data="not_receive_list"
-              stripe
-              width="100%"
-            >
-              <el-table-column
-                prop="orderTime"
-                label="下单时间"
-              >
-              </el-table-column>
-              <el-table-column
-                prop="foodList"
-                label="商品"
-              >
-                <template slot-scope="scope">
-                  <p
-                    v-for="item in scope.row.foodList"
-                    :key="item.id"
-                  >
-                    {{item.name + ' x'}}{{item.num}}
-                  </p>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="sum"
-                label="总价(元)"
-                width="150px"
-              >
-              </el-table-column>
-              <el-table-column
-                label="是否退订"
-                width="100px"
-              >
-                <template slot-scope="scope">
-                  <div v-show="!scope.row.isCancel">
-                    否
-                  </div>
-                  <el-button v-show="scope.row.isCancel" size="small" v-on:click="agree_cancel(scope.row.oid)">接受退订</el-button>
-                </template>
-              </el-table-column>
-              <el-table-column
-                label="操作"
-                align="center"
-              >
-                <template slot-scope="scope">
-                  <el-button size="small" v-on:click="receive_order(scope.row.oid)">接单</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+            <div style="margin-left: 50px">
+
+              <div v-show="not_receive_list.length === 0" style="font-size: 30px;color: #7e7e7e">
+                暂时没有需要接单的订单~
+              </div>
+              <waitReceiveOrder
+                :order="item"
+                v-for="item in not_receive_list"
+                :key="item.oid"
+                @receiveEvent="receive_order"
+              ></waitReceiveOrder>
+            </div>
+
           </el-tab-pane>
           <el-tab-pane label="待发货订单" name="2">
             <el-table
               :data="not_deliver_list"
               stripe
               width="100%"
+              class="table_style"
             >
               <el-table-column
                 prop="orderTime"
@@ -115,6 +81,7 @@
               :data="delivered_list"
               stripe
               width="100%"
+              class="table_style"
             >
               <el-table-column
                 prop="orderTime"
@@ -150,6 +117,7 @@
               </el-table-column>
               <el-table-column
                 label="是否退订"
+                align="center"
               >
                 <template slot-scope="scope">
                   <div v-show="!scope.row.isCancel">
@@ -163,19 +131,21 @@
           </el-tab-pane>
         </el-tabs>
       </div>
-    </restNavi>
+    </div>
 </template>
 
 <script>
-    import restNavi from '../components/restNavi'
+    import restTopBar from '../components/restTopBar'
+    import waitReceiveOrder from '../components/waitReceiveOrder'
     export default {
       name: "express-record",
-      components:{restNavi},
+      components:{restTopBar, waitReceiveOrder},
       mounted: function () {
         this.get_not_receive();
       },
       data() {
         return {
+          tabPosition: 'left',
           index: '1',
           not_receive_list: [],
           not_deliver_list: [],
@@ -248,7 +218,7 @@
             }
           }).then(
             function (response) {
-              self.delivered_list = response.data.reverse();
+              self.delivered_list = response.data;
               for(let i = self.delivered_list.length - 1; i >= 0; i--) {
                 let time = self.delivered_list[i].orderTime + "";
                 time = time.substring(0, 10) + " " + time.substring(11,20);
@@ -260,7 +230,7 @@
           })
         },
 
-        receive_order(oid) {
+        receive_order:function(oid) {
           this.$axios.get('/order/receive_order',{
             params: {
               oid: oid
@@ -314,6 +284,11 @@
 </script>
 
 <style scoped>
+
+  .table_style{
+    margin-left: 50px;
+    width: 800px;
+  }
 
 </style>
 

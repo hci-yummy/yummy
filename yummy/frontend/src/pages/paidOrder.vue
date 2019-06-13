@@ -74,10 +74,12 @@
       <div slot="body" style="width: 400px">
         <el-rate v-model="rate"></el-rate>
         <div style="height: 20px"></div>
-        <el-button style="float: right; margin-right: 5px" size="mini" type="primary" @click="confirmModal">确认</el-button>
-        <el-button style="float: right; margin-right: 5px" size="mini" @click="cancelModal">取消</el-button>
+
       </div>
-      <div slot="footer"></div>
+      <div slot="footer" style="display: flex">
+        <el-button style="float: right; margin-right: 5px" size="mini" @click="cancelModal">取消</el-button>
+        <el-button style="float: right; margin-right: 5px" size="mini" type="primary" @click="confirmModal">确认</el-button>
+      </div>
     </modal>
   </div>
 </template>

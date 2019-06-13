@@ -7,7 +7,7 @@
           <div style="font-size: 25px;">
             订单状态：<span style="color: #409EFF">未支付</span>
           </div>
-          <div style="margin-left: 50%; margin-top: 10px">
+          <div style="margin-left: 55%; margin-top: 10px">
             <router-link :to="{name:'order'}" style="color: #409EFF">>>>返回订单列表</router-link>
           </div>
         </div>
@@ -58,7 +58,7 @@
           </div>
         </div>
 
-        <el-row style="margin-top: 25px; margin-left: auto;margin-right: auto; width: 30%;">
+        <el-row style="float: right;margin: 20px 0px">
           <el-button v-on:click="cancel_order">取消付款</el-button>
           <el-button type="primary"  v-on:click="click_pay">确认付款</el-button>
         </el-row>
@@ -78,8 +78,8 @@
         </el-form>
       </div>
       <div slot="footer" style="display: flex">
-        <el-button @click="close_modal">取消</el-button>
-        <el-button type="primary" @click="check_password">确认</el-button>
+        <el-button size="mini" @click="close_modal">取消</el-button>
+        <el-button size="mini" type="primary" @click="check_password">确认</el-button>
       </div>
     </modal>
 
@@ -170,14 +170,23 @@
             }
           }).then(
             function (response) {
-
+              let self2 = self;
               let isPaid = response.data;
               if(isPaid) {
-                alert("订单支付成功！\n你可以在‘已支付订单’中查看该订单详情");
+                self.$alert('订单支付成功！\n你可以在‘已支付订单’中查看该订单详情', '', {
+                  confirmButtonText: '确定',
+                  callback: action => {
+                    self2.$router.push({name: 'order'});
+                  }
+                })
               }else {
-                alert("未在2分钟内完成支付\n订单已取消！");
+                self.$alert('未在2分钟内完成支付\n订单已取消！', '', {
+                  confirmButtonText: '确定',
+                  callback: action => {
+                    self2.$router.push({name: 'order'});
+                  }
+                })
               }
-              self.$router.push({name: 'order'});
             }
           ).catch(function (error) {
             console.log(error);
