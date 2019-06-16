@@ -62,6 +62,21 @@
               </el-option>
             </el-select>
           </el-form-item>
+
+          <el-form-item label="餐厅图片">
+            <el-upload
+              class="upload-demo"
+              drag
+              action="http://localhost:8000/upload/image"
+              :onSuccess="uploadSuccess"
+              multiple
+            >
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+              <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+          </el-form-item>
+
           <div style="margin-top: 40px;margin-left: 43%">
             <el-button type="primary" v-on:click="submit">保存</el-button>
           </div>
