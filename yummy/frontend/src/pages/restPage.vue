@@ -20,25 +20,34 @@
           <el-button type="info" plain v-on:click="edit">修改信息</el-button>
         </div>
       </div>
+
+
       <div class="rest_form" v-show="editable">
         <el-form :label-position="labelPosition" ref="this.rest_form" :model="rest_form" label-width="100px">
           <el-form-item label="餐厅名">
             <el-input v-model="rest_form.name"></el-input>
           </el-form-item>
+
           <el-form-item label="餐厅识别码">
             <el-input v-model="rest_form.id" :disabled="true"></el-input>
           </el-form-item>
-          <el-form-item label="所在区县" >
-            <el-select v-model="rest_form.district" style="width: 300px">
-              <el-option
-                  v-for="item in rest_form.district_list"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-              >
-              </el-option>
-            </el-select>
+
+          <el-form-item label="所在地" >
+
+
+            <div class="selector" style="width: 300px;border: 1px solid gainsboro;border-radius: 5px;color: #7e7e7e;font-size: 16px;height: 40px;line-height: 40px;display: flex" @click="changeShowPcdChoice">
+              <div style="width: 265px; height: 40px; margin-left: 10px;overflow: hidden;text-overflow: ellipsis;" v-if="pcd.province !=='' ">{{pcd.province+" "+pcd.city+" "+pcd.district}}</div>
+              <div v-else style="width: 265px; height: 40px; margin-left: 10px;overflow: hidden;text-overflow: ellipsis;">请选择所在地</div>
+              <div><i class="el-icon-arrow-down" style="font-size: 16px"></i></div>
+            </div>
+
+            <div v-if="showPcdChoice" style="min-height: 100px;margin:5px auto;font-size: 20px; position: absolute;z-index:9999">
+              <addressChoice :pcd="pcd" @changeAddress="setPcd" @changeState="changeShowPcdChoice"></addressChoice>
+            </div>
+
+
           </el-form-item>
+
           <el-form-item label="餐厅地址">
             <el-input v-model="rest_form.address"></el-input>
           </el-form-item>
@@ -64,14 +73,24 @@
 <script>
 
     import restNavi from '../components/restNavi'
+    import addressChoice from '../components/addressChoice'
+
     export default {
       name: "rest-page",
-      components:{restNavi},
+      components:{
+        restNavi,
+        addressChoice},
       mounted:function () {
         this.get_info();
       },
       data() {
         return {
+          pcd: {
+            province: "",
+            city: "",
+            district: ""
+          },
+          showPcdChoice: false,
           editable: false,
           labelPosition:'left',
           rest_info: {
@@ -93,6 +112,15 @@
         }
       },
       methods: {
+        changeShowPcdChoice () {
+          this.showPcdChoice = !this.showPcdChoice;
+          document.getElementsByClassName("selector")[0].style.border = "1px solid #DCDCDC"
+        },
+        setPcd(pcdChoice){
+          console.log("pcd: "+pcdChoice);
+          this.pcd = pcdChoice;
+          document.getElementsByClassName("selector")[0].style.border = "1px solid #409EFF"
+        },
 
         get_info() {
 
