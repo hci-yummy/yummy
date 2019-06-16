@@ -1,5 +1,8 @@
 <template>
-    <memberNavi paneltitle="我的信息">
+    <div>
+
+      <memberTopBar></memberTopBar>
+
       <div class="member_info" v-show="!editable">
         <div class="info_item">
           用户名：{{this.member_info.username}}
@@ -62,16 +65,18 @@
           </el-form-item>
         </el-form>
       </div>
-    </memberNavi>
+    </div>
 </template>
 
+
+
 <script>
-    import memberNavi from '../components/memberNavi'
+    import memberTopBar from '../components/memberTopBar'
     export default {
       name: "member-info",
-      components: {memberNavi},
+      components: {memberTopBar},
       mounted: function () {
-        this.district_list = JSON.parse(localStorage.district_list);
+    /*    this.district_list = JSON.parse(localStorage.district_list);*/
         this.get_info();
       },
       data() {
@@ -154,6 +159,7 @@
 
         get_info() {
           let email = localStorage.user_email;
+          console.log("aaa"+email);
           let self = this;
           this.$axios.get('/user/get_info',{
             params: {

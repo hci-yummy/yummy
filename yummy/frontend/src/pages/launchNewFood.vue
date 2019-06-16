@@ -20,19 +20,26 @@
             </el-option>
           </el-select>
         </el-form-item>
+
         <el-form-item label="商品单价">
           <el-input v-model="food_info.price"></el-input>
         </el-form-item>
+
         <el-form-item label="商品数量">
           <el-input v-model="food_info.num"></el-input>
         </el-form-item>
+
+        <el-form-item label="商品描述">
+          <el-input v-model="food_info.desc"></el-input>
+        </el-form-item>
+
         <el-form-item label="在售时段">
           <div style="display: flex">
             <el-date-picker
               v-model="date1"
               type="date"
               placeholder="选择开始日期"
-              
+
               >
             </el-date-picker>
             <div>-</div>
@@ -72,7 +79,7 @@
       name: "launch-new-food",
       components:{restNavi},
       mounted: function() {
-        
+
         let restId = localStorage.rest_id;
         let self = this;
         console.log("restId:" + restId);
@@ -140,6 +147,7 @@
           let startDate = this.date1;
           let endDate = this.date2;
           let image = this.food_info.image;
+          let description=this.food_info.desc;
 
           this.$axios.post('/rest/new_food',{
             restId: restId,
