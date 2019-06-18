@@ -18,7 +18,7 @@
     <el-submenu style="width:150px; float: right;" index="4">
       <span class="top-bar-style" slot="title">&nbsp;&nbsp;{{user}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
       <el-menu-item class="sub-menu" index="/restLogin">登出</el-menu-item>
-      <el-menu-item class="sub-menu" index="4-2">基本信息</el-menu-item>
+      <el-menu-item class="sub-menu" index="/restPage">基本信息</el-menu-item>
     </el-submenu>
   </el-menu>
 </template>

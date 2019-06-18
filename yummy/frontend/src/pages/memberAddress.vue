@@ -110,5 +110,10 @@
 </script>
 
 <style scoped>
+  .member_form{
+    /*width: 500px;*/
+    margin-top: 50px;
+    margin-left: 40px;
+  }
 
 </style>
