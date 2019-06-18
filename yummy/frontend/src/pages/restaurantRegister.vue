@@ -150,11 +150,14 @@
               let address = this.rest_form.address;
               let type = this.rest_form.value;
               let self = this;
+              let city=this.rest_form.pcd.city;
+              let province=this.rest_form.pcd.province;
+              let district=this.rest_form.pcd.district;
               this.$axios.post('/rest/register',{
                 name: name,
-                province: self.rest_form.province,
-                city: self.rest_form.city,
-                district: self.rest_form.district,
+                province: self.rest_form.pcd.province,
+                city: self.rest_form.pcd.city,
+                district: self.rest_form.pcd.district,
                 address: address,
                 type: type,
                 imageUrl: self.rest_form.image

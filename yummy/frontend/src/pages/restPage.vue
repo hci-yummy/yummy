@@ -8,7 +8,7 @@
           餐厅识别码：{{this.rest_info.id}}
         </div>
         <div class="info_item">
-          所在区县：{{this.rest_info.district}}
+          所在地区：{{this.rest_info.province}}{{this.rest_info.city}}{{this.rest_info.district}}
         </div>
         <div class="info_item">
           餐厅地址：{{this.rest_info.address}}
@@ -69,7 +69,6 @@
               drag
               action="http://localhost:8000/upload/image"
               :onSuccess="uploadSuccess"
-              multiple
             >
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -112,6 +111,8 @@
             id:'12345',
             name:'宽窄巷子',
             district:'鼓楼区',
+            city:'南京市',
+            province:'江苏省',
             address:'南京市鼓楼区湖北路店',
             type:'特色菜系'
           },
@@ -119,6 +120,8 @@
             id:'',
             name:'',
             district:'',
+            city:'',
+            province:'',
             district_list:[],
             address:'',
             type:'',
@@ -127,6 +130,13 @@
         }
       },
       methods: {
+        uploadSuccess(response, file, fileList) {
+          console.log("uploadSuccess");
+          this.rest_form.image = "";
+          this.rest_form.image += 'http://localhost:8000/';
+          this.rest_form.image += response;
+          console.log("this.rest_form.image:" + this.rest_form.image);
+        },
         changeShowPcdChoice () {
           this.showPcdChoice = !this.showPcdChoice;
           document.getElementsByClassName("selector")[0].style.border = "1px solid #DCDCDC"
@@ -162,11 +172,40 @@
             address: this.rest_info.address,
             type: this.rest_info.type,
             district_list: [],
-            type_list: []
+            type_list: [
+              {
+                value:'甜品饮品',
+                label:'甜品饮品'
+              },
+              {
+                value:'快餐便当',
+                label:'快餐便当'
+              },
+              {
+                value:'小吃夜宵',
+                label:'小吃夜宵'
+              },
+              {
+                value:'特色菜系',
+                label:'特色菜系'
+              },
+              {
+                value:'欧美西餐',
+                label:'欧美西餐'
+              },
+              {
+                value:'日韩美食',
+                label:'日韩美食'
+              },
+              {
+                value:'异域美味',
+                label:'异域美味'
+              }
+            ]
           };
           this.rest_form = obj;
-          this.rest_form.district_list = JSON.parse(localStorage.district_list);
-          this.rest_form.type_list = JSON.parse(localStorage.type_list);
+   /*       this.rest_form.district_list = JSON.parse(localStorage.district_list);*/
+/*          this.rest_form.type_list = JSON.parse(localStorage.type_list);*/
         },
         submit(){
           this.editable = false;

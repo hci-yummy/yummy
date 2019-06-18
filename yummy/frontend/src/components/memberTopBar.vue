@@ -38,6 +38,8 @@
             this.$router.push({name: "nearbyRestaurant"})
           }else if(this.activeIndex === '4-2'){
             this.$router.push({name: "memberInfo"})
+          }else if(this.activeIndex === '4-3'){
+            this.$router.push({name: "memberAddress"})
           }
         },
         logout() {
