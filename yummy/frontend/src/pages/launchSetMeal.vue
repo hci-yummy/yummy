@@ -2,9 +2,16 @@
     <restNavi paneltitle="发布信息 > 发布套餐">
       <div class="main_body">
         <el-form style="width: 600px" ref="setmeal_info" :model="setmeal_info" label-width="80px">
+
           <el-form-item label="套餐名称">
-            <el-input v-model="setmeal_info.name"></el-input>
+
+            <el-autocomplete
+              v-model="setmeal_info.name"
+              placeholder="请输入商品名称"
+              :fetch-suggestions="querySearch">
+            </el-autocomplete>
           </el-form-item>
+
           <el-form-item label="套餐价格">
             <el-input v-model="setmeal_info.price"></el-input>
           </el-form-item>
@@ -132,7 +139,7 @@
       name: "launch-setmeal",
       components:{restNavi},
       mounted: function() {
-        
+
         let restId = localStorage.rest_id;
         let self = this;
         console.log("restId:" + restId);
@@ -159,9 +166,10 @@
             console.log(error);
         });
       },
-  
+
       data() {
         return {
+          nameList:[],
           date1:'',
           date2:'',
           setmeal_info:{
@@ -248,6 +256,19 @@
             console.log(error);
           })
         },
+        querySearch(queryString, cb) {
+          var foods = this.nameList;
+          var results = queryString ? foods.filter(this.createFilter(queryString)) :foods;
+          console.log(foods);
+          cb(results);
+        },
+
+        createFilter(queryString) {
+          return (restaurant) => {
+            return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase())>-1);
+          };
+
+        },
 
         get_food_list() {
           let id = localStorage.rest_id;
@@ -260,6 +281,12 @@
             function (response) {
               console.log(response.data);
               self.setmeal_info.food_list = response.data;
+
+              for(let i=0;i<self.setmeal_info.food_list.length;i++){
+                self.nameList.push({
+                  value:self.setmeal_info.food_list[i].name
+                });
+              }
             }
           ).catch(function (error) {
             console.log(error);
