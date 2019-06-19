@@ -169,6 +169,9 @@
       },
       edit(){
         this.editable = true;
+        this.pcd.province=this.rest_info.province;
+        this.pcd.city=this.rest_info.city;
+        this.pcd.district=this.rest_info.district;
         let obj = {
           name: this.rest_info.name,
           id: this.rest_info.id,
