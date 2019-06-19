@@ -32,6 +32,8 @@
           <el-form-item class="form-label" label="详细地址" prop="address">
             <el-input style="width: 300px;" v-model="rest_form.address"></el-input>
           </el-form-item>
+
+
           <el-form-item class="form-label" label="餐厅图片" prop="pic">
             <el-upload
               class="register-pic"
@@ -44,6 +46,8 @@
               <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
             </el-upload>
           </el-form-item>
+
+
           <el-form-item>
             <div style="width: 875px;margin-top: 20px;">
               <div style="float: right">
@@ -150,9 +154,6 @@
               let address = this.rest_form.address;
               let type = this.rest_form.value;
               let self = this;
-              let city=this.rest_form.pcd.city;
-              let province=this.rest_form.pcd.province;
-              let district=this.rest_form.pcd.district;
               this.$axios.post('/rest/register',{
                 name: name,
                 province: self.rest_form.pcd.province,
