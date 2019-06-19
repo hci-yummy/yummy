@@ -20,6 +20,7 @@
       </div>
       <div style="margin-left: 25px">
         <el-button type="info" plain v-on:click="edit">修改信息</el-button>
+
       </div>
     </div>
 
@@ -80,6 +81,7 @@
 
         <div style="margin-top: 40px;margin-left: 43%">
           <el-button type="primary" v-on:click="submit">保存</el-button>
+          <el-button type="info" plain v-on:click="back2Info">返回</el-button>
         </div>
       </el-form>
     </div>
@@ -132,6 +134,9 @@
       }
     },
     methods: {
+      back2Info(){
+        this.editable = false;
+      },
       uploadSuccess(response, file, fileList) {
         console.log("uploadSuccess");
         this.rest_form.image = "";
@@ -261,6 +266,7 @@
     width: 400px;
     margin-top: 40px;
     margin-left: 20px;
+    padding-bottom: 40px;
   }
 </style>
 
