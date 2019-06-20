@@ -1,66 +1,7 @@
 <template>
-  <div>
+  <div >
     <memberTopBar></memberTopBar>
     <el-form class="member_form" ref="member_info" :model="member_info" :label-position="labelPosition" label-width="80px">
-
-<!--      <el-form-item
-        v-for="(add ,index) in member_info.addressList"
-        :label="'地址' + (index + 1)"
-        :key="add.key"
-      >
-
-        <div style="display: flex">
-
-          <el-select v-model="add.province" style="width: 120px">
-            <el-option
-              v-for="item in district_list"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
-
-
-          <el-select v-model="add.city" style="width: 120px">
-            <el-option
-              v-for="item in district_list"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
-
-
-          <el-select v-model="add.district" style="width: 120px">
-            <el-option
-              v-for="item in district_list"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
-          <el-input v-model="add.address" style="width: 300px"></el-input>
-        </div>
-      </el-form-item>-->
-
-
-<!--      <div class="info_item"
-           v-for="(add ,index) in member_info.addressList"
-           :key="add.key"
-      >
-        地址{{(index + 1)}}：{{add.province}}{{add.city}}{{add.district}} {{add.address}}
-        <el-button style="margin: 20px" type="primary"   v-on:click="editAddress">删除</el-button>
-      </div>
-
-      <el-form-item>
-        <el-button type="primary"  v-on:click="submit">保存</el-button>
-        <el-button v-on:click="back2Info">返回</el-button>
-        <el-button style="margin: 20px" type="primary"   v-on:click="newAddress">添加</el-button>
-      </el-form-item>-->
-
 
       <el-table
         :data="member_info.addressList"
@@ -85,10 +26,7 @@
           label="区"
           align="center"
         >
-<!--
-          <template slot-scope="scope">
-            <el-input-number size="mini" v-model="scope.row.num"></el-input-number>
-          </template>-->
+
         </el-table-column>
 
         <el-table-column
@@ -103,22 +41,22 @@
           align="center"
         >
           <template slot-scope="scope">
-            <el-button size="mini" @click="delAddress">删除</el-button>
+            <el-button size="mini"  type="danger" @click="delAddress(scope.$index)">删除</el-button>
           </template>
         </el-table-column>
 
-        <el-table-column
+<!--        <el-table-column
           label="操作"
           align="center"
         >
           <template slot-scope="scope">
             <el-button size="mini" @click="editAddress">编辑</el-button>
           </template>
-        </el-table-column>
+        </el-table-column>-->
 
       </el-table>
-      <el-button style="margin: 20px 20px 20px 500px" type="primary"   v-on:click="newAddress">添加新地址</el-button>
-
+      <el-button style="margin: 20px 20px 20px 450px" type="primary"   v-on:click="newAddress">添加新地址</el-button>
+      <el-button style="margin: 20px 20px 20px 100px" type="primary"   v-on:click="back2Info">返回</el-button>
       <el-form-item label="所在地" v-if="editable">
 
         <div class="selector" style="width: 300px;border: 1px solid gainsboro;border-radius: 5px;color: #7e7e7e;font-size: 16px;height: 40px;line-height: 40px;display: flex" @click="changeShowPcdChoice">
@@ -135,14 +73,13 @@
       </el-form-item>
 
       <el-form-item label="具体地址" v-if="editable">
-        <el-input v-model="newaddress"></el-input>
+        <el-input v-model="newAdd"></el-input>
       </el-form-item>
 
-      <el-form-item  v-if="editable">
-        <el-button  type="primary"   v-on:click="newAddress">确认</el-button>
+      <el-form-item  v-if="editable" >
+        <el-button  type="primary"   v-on:click="confirmAddress">确认</el-button>
         <el-button  type="primary"   v-on:click="cancelAddress">取消</el-button>
       </el-form-item>
-
 
     </el-form>
 
@@ -165,7 +102,7 @@
     data() {
       return {
         showPcdChoice: false,
-        newaddress:'',
+        newAdd:'',
         pcd: {
           province: "",
           city: "",
@@ -181,15 +118,18 @@
       cancelAddress(){
         this.editable=false;
       },
+
       changeShowPcdChoice () {
         this.showPcdChoice = !this.showPcdChoice;
         document.getElementsByClassName("selector")[0].style.border = "1px solid #DCDCDC"
       },
+
       setPcd(pcdChoice){
         console.log("pcd: "+pcdChoice);
         this.pcd = pcdChoice;
         document.getElementsByClassName("selector")[0].style.border = "1px solid #409EFF"
       },
+
       submit() {
         let username = this.member_info.username;
         let email = this.member_info.email;
@@ -220,22 +160,60 @@
 
       newAddress(){
         this.editable=true;
-
       },
-      delAddress(){
 
+      confirmAddress(){
+        let email = localStorage.user_email;
+        let username = this.member_info.username;
+        let phone = this.member_info.phone;
+        let district = this.pcd.district;
+        let city=this.pcd.city;
+        let province=this.pcd.province;
+        let address = this.newAdd;
+
+        let self = this;
+
+        this.$axios.post('/user/new_address',{
+            email: email,
+            province:province,
+            city:city,
+            district:district,
+            address:address,
+            name:username,
+            phone:phone
+
+        }).then(
+          function (response) {
+            self.$router.go(0);
+          }
+        ).catch(function (error) {
+          console.log(error);
+        })
       },
+
+      delAddress(index){
+        console.log(index);
+        let self = this;
+        let aid = this.member_info.addressList[index].id;
+        console.log(aid);
+
+        this.$axios.get('/user/delete_address',{
+          params: {
+            aid:aid
+          }
+
+        }).then(
+          function (response) {
+            self.$router.go(0);
+          }
+        ).catch(function (error) {
+          console.log(error);
+        })
+      },
+
       back2Info(){
         this.$router.push({name: "memberInfo"})
-        /*      this.member_info.addressList.push({
-                id: -1,
-                province:'',
-                city:'',
-                district: '',
-                address: '',
-              });*/
       },
-
 
       get_info() {
         let email = localStorage.user_email;
