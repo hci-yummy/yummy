@@ -2,8 +2,8 @@
   <div>
     <visitorTopBar></visitorTopBar>
     <div class="top">
-      <div style="padding-left: 40px">
-        <i>Yummy！</i> 会员注册
+      <div style="padding-left: 40px; padding-bottom: 30px">
+        会员注册
       </div>
     </div>
     <div>
@@ -29,6 +29,9 @@
             </div>
           </el-form-item>
         </el-form>
+      </div>
+      <div style="position: absolute; z-index: -999; width: 100%; background: red; opacity: 0.2;top: 150px">
+        <img src="../assets/cake.jpg" style="width: 100%; height: 560px;opacity: 0.6;"/>
       </div>
     </div>
   </div>
@@ -92,17 +95,16 @@
     color: white;
     font-size: 50px;
     width: 100%;
-    height: 150px;
-    line-height: 200px;
+    height: 120px;
+    line-height: 100px;
     background-color: #409EFF;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
     /*background-image: url("/static/top-back.jpg");*/
     /* background-size: 100% 100%;*/
   }
 
   .member{
     width: 500px;
-    height: 600px;
     /*margin-top: 10px;*/
     margin: 80px auto;
     /*border: 1px solid black;*/
@@ -118,6 +120,6 @@
 
 <style>
   .form-label .el-form-item__label{
-    font-size: 20px !important;
+    font-size: 12px !important;
   }
 </style>

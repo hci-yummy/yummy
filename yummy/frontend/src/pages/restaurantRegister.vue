@@ -3,7 +3,7 @@
     <visitorTopBar></visitorTopBar>
     <div class="top">
       <div style="padding-left: 40px">
-        <i>Yummy!</i> 餐厅注册
+        餐厅注册
       </div>
     </div>
     <div>
@@ -57,6 +57,9 @@
             </div>
           </el-form-item>
         </el-form>
+      </div>
+      <div style="position: absolute; z-index: -999; width: 100%; background: red; opacity: 0.2;top: 150px">
+        <img src="../assets/cake.jpg" style="width: 100%; height: 690px;opacity: 0.6;"/>
       </div>
     </div>
   </div>
@@ -188,8 +191,8 @@
     color: white;
     font-size: 50px;
     width: 100%;
-    height: 150px;
-    line-height: 200px;
+    height: 120px;
+    line-height: 100px;
     background-color: #409EFF;
     /*background-image: url("/static/top-back.jpg");*/
     /* background-size: 100% 100%;*/
@@ -199,7 +202,7 @@
     width: 900px;
     height: 600px;
     /*margin-top: 10px;*/
-    margin: 80px auto;
+    margin: 30px auto;
    /* border: 1px solid black;*/
   }
 
@@ -217,10 +220,11 @@
 
 <style>
   .form-label .el-form-item__label{
-    font-size: 20px !important;
+    font-size: 14px !important;
   }
 
   .register-pic .el-upload-dragger{
     width: 745px;
+    height: 200px;
   }
 </style>
