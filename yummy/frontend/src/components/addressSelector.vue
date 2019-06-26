@@ -44,6 +44,7 @@
     font-size: 16px;
     height: 40px;
     line-height: 40px;
-    display: flex
+    display: flex;
+    background: white;
   }
 </style>

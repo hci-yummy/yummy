@@ -4,7 +4,7 @@
     <div class="back">
       <div class="main">
         <div>
-          <img src="../assets/logo.png" style="width: 700px"/>
+          <img src="../assets/logo.png" style="width: 500px"/>
           <!--<h1 class="title">登 录</h1>-->
         </div>
         <div>
@@ -99,8 +99,8 @@
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    width: 60%;
-    height: 60%;
+    width: 50%;
+    height: 50%;
     border: 1px solid #409EFF;
     background: rgba(255,255,255,0.7);
   }
