@@ -2,7 +2,7 @@
   <div >
     <memberTopBar></memberTopBar>
     <el-form class="member_form" ref="member_info" :model="member_info" :label-position="labelPosition" label-width="80px">
-
+      <h3>个人中心 > 修改地址</h3>
       <el-table
         :data="member_info.addressList"
         stripe=""
@@ -55,7 +55,7 @@
         </el-table-column>-->
 
       </el-table>
-      <el-button style="margin: 20px 20px 20px 450px" type="primary"   v-on:click="newAddress">添加新地址</el-button>
+      <el-button style="margin: 20px 20px 20px 250px" type="primary"   v-on:click="newAddress" >添加新地址</el-button>
       <el-button style="margin: 20px 20px 20px 100px" type="primary"   v-on:click="back2Info">返回</el-button>
       <el-form-item label="所在地" v-if="editable">
 
@@ -76,8 +76,8 @@
         <el-input v-model="newAdd"></el-input>
       </el-form-item>
 
-      <el-form-item  v-if="editable" >
-        <el-button  type="primary"   v-on:click="confirmAddress">确认</el-button>
+      <el-form-item  v-if="editable">
+        <el-button  type="primary"   v-on:click="confirmAddress" >确认</el-button>
         <el-button  type="primary"   v-on:click="cancelAddress">取消</el-button>
       </el-form-item>
 
@@ -237,8 +237,17 @@
 
 <style scoped>
   .member_form{
-    /*width: 500px;*/
+    width:900px;
     margin-top: 50px;
-    margin-left: 40px;
+    margin-left: 150px;
+    padding: 0px 20px 20px 20px;
+    border: 1px solid gainsboro;
+    box-shadow:
+      0 1px 6px 0 rgba(0,0,0, .12),
+      0 1px 6px 0 rgba(0,0,0, .12);
+    border-radius: 3px;
   }
+
+
+
 </style>
