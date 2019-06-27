@@ -1,10 +1,10 @@
 <template>
     <div>
       <restTopBar></restTopBar>
-      <div style="width: 100%;padding-top: 50px; padding-left: 20px;">
+      <div style="width: 1200px;padding-top: 50px; padding-left: 40px;">
         <el-tabs v-model="index" @tab-click="handleClick" :tab-position="tabPosition">
           <el-tab-pane label="待接单订单" name="1">
-            <div style="margin-left: 50px">
+            <div style="margin-left: 150px">
 
               <div v-show="not_receive_list.length === 0" style="font-size: 30px;color: #7e7e7e">
                 暂时没有需要接单的订单~
@@ -19,115 +19,120 @@
 
           </el-tab-pane>
           <el-tab-pane label="待发货订单" name="2">
-            <el-table
-              :data="not_deliver_list"
-              stripe
-              width="100%"
-              class="table_style"
-            >
-              <el-table-column
-                prop="orderTime"
-                label="下单时间"
-                width="190px"
+            <el-card style="margin-left: 30px;width: 1000px;margin-top: -20px;">
+              <el-table
+                :data="not_deliver_list"
+                stripe
+                width="100%"
+                class="table_style"
               >
-              </el-table-column>
-              <el-table-column
-                prop="foodList"
-                label="商品"
-                width="150px"
-              >
-                <template slot-scope="scope">
-                  <p
-                    v-for="item in scope.row.foodList"
-                    :key="item.id"
-                  >
-                    {{item.name + ' x'}}{{item.num}}
-                  </p>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="sum"
-                label="总价(元)"
-                width="130px"
-              >
-              </el-table-column>
-              <el-table-column
-                label="是否退订"
-                width="120px"
-              >
-                <template slot-scope="scope">
-                  <div v-show="!scope.row.isCancel">
-                    否
-                  </div>
-                  <div v-show="scope.row.isCancel">
-                    <span style="color: red">是</span>
-                  </div>
+                <el-table-column
+                  prop="orderTime"
+                  label="下单时间"
+                  width="190px"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="foodList"
+                  label="商品"
+                  width="150px"
+                >
+                  <template slot-scope="scope">
+                    <p
+                      v-for="item in scope.row.foodList"
+                      :key="item.id"
+                    >
+                      {{item.name + ' x'}}{{item.num}}
+                    </p>
                   </template>
-              </el-table-column>
-              <el-table-column
-                label="操作"
-                align="center"
-              >
-                <template slot-scope="scope">
-                  <el-button v-show="!scope.row.isCancel" size="small" v-on:click="deliver_order(scope.row.oid)">准备发货</el-button>
-                  <el-button v-show="scope.row.isCancel" size="small" v-on:click="agree_cancel(scope.row.oid)">接受退订</el-button>
+                </el-table-column>
+                <el-table-column
+                  prop="sum"
+                  label="总价(元)"
+                  width="130px"
+                >
+                </el-table-column>
+                <el-table-column
+                  label="是否退订"
+                  width="120px"
+                >
+                  <template slot-scope="scope">
+                    <div v-show="!scope.row.isCancel">
+                      否
+                    </div>
+                    <div v-show="scope.row.isCancel">
+                      <span style="color: red">是</span>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="操作"
+                  align="center"
+                >
+                  <template slot-scope="scope">
+                    <el-button v-show="!scope.row.isCancel" size="small" v-on:click="deliver_order(scope.row.oid)">准备发货</el-button>
+                    <el-button v-show="scope.row.isCancel" size="small" v-on:click="agree_cancel(scope.row.oid)">接受退订</el-button>
 
-                </template>
-              </el-table-column>
-            </el-table>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-card>
           </el-tab-pane>
           <el-tab-pane label="已发货订单" name="3">
-            <el-table
-              :data="delivered_list"
-              stripe
-              width="100%"
-              class="table_style"
-            >
-              <el-table-column
-                prop="orderTime"
-                label="下单时间"
+            <el-card style="margin-left: 30px;width: 1000px;margin-top: -20px;">
+              <el-table
+                :data="delivered_list"
+                stripe
+                width="100%"
+                class="table_style"
+              >
+                <el-table-column
+                  prop="orderTime"
+                  label="下单时间"
 
-                width="190px"
-              >
-              </el-table-column>
-              <el-table-column
-                prop="foodList"
-                label="商品"
-                width="170px"
-              >
-                <template slot-scope="scope">
-                  <p
-                    v-for="item in scope.row.foodList"
-                    :key="item.id"
-                  >
-                    {{item.name + ' x'}}{{item.num}}
-                  </p>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="sum"
-                label="总价(元)"
-                width="130px"
-              >
-              </el-table-column>
-              <el-table-column
-                prop="state"
-                label="状态"
-              >
-              </el-table-column>
-              <el-table-column
-                label="是否退订"
-                align="center"
-              >
-                <template slot-scope="scope">
-                  <div v-show="!scope.row.isCancel">
-                    否
-                  </div>
+                  width="190px"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="foodList"
+                  label="商品"
+                  width="170px"
+                >
+                  <template slot-scope="scope">
+                    <p
+                      v-for="item in scope.row.foodList"
+                      :key="item.id"
+                    >
+                      {{item.name + ' x'}}{{item.num}}
+                    </p>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  prop="sum"
+                  label="总价(元)"
+                  width="130px"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="state"
+                  label="状态"
+                >
+                </el-table-column>
+                <el-table-column
+                  label="是否退订"
+                  align="center"
+                >
+                  <template slot-scope="scope">
+                    <div v-show="!scope.row.isCancel">
+                      否
+                    </div>
 
-                  <el-button v-show="scope.row.isCancel" size="small" v-on:click="agree_cancel(scope.row.oid)">接受退订</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+                    <el-button v-show="scope.row.isCancel" size="small" v-on:click="agree_cancel(scope.row.oid)">接受退订</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-card>
+
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -231,28 +236,36 @@
         },
 
         receive_order:function(oid) {
+          var self = this;
           this.$axios.get('/order/receive_order',{
             params: {
               oid: oid
             }
           }).then(
             function (response) {
-              alert("接单成功！");
-              window.location.reload();
+              self.get_not_receive();
+              self.$message({
+                type:'success',
+                message:'接单成功'
+              });
             }
           ).catch(function (error) {
             console.log(error);
           })
         },
         deliver_order(oid,) {
+          var self = this
           this.$axios.get('/order/deliver_order',{
             params: {
               oid: oid
             }
           }).then(
             function (response) {
-              alert("发货成功！");
-              window.location.reload();
+              self.get_not_deliver();
+              self.$message({
+                type:'success',
+                message:'发货成功'
+              });
             }
           ).catch(function (error) {
             console.log(error);
