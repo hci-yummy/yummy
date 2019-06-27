@@ -30,8 +30,8 @@
           </el-form-item>
         </el-form>
       </div>
-      <div style="position: absolute; z-index: -999; width: 100%; background: red; opacity: 0.2;top: 150px">
-        <img src="../assets/cake.jpg" style="width: 100%; height: 560px;opacity: 0.6;"/>
+      <div style="position: absolute; z-index: -999; width: 100%; background: red; opacity: 0.1;top: 150px">
+        <img src="../assets/cake.jpg" style="width: 100%; height: 560px;opacity: 0.8;"/>
       </div>
     </div>
   </div>

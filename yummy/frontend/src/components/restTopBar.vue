@@ -53,13 +53,13 @@
 
 <style scoped>
   .top-bar-style{
-    font-size: 18px;
+    font-size: 14px;
   }
   .menu{
     border: 1px solid #409EFF;
   }
   .sub-menu{
-    font-size: 14px;
+    font-size: 12px;
     width:200px;
   }
 </style>

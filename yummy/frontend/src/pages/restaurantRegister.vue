@@ -42,8 +42,8 @@
               :onSuccess="uploadSuccess"
             >
               <i class="el-icon-upload"></i>
-              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-              <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em>【只能上传jpg/png文件，且不超过500kb】</div>
+              <!--<div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>-->
             </el-upload>
           </el-form-item>
 
@@ -58,9 +58,9 @@
           </el-form-item>
         </el-form>
       </div>
-      <div style="position: absolute; z-index: -999; width: 100%; background: red; opacity: 0.2;top: 150px">
-        <img src="../assets/cake.jpg" style="width: 100%; height: 690px;opacity: 0.6;"/>
-      </div>
+      <div style="position: absolute; z-index: -999; width: 100%; background: red; opacity: 0.1;top: 150px">
+        <img src="../assets/cake.jpg" style="width: 100%; height: 690px;opacity: 0.8;"/>
+      </div><
     </div>
   </div>
 </template>
@@ -189,9 +189,9 @@
 
   .top{
     color: white;
-    font-size: 50px;
+    font-size: 40px;
     width: 100%;
-    height: 120px;
+    height: 100px;
     line-height: 100px;
     background-color: #409EFF;
     /*background-image: url("/static/top-back.jpg");*/
@@ -202,7 +202,7 @@
     width: 900px;
     height: 600px;
     /*margin-top: 10px;*/
-    margin: 30px auto;
+    margin: 20px auto;
    /* border: 1px solid black;*/
   }
 
