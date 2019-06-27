@@ -1,6 +1,9 @@
 <template>
-  <restNavi paneltitle="发布信息 > 发布新品">
+  <div>
+    <restTopBar></restTopBar>
     <div class="main-body">
+      <h3>发布信息 > 发布新品</h3>
+      <hr class="hr1">
       <el-form style="display: flex;" ref="food_info" :model="food_info" label-width="80px">
 
 
@@ -88,14 +91,14 @@
 
       </el-form>
     </div>
-  </restNavi>
+  </div>
 </template>
 
 <script>
-    import restNavi from '../components/restNavi'
+    import restTopBar from '../components/restTopBar'
     export default {
       name: "launch-new-food",
-      components:{restNavi},
+      components:{ restTopBar},
       mounted: function() {
 
         let restId = localStorage.rest_id;
@@ -237,9 +240,26 @@
 
 <style scoped>
   .main-body{
-    margin-top: 40px;
-    margin-left: 40px;
-    width: 440px;
+    margin-top: 30px;
+    margin-left: 175px;
+    margin-bottom: 50px;
+
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 40px;
+    width:900px;
+    border: 1px solid gainsboro;
+    box-shadow:
+      0 1px 6px 0 rgba(0,0,0, .12),
+      0 1px 6px 0 rgba(0,0,0, .12);
+    border-radius: 3px;
+  }
+  .hr1{
+    border:none;
+    border-bottom: 1px solid #d5d5d5;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-right:15px;
   }
 </style>
 

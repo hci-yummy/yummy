@@ -1,11 +1,15 @@
 <template>
-    <restNavi paneltitle="发布信息 > 发布套餐">
+    <div>
+      <restTopBar></restTopBar>
       <div class="main_body">
-        <el-form style="width: 600px" ref="setmeal_info" :model="setmeal_info" label-width="80px">
+        <h3>发布信息 > 发布套餐</h3>
+        <hr class="hr1">
+        <el-form style="width: 600px;margin-left: 50px" ref="setmeal_info" :model="setmeal_info" label-width="80px">
 
-          <el-form-item label="套餐名称">
+          <el-form-item label="套餐名称" >
 
             <el-autocomplete
+              style="width:520px;"
               v-model="setmeal_info.name"
               placeholder="请输入商品名称"
               :fetch-suggestions="querySearch">
@@ -77,7 +81,7 @@
           </el-table>
         </el-form>
 
-        <el-form style="width: 600px; margin-top: 50px">
+        <el-form style="width: 600px; margin-top: 50px;margin-left: 50px">
           <div class="title">套餐内容:</div>
 
           <el-table
@@ -130,14 +134,14 @@
         </el-form>
 
       </div>
-    </restNavi>
+    </div>
 </template>
 
 <script>
-    import restNavi from '../components/restNavi'
+  import restTopBar from '../components/restTopBar'
     export default {
       name: "launch-setmeal",
-      components:{restNavi},
+      components:{ restTopBar},
       mounted: function() {
 
         let restId = localStorage.rest_id;
@@ -297,17 +301,32 @@
 </script>
 
 <style scoped>
-
+  .hr1{
+    border:none;
+    border-bottom: 1px solid #d5d5d5;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-right:15px;
+  }
   .title{
     font-size: 24px;
     color: #7e7e7e;
   }
 
   .main_body{
-    margin-top: 40px;
-    margin-left: 20px;
-    width: 440px;
+    margin-top: 30px;
+    margin-left: 175px;
     margin-bottom: 50px;
+
+    padding-left: 50px;
+    padding-bottom: 40px;
+    width:900px;
+    border: 1px solid gainsboro;
+    box-shadow:
+      0 1px 6px 0 rgba(0,0,0, .12),
+      0 1px 6px 0 rgba(0,0,0, .12);
+    border-radius: 3px;
+
   }
 
 </style>

@@ -1,6 +1,9 @@
 <template>
-    <restNavi paneltitle="发布信息 > 发布优惠">
-      <div style="margin-top: 50px">
+    <div>
+      <restTopBar></restTopBar>
+      <div  class="main_body">
+        <h3>发布信息 > 发布优惠</h3>
+        <hr class="hr1">
         <el-card class="box">
           <div slot="header" class="clearfix">
             <span>已有优惠</span>
@@ -67,16 +70,16 @@
           </div>
         </el-card>
       </div>
-    </restNavi>
+    </div>
 </template>
 
 <script>
-    import restNavi from '../components/restNavi'
+  import restTopBar from '../components/restTopBar'
     export default {
       name: "launch-discount",
-      components:{restNavi},
+      components:{ restTopBar},
       mounted: function() {
-        
+
         let restId = localStorage.rest_id;
         let self = this;
         console.log("restId:" + restId);
@@ -176,12 +179,34 @@
 </script>
 
 <style scoped>
+.main_body{
+  margin-top: 30px;
+  margin-left: 200px;
+  margin-bottom: 50px;
+
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 40px;
+  width:800px;
+  border: 1px solid gainsboro;
+  box-shadow:
+    0 1px 6px 0 rgba(0,0,0, .12),
+    0 1px 6px 0 rgba(0,0,0, .12);
+  border-radius: 3px;
+}
 
   .box{
     width: 550px;
     margin-bottom: 50px;
+    margin-left: 100px;
   }
-
+  .hr1{
+    border:none;
+    border-bottom: 1px solid #d5d5d5;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-right:15px;
+  }
 </style>
 <style>
 .el-form-item__label{
