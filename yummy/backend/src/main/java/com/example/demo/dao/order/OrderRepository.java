@@ -24,16 +24,16 @@ public interface OrderRepository extends CrudRepository<Orders, Integer> {
 
     List<Orders> findByRestaurant(Restaurant rest);
 
-    @Query(value = "select * from orders o where o.email = ?1 and o.is_paid = false and o.is_valid = true", nativeQuery = true)
+    @Query(value = "select * from orders o where o.email = ?1 and o.is_paid = false and o.is_cancel = false", nativeQuery = true)
     List<Orders> getNotPaidList(String email);
 
-    @Query(value = "select * from orders o where o.email = ?1 and o.is_paid = true and o.is_valid = true", nativeQuery = true)
+    @Query(value = "select * from orders o where o.email = ?1 and o.is_paid = true and o.is_cancel = false", nativeQuery = true)
     List<Orders> getCompleteList(String email);
 
-    @Query(value = "select * from orders o where o.email = ?1 and o.is_valid = false", nativeQuery = true)
+    @Query(value = "select * from orders o where o.email = ?1 and o.is_cancel = true", nativeQuery = true)
     List<Orders> getInvalidList(String email);
 
-    @Query(value = "select * from orders o where o.rest_id = ?1 and o.is_paid = true and o.is_valid = true", nativeQuery = true)
+    @Query(value = "select * from orders o where o.rest_id = ?1 and o.is_paid = true and o.is_cancel = false", nativeQuery = true)
     List<Orders> getPaidList(String restId);
 
     @Query(value = "select * from orders", nativeQuery = true)
@@ -41,6 +41,6 @@ public interface OrderRepository extends CrudRepository<Orders, Integer> {
 
     List<Orders> findDistinctByRestaurantAndOrderTimeBetween(Restaurant restaurant, LocalDateTime start, LocalDateTime end);
 
-    @Query(value = "SELECT * FROM orders o WHERE o.rest_id = ?1 and o.is_paid = true and o.is_valid = false", nativeQuery = true)
+    @Query(value = "SELECT * FROM orders o WHERE o.rest_id = ?1 and o.is_cancel = true", nativeQuery = true)
     List<Orders> findCanceledOrders(String restId);
 }

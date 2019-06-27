@@ -230,8 +230,8 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderExpressResponse> getNotDeliverOrders(String restId) {
         List<Orders> orders = orderRepository.getPaidList(restId);
         List<Orders> orders2 = orderRepository.findCanceledOrders(restId);
-        orders.addAll(orders2);
-        return getExpressList(orders, "等待商家发货");
+        orders2.addAll(orders);
+        return getExpressList(orders2, "等待商家发货");
     }
 
     @Override
