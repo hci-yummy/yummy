@@ -7,8 +7,16 @@
       <hr class="hr1">
 
       <div style="display: flex">
-        <div style="margin: 50px">
+        <div style="margin: 0px 50px 50px 50px">
           <img src="/static/user1.png" style="width: 200px"/>
+          <ul id="sliding-navigation">
+            <li class="sliding-element">
+              <h3>基本信息</h3>
+            </li>
+            <li class="sliding-element"><a href="#/memberAddress">地址管理</a></li>
+            <li class="sliding-element"><a href="#/order">我的订单</a></li>
+            <li class="sliding-element"><a href="#/nearbyRestaurant">附近餐厅</a></li>
+          </ul>
         </div>
 
         <div>
@@ -185,6 +193,51 @@
 </script>
 
 <style scoped>
+
+  #navigation-block {
+    margin-top: 5%;
+    margin-left: 5%;
+    /*    top:100px;
+        left:100px;*/
+    float: left;
+    position:fixed;
+  }
+
+  ul#sliding-navigation
+  {
+    list-style: none;
+    font-size: .85em;
+    margin: 30px 0;
+    padding: 0;
+  }
+
+  ul#sliding-navigation li.sliding-element h3,
+  ul#sliding-navigation li.sliding-element a
+  {
+    display: block;
+    width: 150px;
+    padding: 5px 18px;
+    margin: 0;
+    margin-bottom: 5px;
+  }
+
+  ul#sliding-navigation li.sliding-element h3
+  {
+    color: #fff;
+    background:#333 url("../assets/heading_bg.jpg") repeat-y;
+    font-weight: normal;
+  }
+
+  ul#sliding-navigation li.sliding-element a
+  {
+    color: #d3d3d3;
+    background:#222 url("../assets/tab_bg.jpg") repeat-y;
+    border: 1px solid #1a1a1a;
+    text-decoration: none;
+  }
+
+
+  ul#sliding-navigation li.sliding-element a:hover { color: #ece4e5; }
   .member_info{
     background-color: white;
     padding-left: 20px;
