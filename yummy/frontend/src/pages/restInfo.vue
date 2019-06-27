@@ -6,8 +6,42 @@
     <div v-else>
       <memberTopBar></memberTopBar>
     </div>
-    <div style="width: 100%;margin-top: 50px;margin-left: 20px">
-      <div  style="display: flex">
+
+    <div style="width: 100%;background-color: #f5f5f5;min-height: 650px">
+
+      <div style="padding: 0;position: relative;z-index: 1;width: 100%;" class="myspace">
+        <div style="display: flex;float: left;margin-left: 40px" >
+
+          <div style="width: 100px;height: 100px;margin: 10px 0px">
+            <img :src="info.url" style="width: 100px; height: 100px">
+          </div>
+          <div style="margin-left: 30px">
+            <div style="display: flex">
+              <h2>{{info.name}}</h2><el-tag style="margin-top: 27px;margin-left: 15px" size="mini">{{info.type}}</el-tag>
+            </div>
+
+            <el-rate
+              v-model="info.rate"
+              disabled
+              show-score
+              text-color="#ff9900"
+              score-template="{value}">
+            </el-rate>
+          </div>
+        </div>
+        <div style="float: right; margin-right: 30px; margin-top: 35px">
+          <div style="display: flex;">
+            <div style="margin-top: 5px;margin-left: 5px"><i class="el-icon-location-information" style="font-size: 35px; color: #c1c1c1"></i></div>
+            <!--<div style="border-left: 1px solid #dadada;height: 50px; width: 0px;margin-left: 15px"></div>-->
+            <div style="margin-left: 10px">
+              <p>鼓楼区 广州路99号</p>
+            </div>
+          </div>
+        </div>
+        <div style="height:120px "></div>
+      </div>
+
+      <div  style="display: flex;padding-left: 20px;margin-top: 30px;">
         <div class="pane">
           <foodInfo :food_info="item" v-for="(item, index) in food_list" :key="index" v-on:getFoodEvent="add_basket"></foodInfo>
         </div>
@@ -261,7 +295,7 @@
       0 1px 6px 0 rgba(0,0,0, .12),
       0 1px 6px 0 rgba(0,0,0, .12);
     border-radius: 3px;
-    padding-left: 5%;
+    padding-left: 3%;
   }
 
   .myspace p{
