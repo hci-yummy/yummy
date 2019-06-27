@@ -94,7 +94,6 @@
               label="名称"
               align="center"
             >
-              812697706
             </el-table-column>
             <el-table-column
               prop="price"
