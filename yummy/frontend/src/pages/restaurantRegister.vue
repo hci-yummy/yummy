@@ -7,11 +7,11 @@
       </div>
     </div>
     <div>
-      <div class="member">
+      <el-card class="member">
         <!--<div class="tab_title">
           餐厅基本信息填写：
         </div>-->
-        <el-form :inline="true" :label-position="rest_form.labelPosition" ref="rest_form" :rules="rules" :model="rest_form" label-width="130px" style="width: 1000px;">
+        <el-form :inline="true" :label-position="rest_form.labelPosition" ref="rest_form" :rules="rules" :model="rest_form" label-width="130px" style="width: 1000px;margin-right: 20px;">
           <el-form-item class="form-label" label="餐厅名" prop="rest_name">
             <el-input style="width: 300px;" v-model="rest_form.rest_name"></el-input>
           </el-form-item>
@@ -49,7 +49,7 @@
 
 
           <el-form-item>
-            <div style="width: 875px;margin-top: 20px;">
+            <div style="width: 875px;margin-top: 10px;">
               <div style="float: right">
                 <el-button v-on:click=clear>清空</el-button>
                 <el-button type="primary" v-on:click="rest_register">注册</el-button>
@@ -57,7 +57,9 @@
             </div>
           </el-form-item>
         </el-form>
-      </div>
+
+
+      </el-card>
       <div style="position: absolute; z-index: -999; width: 100%; background: red; opacity: 0.1;top: 150px">
         <img src="../assets/cake.jpg" style="width: 100%; height: 690px;opacity: 0.8;"/>
       </div><
@@ -199,8 +201,8 @@
   }
 
   .member{
-    width: 900px;
-    height: 600px;
+    width: 1000px;
+    height: 500px;
     /*margin-top: 10px;*/
     margin: 20px auto;
    /* border: 1px solid black;*/
