@@ -101,7 +101,7 @@ public class RestServiceImpl implements RestService {
                 int time = 50;
                 double fee = 10;
                 restResponse.setId(r.getId());
-//                restResponse.setAddress(r.getAddress());
+                restResponse.setAddress(r.getDistrict() + "  " + r.getAddress());
                 restResponse.setName(r.getName());
                 restResponse.setType(r.getType());
                 if(r.getDistrict().equals(district)) {

@@ -19,10 +19,10 @@ public class FindRestByDistResponse {
     private String type;
 
     /*@JsonProperty("district")
-    private String district;
+    private String district;*/
 
     @JsonProperty("address")
-    private String address;*/
+    private String address;
 
     @JsonProperty("time")
     private String time;   // 配送时间(min)
@@ -51,9 +51,9 @@ public class FindRestByDistResponse {
         this.type = type;
     }
 
-//    public void setAddress(String address) {
-//        this.address = address;
-//    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public void setTime(int time) {
         this.time = time + "分钟";
