@@ -38,14 +38,13 @@
             <el-button type="info" plain v-on:click="edit" size="middle">修改信息</el-button>
             <el-button type="danger" plain="" v-on:click="deleteMember" size="middle">注销账号</el-button>
           </div>
-
         </div>
-
       </div>
-
     </div>
 
-
+    <div style="position: absolute; z-index: -999; width: 100%; background: red; opacity: 0.2;top: 50px">
+      <img src="../assets/cake.jpg" style="width: 100%; height: 100%;opacity: 0.6;"/>
+    </div>
 
     <div v-show="editable" class="member_info">
       <h3>个人中心 > 修改信息</h3>
@@ -55,6 +54,8 @@
         <div style="margin-top: 30px">
           <img src="/static/user1.png" style="width: 200px"/>
         </div>
+
+
         <div>
           <el-form class="member_form" ref="member_info" :model="member_info" :label-position="labelPosition" label-width="80px">
             <el-form-item label="用户名">
@@ -73,7 +74,6 @@
           </el-form>
         </div>
       </div>
-
 
     </div>
 
@@ -186,6 +186,7 @@
 
 <style scoped>
   .member_info{
+    background-color: white;
     padding-left: 20px;
     padding-bottom: 20px;
     width:900px;

@@ -283,7 +283,9 @@
     color: black ;
   }
 
-  .upload-demo {
+  .upload-demo  .el-upload-dragger{
     width: 445px;
+    height: 300px;
+    padding: 60px;
   }
 </style>

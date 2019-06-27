@@ -84,8 +84,11 @@
     </el-form>
 
 
-
+    <div style="position: absolute; z-index: -999; width: 100%; background: red; opacity: 0.2;top: 50px">
+      <img src="../assets/cake.jpg" style="width: 100%; height: 100%;opacity: 0.6;"/>
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -237,6 +240,7 @@
 
 <style scoped>
   .member_form{
+    background-color: white;
     width:900px;
     margin-top: 50px;
     margin-left: 150px;
