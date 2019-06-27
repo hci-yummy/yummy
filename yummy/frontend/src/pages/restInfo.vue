@@ -57,7 +57,7 @@
           <foodInCart :food="item" v-for="item in basket" :key="item.id" v-on:changeNumEvent="change_num"></foodInCart>
         </div>
 
-        <div style="height: 50px;display: flex">
+        <div style="height: 50px;display: flex;z-index: 9">
           <div class="cart">
             <div>
               <i class="el-icon-shopping-cart-2" style="font-size: 25px"></i>
@@ -222,7 +222,7 @@
 
           if(this.visitorMode) {
             // visitor
-            this.$router.push({name: 'login', params:{basket: this.basket, info: this.info}});
+            this.$router.push({name: 'loadingPage', params:{basket: this.basket, info: this.info}});
           }else {
             // member
             this.$router.push({name: 'basket', params:{basket: this.basket, info: this.info}});

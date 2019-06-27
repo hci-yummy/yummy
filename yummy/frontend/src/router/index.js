@@ -29,6 +29,7 @@ import welcome from '@/pages/welcome'
 import nearbyRestaurant from '@/pages/nearbyRestaurant'
 import memberRegister from '@/pages/memberRegister'
 import restaurantRegister from '@/pages/restaurantRegister'
+import loadingPage from '@/pages/loadingPage'
 
 Vue.use(Router);
 
@@ -173,6 +174,11 @@ export default new Router({
       path: '/adminStatistics',
       name: 'adminStatistics',
       component: adminStatistics
+    },
+    {
+      path: '/loadingPage',
+      name: 'loadingPage',
+      component: loadingPage
     },
   ]
 })
