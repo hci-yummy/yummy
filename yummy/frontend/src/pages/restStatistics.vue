@@ -12,7 +12,7 @@
          </div>-->
        </div>
 
-       <div style="margin-left: 40px">
+       <div style="margin-left: 40px; margin-top: 50px">
          <el-row class="row">
            <span class="title">开始日期：</span>
            <el-date-picker
@@ -46,6 +46,7 @@
 
        </el-row>
        <el-table
+         :header-cell-style="{background:'#409EFF',color:'white'}"
          :data="tableList"
          stripe=""
          style="margin-top: 30px;margin-bottom: 50px;width: 95%"
