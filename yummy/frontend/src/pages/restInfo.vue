@@ -57,7 +57,7 @@
           <foodInCart :food="item" v-for="item in basket" :key="item.id" v-on:changeNumEvent="change_num"></foodInCart>
         </div>
 
-        <div style="height: 50px;display: flex;z-index: 9">
+        <div style="height: 50px;display: flex;">
           <div class="cart">
             <div>
               <i class="el-icon-shopping-cart-2" style="font-size: 25px"></i>
@@ -249,6 +249,7 @@
     position: fixed;
     right: 0px;
     bottom: 0px;
+    z-index: 9
   }
 
   .cart{
