@@ -51,6 +51,12 @@
             visitorMode: localStorage.username === undefined || localStorage.username === null ||  localStorage.username === ""
           }
         },
+        mounted(){
+          this.pcd.province = localStorage.province===undefined? this.pcd.province: localStorage.province;
+          this.pcd.city = localStorage.city===undefined? this.pcd.city: localStorage.city;
+          this.pcd.district = localStorage.dis===undefined? this.pcd.city: localStorage.dis;
+          this.detail_address = localStorage.detail_address===undefined? this.detail_address: localStorage.detail_address;
+        },
         methods:{
           setPcd(pcdChoice){
             console.log(pcdChoice);
@@ -83,6 +89,8 @@
               localStorage.district = token[2]+this.detail_address;
               localStorage.city = token[1];
               localStorage.province = token[0];
+              localStorage.dis = token[2];
+              localStorage.detail_address = this.detail_address;
               this.$router.push({name:"nearbyRestaurant", params:{pcd:this.pcd, detail_address: this.detail_address}});
             }
 
