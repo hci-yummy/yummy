@@ -100,16 +100,20 @@
           </div>
 
 
-          <div v-show="!isShow">
+          <div v-show="!isShow && showAddress">
             <addressCard :info="now_address" :test="now_address.isChoosed" @editAddressEvent="edit_address" />
           </div>
-          <div v-if="isShow">
+          <div v-if="isShow && showAddress">
             <addressCard
               :info="item"
               v-for="item in address_list"
               :test="item.isChoosed" :key="item.aid"
               @chooseAddressEvent="choose_address"
               @editAddressEvent="edit_address" />
+          </div>
+
+          <div class="address" v-if="!showAddress">
+            <p style="margin-right: auto;margin-left: auto; width: 220px">暂无收货地址信息请先添加！</p>
           </div>
 
           <modal v-show="isModalVisible" @close="close_modal">
@@ -140,8 +144,9 @@
             <div slot="footer"></div>
           </modal>
 
-          <div v-show="!isShow" class="show" v-on:click="show_list"><span>显示更多地址 <i class="el-icon-arrow-down"></i></span></div>
-          <div v-show="isShow" class="show" v-on:click="hide_list"><span>收起 <i class="el-icon-arrow-up"></i></span></div>
+          <div v-show="!isShow && showAddress" class="show" v-on:click="show_list"><span>显示更多地址 <i class="el-icon-arrow-down"></i></span></div>
+          <div v-show="isShow && showAddress" class="show" v-on:click="hide_list"><span>收起 <i class="el-icon-arrow-up"></i></span></div>
+
 
           <div style="margin-top: 20px">
             <div class="title">
@@ -179,7 +184,9 @@
         this.basket = this.$route.params.basket;
 
         this.get_address_list();
-        //this.now_address = this.address_list[0];
+        if(this.address_list.length === 0) {
+          this.showAddress = false;
+        }
 
         this.cal_sum();
         this.get_time();
@@ -218,12 +225,14 @@
             city:'',
             district:'',
           },
+
+          showAddress: true,
           isShow: false, // 是否显示地址列表
           isModalVisible: false,
           now_address:{}, // 当前缩略显示的地址
           choose_id:'', // 当前选择的地址id
           address_list:[
-            {
+            /*{
               aid:1,
               name: "1",
               tele: "1234",
@@ -252,7 +261,7 @@
               province: "江苏省",
               city: "南京市",
               district: "玄武区",
-            }]
+            }*/]
         }
       },
       methods: {
@@ -402,6 +411,7 @@
             console.log(response.data);
             if(response.data) {
               self.isShow = false;
+              self.showAddress = true;
               /*self.get_address_list();
 
               self.now_address = self.address_list[0];
@@ -555,6 +565,16 @@
         },
 
         submit() {
+
+          if(!this.showAddress){
+            this.$alert('请先选择收货地址！', '', {
+              confirmButtonText: '确定',
+              callback: action => {
+                return;
+              }
+            })
+            return;
+          }
           let email = localStorage.user_email;
           let restId = this.info.rid;
           let sum = this.all;
@@ -642,6 +662,14 @@
   .show > span:hover {
     cursor: pointer;
   }
+
+.address{
+  display: flex;
+  width: 95%;
+  border: 1px solid #dadada;
+  height: 50px;
+  padding: 10px;
+}
 
 
 
