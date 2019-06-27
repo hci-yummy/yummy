@@ -283,6 +283,7 @@
 
         show_list() {
           this.isShow = true;
+          this.get_address_list();
         },
 
         hide_list() {
@@ -366,14 +367,18 @@
         save_add_address() {
           let info = this.address_form;
           let self = this;
+          let pcd = this.pcd;
+
+          let email = localStorage.user_email;
 
           this.$axios.post('/user/new_address', {
-            province: info.province,
-            city: info.city,
-            district: info.district,
+            province: pcd.province,
+            city: pcd.city,
+            district: pcd.district,
             address: info.address,
             phone: info.phone,
             name: info.name,
+            email: email,
           }).then(function (response) {
             if(response.data === true) {
 
