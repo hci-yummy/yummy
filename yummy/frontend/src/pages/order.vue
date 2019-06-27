@@ -2,10 +2,10 @@
     <div>
       <memberTopBar></memberTopBar>
 
-      <div style="width: 100%;min-height: 800px;padding-left: 20px;margin-top: 50px">
+      <div style="width: 1000px;min-height: 800px;padding-left: 50px;margin-top: 50px">
         <el-tabs v-model="index" @tab-click="handleClick" :tab-position="tabPosition">
           <el-tab-pane label="待支付订单" name="1">
-            <div class="table_style">
+            <el-card class="table_style">
               <el-table
                 :data="not_paid_list"
                 stripe
@@ -31,11 +31,11 @@
                   </template>
                 </el-table-column>
               </el-table>
-            </div>
+            </el-card>
 
           </el-tab-pane>
           <el-tab-pane label="已支付订单" name="2">
-            <div class="table_style">
+            <el-card class="table_style">
               <el-table
                 :data="complete_list"
                 stripe
@@ -61,11 +61,11 @@
                   </template>
                 </el-table-column>
               </el-table>
-            </div>
+            </el-card>
 
           </el-tab-pane>
           <el-tab-pane label="已失效订单" name="3">
-            <div class="table_style">
+            <el-card class="table_style">
               <el-table
                 :data="invalid_list"
                 stripe
@@ -91,7 +91,7 @@
                   </template>
                 </el-table-column>
               </el-table>
-            </div>
+            </el-card>
 
           </el-tab-pane>
         </el-tabs>
