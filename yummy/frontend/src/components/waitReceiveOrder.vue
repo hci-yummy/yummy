@@ -3,7 +3,7 @@
       <el-card class="order">
         <div slot="header" class="clearfix">
           <span>{{order.orderTime}}</span>
-          <el-button style="float: right; padding: 3px 0" type="text" @click="receive_order">接单&nbsp&nbsp&nbsp</el-button>
+          <el-button style="float: right;margin-top: -25px" type="text" @click="receive_order"><el-button>接单</el-button></el-button>
         </div>
         <div>
           <div style="display: flex">

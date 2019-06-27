@@ -67,7 +67,7 @@
                 if(usable === true) {
                   localStorage.rest_id = id;
                   localStorage.rest_name = rest.name;
-                  self.$router.push({name:'restPage'});
+                  self.$router.push({name:'expressRecord'});
                 }else {
                   alert("该餐厅还在审核中，请等待！")
                 }

@@ -16,9 +16,9 @@
             </div>
           </div>
           <div>
-            <el-row style="margin-top: 10px;">
-              <span style="color: red">￥{{food_info.price}}</span>
-              <el-input-number size="mini" v-model="food_info.num" style="margin-left: 50px"></el-input-number>
+            <el-row style="margin-top: 10px;display: flex">
+              <div style="color: red; width: 100px;">￥{{food_info.price}}</div>
+              <el-input-number size="mini" v-model="food_info.num" style="margin-left: 25px"></el-input-number>
               <el-button size="mini" type="primary" v-on:click="add_food">加入购物车</el-button>
             </el-row>
           </div>
@@ -51,7 +51,7 @@
 <style scoped>
 
   .food{
-    width:500px;
+    width:520px;
     height: 150px;
   }
 

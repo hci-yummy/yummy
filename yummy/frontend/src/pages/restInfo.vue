@@ -34,7 +34,7 @@
             <div style="margin-top: 5px;margin-left: 5px"><i class="el-icon-location-information" style="font-size: 35px; color: #c1c1c1"></i></div>
             <!--<div style="border-left: 1px solid #dadada;height: 50px; width: 0px;margin-left: 15px"></div>-->
             <div style="margin-left: 10px">
-              <p>鼓楼区 广州路99号</p>
+              <p>{{info.address}}</p>
             </div>
           </div>
         </div>
