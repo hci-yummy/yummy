@@ -116,19 +116,19 @@
             <div slot="header" style="margin-top: 5px">{{title}}</div>
             <div slot="body">
               <div style="width: 700px">
-                <el-form ref="address_form" v-model="address_form" style="width: 380px;" label-width="80px">
+                <el-form :rules="rules" ref="address_form" :model="address_form" style="width: 380px;" label-width="80px">
                   <!--style="width: 500px;height: 300px"-->
-                  <el-form-item label="姓名">
-                    <el-input v-model="address_form.name" />
+                  <el-form-item label="姓名" prop="name">
+                    <el-input v-model="address_form.name"></el-input>
                   </el-form-item>
                   <el-form-item label="位置">
                     <addressSelector :pcd="pcd" @setPcd="setAddress"></addressSelector>
                   </el-form-item>
-                  <el-form-item label="详细地址">
-                    <el-input v-model="address_form.address" />
+                  <el-form-item label="详细地址" prop="address">
+                    <el-input v-model="address_form.address"></el-input>
                   </el-form-item>
-                  <el-form-item label="手机号">
-                    <el-input style="width: 210px " v-model="address_form.phone" />
+                  <el-form-item label="手机号" prop="phone">
+                    <el-input style="width: 210px " v-model="address_form.phone"></el-input>
                   </el-form-item>
                   <el-form-item>
                     <span style="color: #c1c1c1;margin-left: 30px;margin-right: 30px;cursor: pointer" @click="close_modal">取消</span> <el-button type="primary" style="width: 120px" @click="save_address">保存</el-button>
@@ -193,7 +193,6 @@
           disMoneyByLevel: 0,
           fullMoney: 0,
           disMoneyByRest: 0,
-
           need_pay:false,
           time:'',
 
@@ -203,6 +202,17 @@
 
           title: "", // 模态框的标题
           address_form: {},
+          rules:{
+            name: [
+              { required: true, message: '请输入收货人姓名', trigger: 'blur' },
+            ],
+            address: [
+              { required: true, message: '请填写详细地址', trigger: 'blur' }
+            ],
+            phone: [
+              { required: true, message: '请填写手机号', trigger: 'blur' }
+            ],
+          },
           pcd:{
             province:'',
             city:'',
