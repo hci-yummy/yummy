@@ -266,12 +266,23 @@
             }
           }).then(
             function(response) {
-              self.address_list = response.data;
-              self.address_list[0].isChoosed = true;
-              for(let i = 1; i < self.address_list.length; i++) {
-                self.address_list[i].isChoosed = false;
+              self.address_list = response.data.reverse();
+
+              if(self.choose_id === '') {
+                self.choose_id = self.address_list[0].aid;
               }
-              self.now_address = self.address_list[0];
+
+              // self.choose_id = self.now_address.aid;
+              console.log("choose id in get:"+self.choose_id);
+              for(let i = 0; i < self.address_list.length; i++) {
+                if(self.choose_id === self.address_list[i].aid) {
+                  self.address_list[i].isChoosed = true;
+                  self.now_address = self.address_list[i];
+                }else {
+                  self.address_list[i].isChoosed = false;
+                }
+              }
+              // self.now_address = self.address_list[0];
               self.choose_id = self.now_address.aid;
             }
           ).catch(function(error){
@@ -288,16 +299,21 @@
 
         hide_list() {
           this.isShow = false;
+
         },
 
         choose_address: function(id) {
-          console.log(id);
+          console.log("in choose:"+id);
           this.choose_id = id;
           let info;
+          console.log("length:"+this.address_list.length);
           for(let i = 0; i < this.address_list.length; i++) {
-            if(id === this.address_list[i].aid) {
+            console.log(id, this.address_list[i].aid);
+            if(id == this.address_list[i].aid) {
               this.address_list[i].isChoosed = true;
               this.now_address = this.address_list[i];
+              this.choose_id = this.now_address.aid;
+              console.log("choose id in click:"+this.choose_id);
             }else {
               this.address_list[i].isChoosed = false;
             }
@@ -305,6 +321,9 @@
             this.$set(this.address_list, i, info);
           }
           console.log(this.address_list);
+
+          console.log("in click after:"+this.choose_id);
+
         },
 
         save_address() {
@@ -380,9 +399,15 @@
             name: info.name,
             email: email,
           }).then(function (response) {
-            if(response.data === true) {
+            console.log(response.data);
+            if(response.data) {
+              self.isShow = false;
+              /*self.get_address_list();
 
-              let choose_id = self.choose_id;
+              self.now_address = self.address_list[0];
+              self.now_address.isChoosed = true;
+              self.choose_id = self.now_address.aid;*/
+
 
               new Promise(
                 function (resolve, reject) {
@@ -395,12 +420,21 @@
                 }
               )
                 .then(function (result) {
-                  console.log(result);
-                  console.log("in promise:"+choose_id);
+
+
 
                   /*self.choose_address(choose_id);*/
                   setTimeout(function () {
-                    self.choose_address(choose_id);
+                    self.choose_address(response.data);
+
+
+                    self.isShow = false;
+                    self.now_address = self.address_list[0];
+                    self.now_address.isChoosed = true;
+                    self.choose_id = self.now_address.aid;
+                    console.log(result);
+                    console.log("in promise:"+self.choose_id);
+
                   }, 200);
                   self.close_modal();
 
