@@ -2,14 +2,17 @@
   <div>
     <visitorTopBar></visitorTopBar>
     <div class="top">
-      <div style="padding-left: 40px">
-        <i>Yummy！</i> 会员注册
+      <div style="padding-left: 40px; padding-bottom: 20px">
+        会员注册
       </div>
     </div>
     <div>
-      <div class="member">
+      <el-card class="member">
        <!-- <div class="tab_title">会员基本信息填写：</div>-->
-        <el-form :label-position="member_form.labelPosition" ref="member_form" :model="member_form" label-width="80px">
+        <div slot="header" class="clearfix">
+          <span style="color: grey">会员基本信息填写</span>
+        </div>
+        <el-form :label-position="member_form.labelPosition" ref="member_form" :model="member_form" label-width="80px" style="margin-right: 20px;">
           <el-form-item class="form-label" label="会员名">
             <el-input v-model="member_form.username"></el-input>
           </el-form-item>
@@ -23,12 +26,15 @@
             <el-input type="password" v-model="member_form.password" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item>
-            <div style="margin-top: 20px; float: right">
+            <div style="margin-top: 10px; float: right">
               <el-button>清空</el-button>
               <el-button type="primary" v-on:click="member_register" v-loading.fullscreen.lock="fullscreenLoading">注册</el-button>
             </div>
           </el-form-item>
         </el-form>
+      </el-card>
+      <div style="position: absolute; z-index: -999; width: 100%; background: red; opacity: 0.1;top: 150px">
+        <img src="../assets/cake.jpg" style="width: 100%; height: 560px;opacity: 0.8;"/>
       </div>
     </div>
   </div>
@@ -90,21 +96,19 @@
 
   .top{
     color: white;
-    font-size: 50px;
+    font-size: 40px;
     width: 100%;
-    height: 150px;
-    line-height: 200px;
+    height: 90px;
+    line-height: 80px;
     background-color: #409EFF;
-    margin-bottom: 30px;
     /*background-image: url("/static/top-back.jpg");*/
     /* background-size: 100% 100%;*/
   }
 
   .member{
     width: 500px;
-    height: 600px;
     /*margin-top: 10px;*/
-    margin: 80px auto;
+    margin: 30px auto;
     /*border: 1px solid black;*/
   }
 
@@ -118,6 +122,6 @@
 
 <style>
   .form-label .el-form-item__label{
-    font-size: 20px !important;
+    font-size: 12px !important;
   }
 </style>

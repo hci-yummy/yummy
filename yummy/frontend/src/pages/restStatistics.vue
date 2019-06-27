@@ -1,8 +1,9 @@
 <template>
-   <restNavi paneltitle="统计信息">
-     <div>
+   <div >
+     <restTopBar></restTopBar>
+     <div style="margin-left: 80px;margin-top: 50px">
        <div>
-         <div id="orderChart" style="width: 800px; height: 400px; margin-top: 30px">
+         <div id="orderChart" style="width: 95%; height: 400px; margin-top: 30px;margin-left: -40px">
 
          </div>
 
@@ -11,39 +12,43 @@
          </div>-->
        </div>
 
-       <el-row class="row">
-         <span class="title">开始日期：</span>
-         <el-date-picker
-           v-model="filter_info.startDate"
-           type="date"
-           size="small"
-           value-format="yyyy-MM-dd"
-           placeholder="选择开始日期">
-         </el-date-picker>
-         <span class="title">结束日期：</span>
-         <el-date-picker
-           v-model="filter_info.endDate"
-           type="date"
-           size="small"
-           value-format="yyyy-MM-dd"
-           placeholder="选择结束日期">
-         </el-date-picker>
-       </el-row>
-       <el-row class="row">
-         <span class="title">最低金额：</span>
-         <el-input style="display: inline-block;width: 220px" size="small" v-model="filter_info.leastMoney"></el-input>
-         <span class="title">最高金额：</span>
-         <el-input style="display: inline-block;width: 220px" size="small" v-model="filter_info.mostMoney"></el-input>
-       </el-row>
+       <div style="margin-left: 40px">
+         <el-row class="row">
+           <span class="title">开始日期：</span>
+           <el-date-picker
+             v-model="filter_info.startDate"
+             type="date"
+             size="small"
+             value-format="yyyy-MM-dd"
+             placeholder="选择开始日期">
+           </el-date-picker>
+           <span class="title">结束日期：</span>
+           <el-date-picker
+             v-model="filter_info.endDate"
+             type="date"
+             size="small"
+             value-format="yyyy-MM-dd"
+             placeholder="选择结束日期">
+           </el-date-picker>
+           <span class="title">用户名称：</span>
+           <el-input style="display: inline-block;width: 220px" size="small" v-model="filter_info.username"></el-input>
+         </el-row>
+         <el-row class="row">
+           <span class="title">最低金额：</span>
+           <el-input style="display: inline-block;width: 220px" size="small" v-model="filter_info.leastMoney"></el-input>
+           <span class="title">最高金额：</span>
+           <el-input style="display: inline-block;width: 220px" size="small" v-model="filter_info.mostMoney"></el-input>
+         </el-row>
+       </div>
+
 
        <el-row class="row">
-         <span class="title">用户名称：</span>
-         <el-input style="display: inline-block;width: 220px" size="small" v-model="filter_info.username"></el-input>
+
        </el-row>
        <el-table
          :data="tableList"
          stripe=""
-         style="margin-top: 30px;margin-bottom: 50px"
+         style="margin-top: 30px;margin-bottom: 50px;width: 95%"
        >
          <el-table-column
            prop="username"
@@ -104,11 +109,11 @@
          ></el-table-column>
        </el-table>
      </div>
-   </restNavi>
+   </div>
 </template>
 
 <script>
-    import restNavi from '../components/restNavi'
+  import restTopBar from '../components/restTopBar'
 
     let echarts = require('echarts/lib/echarts');
     // 引入柱状图组件
@@ -123,9 +128,10 @@
 
     export default {
       name: "rest-statistics",
-      components:{restNavi},
+      components:{restTopBar},
       mounted: function () {
-        this.draw();
+        this.getLatestYear();
+        //this.draw();
         this.get_all_info();
         //this.draw
       },
@@ -174,6 +180,39 @@
         }
       },
       methods: {
+
+        getLatestYear() {
+          let restId = localStorage.rest_id;
+          let date = new Date();
+          let now_year = date.getFullYear();
+          let last_year = (parseInt(now_year) - 1) + "";
+
+          let month = (parseInt(date.getMonth()) + 1) + "";
+          if(month.length === 1) {
+            month = "0" + month;
+          }
+
+          let start = last_year + "-" + month;
+          let end = now_year + "-" + month;
+
+          let self = this;
+          this.$axios.get("/rest/get_statistics", {
+            params: {
+              rid: restId,
+              start: start,
+              end: end,
+            }
+          }).then(function (response) {
+            self.xList = response.data.monthList;
+            self.orderList = response.data.orderList;
+            self.moneyList = response.data.moneyList;
+
+            self.draw();
+          }).catch(function (error) {
+            console.log(error);
+          })
+        },
+
         draw() {
           this.draw_order();
           this.draw_money();
@@ -184,7 +223,7 @@
           // 绘制图表
           myChart.setOption({
             title : {
-              /*text: '订单数',*/
+              text: '最近一年营业情况',
               /*subtext: '纯属虚构'*/
             },
             tooltip : {

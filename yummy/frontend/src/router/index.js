@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import index from '@/pages/index'
 import login from '@/pages/login'
 import memberInfo from '@/pages/memberInfo'
+import memberAddress from '@/pages/memberAddress'
 import register from '@/pages/register'
 import selectAddress from '@/pages/selectAddress'
 import foodList from '@/pages/foodList'
@@ -47,6 +48,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: login
+    },
+    {
+      path: '/memberAddress',
+      name: 'memberAddress',
+      component: memberAddress
     },
     {
       path: '/memberInfo',

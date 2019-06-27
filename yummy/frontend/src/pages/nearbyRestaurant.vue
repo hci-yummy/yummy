@@ -34,17 +34,17 @@
       <div style="width: 100%; margin-top: 50px">
         <div style="width: 100%;">
           <div style="display: flex; border: 1px dashed lightgrey; height: 60px; border-radius: 1%; line-height: 60px; background: white">
-            <div style="margin-right: 20px; font-size: 16px; margin-left: 10px; color: grey">选择您喜欢的分类：</div>
-            <el-checkbox-group v-model="checkList">
+            <div style="margin-right: 20px; font-size: 14px; margin-left: 10px; color: grey">选择您喜欢的分类：</div>
+            <el-checkbox-group v-model="checkList" size="mini">
               <el-checkbox-button v-for="item in type" :label="item" :key="item">{{item}}</el-checkbox-button>
             </el-checkbox-group>
           </div>
           <!--具体餐厅-->
-          <div style="margin-top: 20px;margin-left: 2px">
+          <div style="margin-top: 20px;margin-left: 2px;">
             <div style="display: inline-block;" v-for="info in infos" :key="info.rid">
               <restaurantCard :info="info" @enterRestEvent="enter_rest"></restaurantCard>
             </div>
-            <div v-if="infos.length===0" style="font-size: 40px; width: 100%; height: 40px; margin: 50px auto;line-height: 40px">
+            <div v-if="infos.length===0&&this.pcd.district===''" style="font-size: 40px; width: 100%; height: 40px; margin: 50px auto;line-height: 40px">
               <div style="margin: 10px auto; width: 400px; color: grey">请先选择地址并搜索！</div>
             </div>
           </div>

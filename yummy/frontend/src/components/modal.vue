@@ -55,7 +55,7 @@
   .modal-header, .modal-footer { padding: 15px; display: flex; }
   .modal-header {
     border-bottom: 1px solid #eee;
-    color: #4aae9b;
+    color: #409EFF;
     justify-content: space-between;
   }
   .modal-footer {
@@ -69,7 +69,7 @@
 
   .btn-close {
     border: none 0; font-size: 20px; padding: 5px; cursor: pointer;
-    font-weight: bold; color: #4aae9b; background-color: transparent; }
+    font-weight: bold; color: #409EFF; background-color: transparent; }
 
   .btn-green { color: #fff; background-color: #4aae9b; border: 1px solid #4aae9b; border-radius: 2px; }
 </style>

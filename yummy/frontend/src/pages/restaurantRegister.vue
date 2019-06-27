@@ -3,15 +3,15 @@
     <visitorTopBar></visitorTopBar>
     <div class="top">
       <div style="padding-left: 40px">
-        <i>Yummy!</i> 餐厅注册
+        餐厅注册
       </div>
     </div>
     <div>
-      <div class="member">
+      <el-card class="member">
         <!--<div class="tab_title">
           餐厅基本信息填写：
         </div>-->
-        <el-form :inline="true" :label-position="rest_form.labelPosition" ref="rest_form" :rules="rules" :model="rest_form" label-width="130px" style="width: 1000px;">
+        <el-form :inline="true" :label-position="rest_form.labelPosition" ref="rest_form" :rules="rules" :model="rest_form" label-width="130px" style="width: 1000px;margin-right: 20px;">
           <el-form-item class="form-label" label="餐厅名" prop="rest_name">
             <el-input style="width: 300px;" v-model="rest_form.rest_name"></el-input>
           </el-form-item>
@@ -32,6 +32,8 @@
           <el-form-item class="form-label" label="详细地址" prop="address">
             <el-input style="width: 300px;" v-model="rest_form.address"></el-input>
           </el-form-item>
+
+
           <el-form-item class="form-label" label="餐厅图片" prop="pic">
             <el-upload
               class="register-pic"
@@ -40,12 +42,14 @@
               :onSuccess="uploadSuccess"
             >
               <i class="el-icon-upload"></i>
-              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-              <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em>【只能上传jpg/png文件，且不超过500kb】</div>
+              <!--<div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>-->
             </el-upload>
           </el-form-item>
+
+
           <el-form-item>
-            <div style="width: 875px;margin-top: 20px;">
+            <div style="width: 875px;margin-top: 10px;">
               <div style="float: right">
                 <el-button v-on:click=clear>清空</el-button>
                 <el-button type="primary" v-on:click="rest_register">注册</el-button>
@@ -53,7 +57,12 @@
             </div>
           </el-form-item>
         </el-form>
-      </div>
+
+
+      </el-card>
+      <div style="position: absolute; z-index: -999; width: 100%; background: red; opacity: 0.1;top: 150px">
+        <img src="../assets/cake.jpg" style="width: 100%; height: 690px;opacity: 0.8;"/>
+      </div><
     </div>
   </div>
 </template>
@@ -152,9 +161,9 @@
               let self = this;
               this.$axios.post('/rest/register',{
                 name: name,
-                province: self.rest_form.province,
-                city: self.rest_form.city,
-                district: self.rest_form.district,
+                province: self.rest_form.pcd.province,
+                city: self.rest_form.pcd.city,
+                district: self.rest_form.pcd.district,
                 address: address,
                 type: type,
                 imageUrl: self.rest_form.image
@@ -182,20 +191,20 @@
 
   .top{
     color: white;
-    font-size: 50px;
+    font-size: 40px;
     width: 100%;
-    height: 150px;
-    line-height: 200px;
+    height: 100px;
+    line-height: 100px;
     background-color: #409EFF;
     /*background-image: url("/static/top-back.jpg");*/
     /* background-size: 100% 100%;*/
   }
 
   .member{
-    width: 900px;
-    height: 600px;
+    width: 1000px;
+    height: 500px;
     /*margin-top: 10px;*/
-    margin: 80px auto;
+    margin: 20px auto;
    /* border: 1px solid black;*/
   }
 
@@ -213,10 +222,11 @@
 
 <style>
   .form-label .el-form-item__label{
-    font-size: 20px !important;
+    font-size: 14px !important;
   }
 
   .register-pic .el-upload-dragger{
     width: 745px;
+    height: 200px;
   }
 </style>

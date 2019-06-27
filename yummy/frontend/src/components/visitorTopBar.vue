@@ -35,7 +35,6 @@
 
 <style scoped>
   .top-bar-style{
-    font-size: 22px;
     float: right;
   }
   .menu{

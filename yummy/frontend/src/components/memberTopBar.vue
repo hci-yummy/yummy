@@ -36,6 +36,10 @@
             this.$router.push({name: "order"})
           }else if(this.activeIndex === '2'){
             this.$router.push({name: "nearbyRestaurant"})
+          }else if(this.activeIndex === '4-2'){
+            this.$router.push({name: "memberInfo"})
+          }else if(this.activeIndex === '4-3'){
+            this.$router.push({name: "memberAddress"})
           }
         },
         logout() {
@@ -50,13 +54,13 @@
 
 <style scoped>
   .top-bar-style{
-    font-size: 18px;
+    font-size: 14px;
   }
   .menu{
     border: 1px solid #409EFF;
   }
   .sub-menu{
-    font-size: 14px;
+    font-size: 12px;
     width:200px;
   }
 </style>
