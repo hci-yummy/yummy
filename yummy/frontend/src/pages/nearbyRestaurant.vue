@@ -88,7 +88,7 @@
         mounted(){
             this.pcd.province = localStorage.province===undefined? this.pcd.province: localStorage.province;
             this.pcd.city = localStorage.city===undefined? this.pcd.city: localStorage.city;
-            this.pcd.district = localStorage.dis===undefined? this.pcd.city: localStorage.dis;
+            this.pcd.district = localStorage.dis===undefined? this.pcd.district: localStorage.dis;
             this.detail_address = localStorage.detail_address===undefined? this.detail_address: localStorage.detail_address;
             this.pcd = this.$route.params.pcd === undefined ? this.pcd : this.$route.params.pcd;
             this.detail_address = this.$route.params.detail_address === undefined ? this.detail_address : this.$route.params.detail_address;
