@@ -116,7 +116,7 @@
             <div slot="header" style="margin-top: 5px">{{title}}</div>
             <div slot="body">
               <div style="width: 700px">
-                <el-form :rules="rules" ref="address_form" :model="address_form" style="width: 380px;" label-width="80px">
+                <el-form :rules="rules" ref="address_form" :model="address_form" style="width: 400px;" label-width="100px">
                   <!--style="width: 500px;height: 300px"-->
                   <el-form-item label="姓名" prop="name">
                     <el-input v-model="address_form.name"></el-input>
