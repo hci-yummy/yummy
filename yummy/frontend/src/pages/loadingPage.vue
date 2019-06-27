@@ -19,11 +19,12 @@
         let basket = this.$route.params.basket;
         let info = this.$route.params.info;
 
-        setInterval(() => {
+        let timer = setInterval(() => {
           this.lastTime--;
           console.log(this.lastTime);
           if(this.lastTime <= 0) {
             console.log("结束");
+            clearInterval(timer);
             this.$router.push({name: 'login', params:{basket: basket, info: info}});
           }
         }, 1000)
