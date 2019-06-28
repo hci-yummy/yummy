@@ -131,7 +131,7 @@ INSERT INTO discount (id, dis_money, full_money, rest_id, end_date, start_date) 
 # 餐厅4信息
 INSERT INTO restaurant (id, name, district, address, type, usable, city, evaluation_num, image, province, stars) VALUES ('6293602','宽窄巷子','鼓楼区','湖北路21号','特色菜系',1,'南京市',13,'http://localhost:8000/images/upload/6293602.jpg','江苏',4.4);
 # 餐厅4餐品
-INSERT INTO food (id, rest_id, name, type, price, amount, start_date, end_date, image, description) VALUES (41,'6293602','培根','主食',2.5,1000,'2019-01-31','2019-12-31','http://localhost:8000/images/upload/41e8cea_41.png','培根');
+INSERT INTO food (id, rest_id, name, type, price, amount, start_date, end_date, image, description) VALUES (41,'6293602','培根','主食',2.5,1000,'2019-01-31','2019-12-31','http://localhost:8000/images/upload/41e8cea_41.jpg','培根');
 INSERT INTO food (id, rest_id, name, type, price, amount, start_date, end_date, image, description) VALUES (42,'6293602','鸡翅中','主食',5,1000,'2019-01-31','2019-12-31','http://localhost:8000/images/upload/41e8cea_42.jpg','鸡翅中');
 INSERT INTO food (id, rest_id, name, type, price, amount, start_date, end_date, image, description) VALUES (43,'6293602','秋葵','主食',1.5,1000,'2019-01-31','2019-12-31','http://localhost:8000/images/upload/41e8cea_43.jpg','秋葵');
 INSERT INTO food (id, rest_id, name, type, price, amount, start_date, end_date, image, description) VALUES (44,'6293602','四川笋尖','主食',1.5,1000,'2019-01-31','2019-12-31','http://localhost:8000/images/upload/41e8cea_44.jpg','四川笋尖');
@@ -140,7 +140,7 @@ INSERT INTO food (id, rest_id, name, type, price, amount, start_date, end_date, 
 INSERT INTO food (id, rest_id, name, type, price, amount, start_date, end_date, image, description) VALUES (47,'6293602','冒成都宽粉','主食',9,1000,'2019-01-31','2019-12-31','http://localhost:8000/images/upload/41e8cea_47.jpg','冒成都宽粉');
 INSERT INTO food (id, rest_id, name, type, price, amount, start_date, end_date, image, description) VALUES (48,'6293602','刀切小馒头','小食',13,1000,'2019-01-31','2019-12-31','http://localhost:8000/images/upload/41e8cea_48.jpg','刀切小馒头');
 INSERT INTO food (id, rest_id, name, type, price, amount, start_date, end_date, image, description) VALUES (49,'6293602','红糖糍粑','主食',13,1000,'2019-01-31','2019-12-31','http://localhost:8000/images/upload/41e8cea_49.jpg','红糖糍粑');
-INSERT INTO food (id, rest_id, name, type, price, amount, start_date, end_date, image, description) VALUES (50,'6293602','芝士丸','主食',4,1000,'2019-01-31','2019-12-31','http://localhost:8000/images/upload/41e8cea_50.png','芝士丸');
+INSERT INTO food (id, rest_id, name, type, price, amount, start_date, end_date, image, description) VALUES (50,'6293602','芝士丸','主食',4,1000,'2019-01-31','2019-12-31','http://localhost:8000/images/upload/41e8cea_50.jpg','芝士丸');
 # 餐厅4折扣
 INSERT INTO discount (id, dis_money, full_money, rest_id, end_date, start_date) VALUES (7,20,50,'6293602','2019-12-31','2019-01-01');
 INSERT INTO discount (id, dis_money, full_money, rest_id, end_date, start_date) VALUES (8,5,20,'6293602','2019-12-31','2019-01-01');
