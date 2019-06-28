@@ -184,9 +184,7 @@
         this.basket = this.$route.params.basket;
 
         this.get_address_list();
-        if(this.address_list.length === 0) {
-          this.showAddress = false;
-        }
+
 
         this.cal_sum();
         this.get_time();
@@ -276,6 +274,10 @@
           }).then(
             function(response) {
               self.address_list = response.data.reverse();
+
+              if(self.address_list.length === 0) {
+                self.showAddress = false;
+              }
 
               if(self.choose_id === '') {
                 self.choose_id = self.address_list[0].aid;
